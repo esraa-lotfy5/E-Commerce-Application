@@ -17,6 +17,7 @@
 		09882747284648C4005564D0 /* E_Commerce_ApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09882746284648C4005564D0 /* E_Commerce_ApplicationTests.swift */; };
 		0988275328464AAF005564D0 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 0988275228464AAF005564D0 /* QGrid */; };
 		505A1C4DA596F61EC18702C5 /* Pods_E_Commerce_ApplicationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A74C2A1EE38A1EAC025EF8 /* Pods_E_Commerce_ApplicationTests.framework */; };
+		9B3E7B422846A95E00E7597F /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E7B412846A95E00E7597F /* ReviewView.swift */; };
 		D5EB3D7698ABF007CE2A1F82 /* Pods_E_Commerce_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		09882748284648C4005564D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31A74C2A1EE38A1EAC025EF8 /* Pods_E_Commerce_ApplicationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E_Commerce_ApplicationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E_Commerce_Application.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B3E7B412846A95E00E7597F /* ReviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		C7E10D176604350891750C79 /* Pods-E-Commerce ApplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D12F88E8F1ED3D871A07E083 /* Pods-E-Commerce Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce Application.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce Application/Pods-E-Commerce Application.debug.xcconfig"; sourceTree = "<group>"; };
 		EBD56879B8196BA006BD4741 /* Pods-E-Commerce ApplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.release.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		0988275428464ABF005564D0 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				9B3E7B3E2846A93100E7597F /* ReviewScreen */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -162,6 +165,30 @@
 				0988273A284648C3005564D0 /* LaunchScreen.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		9B3E7B3E2846A93100E7597F /* ReviewScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9B3E7B402846A94B00E7597F /* ViewModel */,
+				9B3E7B3F2846A94300E7597F /* View */,
+			);
+			path = ReviewScreen;
+			sourceTree = "<group>";
+		};
+		9B3E7B3F2846A94300E7597F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B3E7B412846A95E00E7597F /* ReviewView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9B3E7B402846A94B00E7597F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CE151C82085CD6ED388BC391 /* Frameworks */ = {
@@ -358,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3E7B422846A95E00E7597F /* ReviewView.swift in Sources */,
 				0988272D284648BA005564D0 /* AppDelegate.swift in Sources */,
 				0988272F284648BA005564D0 /* SceneDelegate.swift in Sources */,
 				09882734284648BB005564D0 /* ContentView.swift in Sources */,
