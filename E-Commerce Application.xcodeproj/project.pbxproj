@@ -17,6 +17,11 @@
 		09882747284648C4005564D0 /* E_Commerce_ApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09882746284648C4005564D0 /* E_Commerce_ApplicationTests.swift */; };
 		0988275328464AAF005564D0 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 0988275228464AAF005564D0 /* QGrid */; };
 		505A1C4DA596F61EC18702C5 /* Pods_E_Commerce_ApplicationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A74C2A1EE38A1EAC025EF8 /* Pods_E_Commerce_ApplicationTests.framework */; };
+		9B3C61AE2846A0BE00F0DECC /* ProductRowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C61A92846A0BD00F0DECC /* ProductRowDetails.swift */; };
+		9B3C61AF2846A0BE00F0DECC /* emptyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C61AA2846A0BD00F0DECC /* emptyList.swift */; };
+		9B3C61B02846A0BE00F0DECC /* OrderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C61AB2846A0BD00F0DECC /* OrderRow.swift */; };
+		9B3C61B12846A0BE00F0DECC /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C61AC2846A0BE00F0DECC /* OrderListView.swift */; };
+		9B3C61B22846A0BE00F0DECC /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3C61AD2846A0BE00F0DECC /* HeaderView.swift */; };
 		D5EB3D7698ABF007CE2A1F82 /* Pods_E_Commerce_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +51,11 @@
 		09882748284648C4005564D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31A74C2A1EE38A1EAC025EF8 /* Pods_E_Commerce_ApplicationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E_Commerce_ApplicationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E_Commerce_Application.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B3C61A92846A0BD00F0DECC /* ProductRowDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductRowDetails.swift; sourceTree = "<group>"; };
+		9B3C61AA2846A0BD00F0DECC /* emptyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = emptyList.swift; sourceTree = "<group>"; };
+		9B3C61AB2846A0BD00F0DECC /* OrderRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderRow.swift; sourceTree = "<group>"; };
+		9B3C61AC2846A0BE00F0DECC /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListView.swift; sourceTree = "<group>"; };
+		9B3C61AD2846A0BE00F0DECC /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C7E10D176604350891750C79 /* Pods-E-Commerce ApplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D12F88E8F1ED3D871A07E083 /* Pods-E-Commerce Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce Application.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce Application/Pods-E-Commerce Application.debug.xcconfig"; sourceTree = "<group>"; };
 		EBD56879B8196BA006BD4741 /* Pods-E-Commerce ApplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.release.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,6 +138,7 @@
 		0988275428464ABF005564D0 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				9B3C61A128469FD300F0DECC /* ShoppingCart  */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -162,6 +173,42 @@
 				0988273A284648C3005564D0 /* LaunchScreen.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		9B3C61A128469FD300F0DECC /* ShoppingCart  */ = {
+			isa = PBXGroup;
+			children = (
+				9B3C61A72846A09000F0DECC /* ViewModel */,
+				9B3C61A62846A08A00F0DECC /* View */,
+			);
+			path = "ShoppingCart ";
+			sourceTree = "<group>";
+		};
+		9B3C61A62846A08A00F0DECC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B3C61AA2846A0BD00F0DECC /* emptyList.swift */,
+				9B3C61AD2846A0BE00F0DECC /* HeaderView.swift */,
+				9B3C61AC2846A0BE00F0DECC /* OrderListView.swift */,
+				9B3C61AB2846A0BD00F0DECC /* OrderRow.swift */,
+				9B3C61A92846A0BD00F0DECC /* ProductRowDetails.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9B3C61A72846A09000F0DECC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9B3C61A82846A09900F0DECC /* ModelShoppingCart */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9B3C61A82846A09900F0DECC /* ModelShoppingCart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ModelShoppingCart;
 			sourceTree = "<group>";
 		};
 		CE151C82085CD6ED388BC391 /* Frameworks */ = {
@@ -359,7 +406,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0988272D284648BA005564D0 /* AppDelegate.swift in Sources */,
+				9B3C61B22846A0BE00F0DECC /* HeaderView.swift in Sources */,
+				9B3C61B12846A0BE00F0DECC /* OrderListView.swift in Sources */,
+				9B3C61AF2846A0BE00F0DECC /* emptyList.swift in Sources */,
+				9B3C61B02846A0BE00F0DECC /* OrderRow.swift in Sources */,
 				0988272F284648BA005564D0 /* SceneDelegate.swift in Sources */,
+				9B3C61AE2846A0BE00F0DECC /* ProductRowDetails.swift in Sources */,
 				09882734284648BB005564D0 /* ContentView.swift in Sources */,
 				09882732284648BA005564D0 /* E_Commerce_Application.xcdatamodeld in Sources */,
 			);
