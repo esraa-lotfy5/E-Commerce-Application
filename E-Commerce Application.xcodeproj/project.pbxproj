@@ -176,12 +176,28 @@
 		412EDBFA2846805E002F7427 /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
-				412EDBFB284680CF002F7427 /* HomeScreen.swift */,
-				412EDBFD2846812F002F7427 /* BannerView.swift */,
-				412EDBFF28468150002F7427 /* NavigationView.swift */,
-				412EDC0128468171002F7427 /* FakePojo.swift */,
+				412EDC0428468200002F7427 /* HomeViewModel */,
+				412EDC03284681EB002F7427 /* HomeView */,
 			);
 			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		412EDC03284681EB002F7427 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				412EDC0128468171002F7427 /* FakePojo.swift */,
+				412EDBFF28468150002F7427 /* NavigationView.swift */,
+				412EDBFD2846812F002F7427 /* BannerView.swift */,
+				412EDBFB284680CF002F7427 /* HomeScreen.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		412EDC0428468200002F7427 /* HomeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeViewModel;
 			sourceTree = "<group>";
 		};
 		CE151C82085CD6ED388BC391 /* Frameworks */ = {
