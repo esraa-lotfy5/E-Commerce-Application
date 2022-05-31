@@ -29,7 +29,7 @@ struct ProductDetailsImage: View {
 //                        .scaledToFit()
 //                        .frame(height: 250)
                     
-                    image.resizable()
+                    self.image.resizable()
                         .frame(maxWidth: .infinity, maxHeight: 250)
                         
                     

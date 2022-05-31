@@ -17,6 +17,7 @@ struct CategoryScreen: View {
        CategoryTabs()
        QGrid(dummyProducts, columns: 2, hPadding: 15) { CategoryCell(firstItem: $0) }
        }
+    
    }
 }
 

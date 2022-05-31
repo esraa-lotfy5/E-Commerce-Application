@@ -9,7 +9,7 @@
 import SwiftUI
 import QGrid
 import Alamofire
-struct HeaderView: View {
+struct HeaderView2: View {
     var header : String
     @State var cartNum : String
     var image :String
@@ -33,6 +33,6 @@ struct HeaderView: View {
 }
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView(header: "Your Orders", cartNum: "", image: "cart")
+        HeaderView2(header: "Your Orders", cartNum: "", image: "cart")
     }
 }
