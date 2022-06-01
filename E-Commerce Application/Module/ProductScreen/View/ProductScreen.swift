@@ -19,6 +19,15 @@ let dummyProducts = [
 import SwiftUI
 import QGrid
 
+struct ProductItem : Identifiable {
+    var id = UUID()
+    
+    var image :String
+    var name :String
+    var Description :String
+    var price :String
+}
+
 struct ProductScreen: View {
     
     //  By deafult view style is grid

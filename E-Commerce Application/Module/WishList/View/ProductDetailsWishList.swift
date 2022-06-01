@@ -8,7 +8,7 @@
 
 import SwiftUI
 struct ProductDetailsWishList: View {
-    @State var product : Product
+    @State var product : Product3
 
     @Binding var productPrice : Double
     

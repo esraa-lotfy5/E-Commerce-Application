@@ -19,7 +19,7 @@ struct OrderRow: View {
             //MARK: Image
             
             //First
-            ProductImage(imageName: "G")
+            ProductImage3(imageName: "G")
             VStack{
                 //Second
                 ProductRowDetails(product: product, productPrice: $productPrice )
@@ -34,7 +34,7 @@ struct OrderRow: View {
 }
 
 //MARK:- >>>>>>>> Product Image <<<<<<<<<<<<
-struct ProductImage: View {
+struct ProductImage3: View {
     var imageName :String
     var body: some View {
         Image(imageName)

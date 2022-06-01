@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-struct Product : Hashable , Identifiable {
+struct Product3 : Hashable , Identifiable {
     var id  = UUID()
     var name : String?
     var price : Double?
@@ -18,7 +18,7 @@ struct Product : Hashable , Identifiable {
 
 
 struct WishList: View {
-    @State var product : [Product]
+    @State var product : [Product3]
     @State var cartCount : Int = 0
     @State var totalPrice : Int = 0
     @State var productPrice  : Double = 0.0

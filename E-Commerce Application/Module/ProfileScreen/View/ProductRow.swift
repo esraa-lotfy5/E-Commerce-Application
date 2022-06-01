@@ -8,12 +8,16 @@
 
 import SwiftUI
 
+struct  Product4 {
+    var image :String
+    var name :String
+}
 struct ProductRow: View {
-    let firstItem : Product
-    let secondItem : Product
+    let firstItem : ProductItem
+    let secondItem : ProductItem
     var viewWidth : CGFloat = CGFloat(0.0)
     @State private var fav : Bool = false // by default is un fav
-    init(firstItem: Product, secondItem: Product){
+    init(firstItem: ProductItem, secondItem: ProductItem){
         self.viewWidth = (UIScreen.main.bounds.size.width-50)/2
         self.firstItem = firstItem
         self.secondItem = secondItem

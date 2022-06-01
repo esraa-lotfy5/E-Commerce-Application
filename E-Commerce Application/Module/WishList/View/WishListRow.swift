@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WishListRow: View {
-    var product : Product
+    var product : Product3
     
     @Binding var productPrice : Double
     @State var checked = false
