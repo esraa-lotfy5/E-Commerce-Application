@@ -74,7 +74,7 @@ struct Register: View {
                     }
 
                     Button(action: {
-                        hidePassword.toggle()
+                        self.hidePassword.toggle()
                     }) {
                         Image(systemName: self.hidePassword ? "eye.slash" : "eye")
                             .padding()
@@ -117,7 +117,7 @@ struct Register: View {
                     }
 
                     Button(action: {
-                        hideConfirmPassword.toggle()
+                        self.hideConfirmPassword.toggle()
                     }) {
                         Image(systemName: self.hideConfirmPassword ? "eye.slash" : "eye")
                             .padding()
@@ -128,10 +128,10 @@ struct Register: View {
                     
                 Button(action: {
 
-                    if validateFields() {
+                    if self.validateFields() {
                         // continue with register
                     } else {
-                        showErrorMessage("Please fill all the fields")
+                        self.showErrorMessage("Please fill all the fields")
                     }
                     
                 }) {

@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct Login: View {
     
     @State var email: String = ""
@@ -62,7 +64,7 @@ struct Login: View {
                     }
 
                     Button(action: {
-                        hidePassword.toggle()
+                        self.hidePassword.toggle()
                     }) {
                         Image(systemName: self.hidePassword ? "eye.slash" : "eye")
                             .padding()
@@ -86,10 +88,10 @@ struct Login: View {
                     
                 Button(action: {
 
-                    if validateFields() {
+                    if self.validateFields() {
                         // continue with login
                     } else {
-                        showErrorMessage("You need to provide email and password")
+                        self.showErrorMessage("You need to provide email and password")
                     }
                     
                 }) {
