@@ -22,7 +22,7 @@ struct ProductDetails: View {
     
     var body: some View {
         
-        NavigationView {
+//        NavigationView {
             
             ScrollView {
                 
@@ -36,8 +36,8 @@ struct ProductDetails: View {
                     
                     
                     PageView(pages: [FeatureCard(image: Image("bag1")), FeatureCard(image: Image("bag2")), FeatureCard(image: Image("bag3")), FeatureCard(image: Image("bag4"))])
-                        .scaledToFit()
-//                        .aspectRatio(3 / 2, contentMode: .fit)
+//                        .scaledToFit()
+                        .aspectRatio(3 / 2, contentMode: .fit)
                     
                     
                     VStack(alignment: .leading) {
@@ -138,8 +138,10 @@ struct ProductDetails: View {
                 }
                 
             }
-            .navigationBarTitle("Details")
-        }
+            .navigationBarTitle(Text("Details"), displayMode: .inline)
+//            .navigationBarTitle("Details")
+//            .navigationBarTitleDisplayMode(.inline)
+//        }
     
     }
 }
@@ -147,6 +149,7 @@ struct ProductDetails: View {
 struct ProductDetails_Previews: PreviewProvider {
     
     static var previews: some View {
+        
         ProductDetails(product:
                         
                         Product(id: 6870135275659, title: "ADIDAS | CLASSIC BACKPACK", body_html: "This women's backpack has a glam look, thanks to a faux-leather build with an allover fur print. The front zip pocket keeps small things within reach, while an interior divider reins in potential chaos.", vendor: "ADIDAS", product_type: "ACCESSORIES", created_at: "2022-05-24T16:37:47+02:00", handle: "adidas-classic-backpack", updated_at: "2022-05-24T16:46:10+02:00", published_at: "2022-05-24T16:37:47+02:00", status: "active", published_scope: "web", tags: "adidas, backpack, egnition-sample-data", admin_graphql_api_id: "gid://shopify/Product/6870135275659", variants:

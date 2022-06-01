@@ -71,6 +71,7 @@ struct ReviewView_Previews: PreviewProvider {
         ReviewView()
     }
 }
+
 struct HeaderView: View {
     var header : String
     @State var cartNum : String

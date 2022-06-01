@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-
 import StepperView
 
 struct PaymentScreen: View {
@@ -34,7 +33,9 @@ struct PaymentScreen: View {
     
     var body: some View {
         
-        NavigationView {
+//        NavigationView {
+            
+        ScrollView {
             
             VStack {
                 
@@ -53,71 +54,124 @@ struct PaymentScreen: View {
                     }
                 }
                 
-                VStack(alignment:.leading) {
+                VStack {
+                
+                
+                    TextField("Name", text: self.$name)
+                        .padding()
+                        .padding(.bottom, -25)
+                        .foregroundColor(Color.blue)
                     
-                    Text("Name")
-                        .padding(.leading)
-                        .foregroundColor(.black)
-                    TextField("", text: $name)
-                        .foregroundColor(.gray)
-                        .padding(.horizontal, 30)
-                    Divider()
-                        .padding(.horizontal, 30)
-                        .padding(.bottom)
+                    Divider().padding()
                     
-                    VStack(alignment:.leading) {
-                        Text("Address")
-                            .padding(.leading)
-                            .foregroundColor(.black)
-                        TextField("", text: $address)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 30)
-                        Divider()
-                            .padding(.horizontal, 30)
-                            .padding(.bottom)
-                    }
+                    TextField("Address", text: self.$address)
+                        .padding()
+                        .padding(.bottom, -15)
+                        .foregroundColor(Color.blue)
                     
-                    VStack(alignment:.leading){
-                        Text("City")
-                            .padding(.leading)
-                            .foregroundColor(.black)
-                        TextField("", text: $city)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 30)
-                        Divider()
-                            .padding(.horizontal, 30)
-                            .padding(.bottom)
-                    }
+                    Divider().padding().padding(.top, -15)
                     
-                    VStack(alignment:.leading) {
-                        Text("State")
-                            .padding(.leading)
-                            .foregroundColor(.black)
-                        TextField("", text: $state)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 30)
-                        Divider()
-                            .padding(.horizontal, 30)
-                            .padding(.bottom)
-                        
-                    }
+                    TextField("City", text: self.$city)
+                        .padding()
+                        .padding(.bottom, -15)
+                        .foregroundColor(Color.blue)
+                    
+                    Divider().padding().padding(.top, -15)
+                
+                    TextField("State", text: self.$state)
+                        .padding()
+                        .padding(.bottom, -15)
+                        .foregroundColor(Color.blue)
+                    
+                    Divider().padding().padding(.top, -15)
+                    
+                }
+                    
+//                VStack(alignment:.leading) {
+//
+//                    Text("Name")
+//                        .padding(.leading)
+//                        .foregroundColor(.black)
+//
+//                    TextField("", text: $name)
+//                        .foregroundColor(.gray)
+//                        .padding(.horizontal, 30)
+//
+//                    Divider()
+//                        .padding(.horizontal, 30)
+//                        .padding(.bottom)
+//
+//                    VStack(alignment:.leading) {
+//
+//                        Text("Address")
+//                            .padding(.leading)
+//                            .foregroundColor(.black)
+//
+//                        TextField("", text: $address)
+//                            .foregroundColor(.gray)
+//                            .padding(.horizontal, 30)
+//
+//                        Divider()
+//                            .padding(.horizontal, 30)
+//                            .padding(.bottom)
+//                    }
+//
+//                    VStack(alignment:.leading){
+//
+//                        Text("City")
+//                            .padding(.leading)
+//                            .foregroundColor(.black)
+//
+//                        TextField("", text: $city)
+//                            .foregroundColor(.gray)
+//                            .padding(.horizontal, 30)
+//
+//                        Divider()
+//                            .padding(.horizontal, 30)
+//                            .padding(.bottom)
+//                    }
+//
+//                    VStack(alignment:.leading) {
+//                        Text("State")
+//                            .padding(.leading)
+//                            .foregroundColor(.black)
+//                        TextField("", text: $state)
+//                            .foregroundColor(.gray)
+//                            .padding(.horizontal, 30)
+//                        Divider()
+//                            .padding(.horizontal, 30)
+//                            .padding(.bottom)
+//
+//                    }
                     
                     Spacer()
                 }
                 
                 Spacer()
+            
+            
                 NavigationLink(destination: PaymentOptions()) {
-                    Text("Next").colorScheme(.dark)
+                    
+                    Text("Next").bold()
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding()
                     
                     
                 }
             }
-            
         }
+        
+            
+            
+//        }
         
         
     }
-}
+
 
 
 
@@ -152,14 +206,17 @@ struct PaymentOptions: View {
                 }
             }
             
-            
-            
-            
             Spacer()
             Spacer()
             Spacer()
             NavigationLink(destination: OrderPayments()) {
-                Text("Next")
+                Text("Next").bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding()
             }
             Spacer()
         }
@@ -170,6 +227,7 @@ struct PaymentOptions: View {
 }
 
 struct OrderPayments: View {
+    
     let steps = [
         TextView(text: "Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
         TextView(text: "Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -181,6 +239,7 @@ struct OrderPayments: View {
         StepperIndicationType.custom(Image(systemName:"2.circle.fill").font(.largeTitle).eraseToAnyView()),
         StepperIndicationType.custom(Image(systemName:"3.circle.fill").font(.largeTitle).eraseToAnyView())
     ]
+    
     @State private var cobon = ""
     @State var subTotal : Double = 976.0
     @State var shippingFees : Double = 30.0
@@ -190,8 +249,6 @@ struct OrderPayments: View {
     
     
     var body: some View {
-        
-        
         
         
         VStack {
@@ -245,7 +302,13 @@ struct OrderPayments: View {
             
             //////////
             NavigationLink(destination: Text("")) {
-                Text("Placce Order")
+                Text("Place Order").bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding()
             }
             Spacer()
         }

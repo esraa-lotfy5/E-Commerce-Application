@@ -14,12 +14,14 @@ struct CategoryScreen: View {
     // by deafult user untapp search button
     @State private var searchTapped = false
 
-
-
     var body: some View {
-        NavigationView{
+        
+        NavigationView {
+            
             VStack{
+                
                 VStack {
+                    
                     //MARK:  ------------------ > nav bars <------------------
                     HStack{
                         Spacer().frame(width: 24.0)
@@ -87,11 +89,13 @@ struct CategoryScreen: View {
                     }
 
                 }.padding(.bottom , .some(0.20))
+                
                 Spacer()
+                
                 //MARK:- Tabs
                 CategoryTabs()
                 Spacer()
-               NavigationLink(destination: ProductDetails(product: Product())){
+                NavigationLink(destination: ProductDetails(product: Product())){
 
                 QGrid(dummyProducts, columns: 2, hPadding: 15) {
                             CategoryCell(firstItem: $0)
@@ -99,7 +103,7 @@ struct CategoryScreen: View {
                     }
                 }
                 
-            }
+            }.navigationBarHidden(true)
         
         }
     }

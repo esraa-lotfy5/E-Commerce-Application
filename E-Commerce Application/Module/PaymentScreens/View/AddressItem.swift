@@ -16,22 +16,25 @@ struct AddressItem: View {
         
         
         ZStack{
+            
             RoundedRectangle (cornerRadius: 25,style: .continuous)
                 .shadow(radius: 10)
-                .background(Color.white)
+                .foregroundColor(Color.white)
+            
             VStack{
+                
                 Text(address.name)
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
+                    .font(.title)
+                    .foregroundColor(.black)
                 
                 Text(address.address)
-                    .font(.title)
+//                    .font(.title)
                     .foregroundColor(.gray)
             }
             .padding()
             .multilineTextAlignment(.center)
         }
-        .frame(width: 350 , height: 250)
+        .frame(width: 300 , height: 150)
         
         
     }}

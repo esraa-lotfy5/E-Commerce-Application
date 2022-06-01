@@ -26,7 +26,7 @@ struct OrderListView: View {
 
 
     var body: some View {
-        NavigationView{
+//        NavigationView{
         VStack {
             if product.count != 0 {
                 HeaderView(header: "Your Orders", cartNum: "\(self.$cartCount.wrappedValue)", image: "cart")
@@ -106,7 +106,7 @@ struct OrderListView: View {
                 emptyOrderList()
             }
         }
-        }
+//        }
     }
     
     private func delete(with indexSet: IndexSet) {
