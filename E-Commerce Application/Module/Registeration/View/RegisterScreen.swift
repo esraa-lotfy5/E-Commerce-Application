@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Register: View {
+struct RegisterScreen: View {
     
     @State var username: String = ""
     @State var email: String = ""
@@ -171,6 +171,6 @@ struct Register: View {
 
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Register()
+        RegisterScreen()
     }
 }

@@ -8,9 +8,7 @@
 
 import SwiftUI
 
-import SwiftUI
-
-struct Login: View {
+struct LoginScreen: View {
     
     @State var email: String = ""
     @State var password: String = ""
@@ -110,14 +108,12 @@ struct Login: View {
                     
             }
             .navigationBarTitle("Login")
-            .navigationBarItems(trailing:
-                Button(action: {
-                
-                    // navigate to register
-                
-                }) {
-                    Text("Register").font(.headline)
-                }
+            .navigationBarItems(
+                trailing:
+                    NavigationLink(
+                        destination: RegisterScreen(), label: {
+                        Text("Register").font(.headline)
+                    })
             )
             
         }
@@ -142,6 +138,6 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        LoginScreen()
     }
 }
