@@ -26,6 +26,7 @@ struct OrderListView: View {
 
 
     var body: some View {
+        NavigationView{
         VStack {
             if product.count != 0 {
                 HeaderView(header: "Your Orders", cartNum: "\(self.$cartCount.wrappedValue)", image: "cart")
@@ -93,15 +94,19 @@ struct OrderListView: View {
                     .padding(.bottom)
                     }
                     
-                    Button("CheckOut" , action: {
-                        print(Int(self.product.reduce(0.0){$0 + $1.price!})) })
+                    NavigationLink("CheckOut",destination:PaymentScreen(addressess: [Address(id: 1, name: "My home #1", address: "438 Dark Suprt Avenune ", city: " San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 2, name: "My home #2", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 3, name: "My home #3", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 4, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 5, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 6, name: "My home #5", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 7, name: "My home #6", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "city", zipCode: 112, state: "state", defultShippingAddress: false)]))
+//                    {
+//                         print(Int(self.product.reduce(0.0){$0 + $1.price!})) 
+//                    }
+//                    Button("CheckOut" , action: {
+//                        print(Int(self.product.reduce(0.0){$0 + $1.price!})) })
                 }
                 }
             else {
                 emptyOrderList()
             }
         }
-        
+        }
     }
     
     private func delete(with indexSet: IndexSet) {

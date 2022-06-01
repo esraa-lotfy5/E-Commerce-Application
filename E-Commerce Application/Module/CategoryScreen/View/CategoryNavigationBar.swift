@@ -51,6 +51,7 @@ struct CategoryNavigationBar: View {
                })
                {
                    HStack {
+//                NavigationLink(destination:OrderListView(product: [Product2( name: "test", price: 89.0, size: "S", desc: "desc")])){
                        Image(systemName: "cart")
                        .foregroundColor(.black)
                    }
@@ -90,9 +91,11 @@ struct CategoryNavigationBar: View {
         }
     }
 }
-
+    
 struct CategoryNavigationBar_Previews: PreviewProvider {
     static var previews: some View {
         CategoryNavigationBar()
     }
 }
+
+
