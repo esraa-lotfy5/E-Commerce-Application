@@ -12,7 +12,9 @@ struct CategoryNavigationBar: View {
     
     // by deafult user untapp search button
     @State private var searchTapped = false
-    
+    @State private var isActive = false
+    @State private var isActivef = false
+
     var body: some View {
         VStack{
             HStack {
@@ -46,38 +48,38 @@ struct CategoryNavigationBar: View {
             //  ------------ end of header text --------------------
                Spacer()
             //  --------- start of cart icon -----------------
-               Button(action: {
-                   print(String("cart button tapped"))
-               })
-               {
+            
                    HStack {
-//                NavigationLink(destination:OrderListView(product: [Product2( name: "test", price: 89.0, size: "S", desc: "desc")])){
                        Image(systemName: "cart")
                        .foregroundColor(.black)
                    }
+                   .onTapGesture {self.isActivef.toggle() }
+                    
+                    .background(NavigationLink(destination:OrderListView(product: [Product2( name: "test", price: 89.0, size: "S", desc: "desc")]), isActive: $isActivef) { EmptyView() })
+                 
                    .padding(15)
                    .frame(width: 50, height: 40)
                    .background(Color.white)
                    .cornerRadius(10)
                    .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-               }
+               
             //  --------- end of cart icon -----------------
             Spacer().frame(width:8)
             //  --------- start of fav icon -----------------
-            Button(action: {
-                print(String("fav button tapped"))
-            })
-            {
+        
                 HStack {
                     Image(systemName: "heart")
                     .foregroundColor(.black)
                 }
+                .onTapGesture {self.isActive.toggle() }
+                    
+                .background(NavigationLink(destination: WishList(product: [Product3(name: "test", price: 90.0, size: "S", desc: "desc")]), isActive: $isActive) { EmptyView() })
                 .padding(15)
                 .frame(width: 50, height: 40)
                 .background(Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                }
+                
             //  --------- end of fav icon -----------------
                Spacer().frame(width: 24.0)
             }.padding(.bottom, 16)

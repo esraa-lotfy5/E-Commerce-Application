@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct CategoryCell: View {
+    
+    @State private var isActive = false
+
     let firstItem : ProductItem
     var viewWidth : CGFloat = CGFloat(0.0)
     @State private var fav : Bool = false // by default is un fav
@@ -49,7 +52,7 @@ struct CategoryCell: View {
                         HStack {
                             if(self.fav){
                                 Image(systemName:"heart.fill")
-                                        .foregroundColor(.black)
+//                                        .foregroundColor(.black)
                                         .scaledToFit()
                                         .foregroundColor(.red)
                             }
@@ -57,7 +60,7 @@ struct CategoryCell: View {
                                 Image(systemName:"heart")
                                 .foregroundColor(.black)
                                 .scaledToFit()
-                                .foregroundColor(.black)
+//                                .foregroundColor(.black)
                             }
                         }.frame(width: 25, height: 20)
                             .background(Color.white)
@@ -67,6 +70,10 @@ struct CategoryCell: View {
         }.cornerRadius(15)
         .frame(width: self.viewWidth)
         .padding(.bottom, 10)
+        
+        .onTapGesture { self.isActive.toggle() } // activate link on image tap
+                   .background(NavigationLink(destination:  // link in background
+                   ProductDetails(product: Product()), isActive: $isActive) { EmptyView() })
     }
 }
 
