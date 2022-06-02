@@ -15,6 +15,11 @@ struct LoginScreen: View {
     @State var errorMessage: String = ""
     @State private var hidePassword: Bool = true
     
+    init(){
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+            UINavigationBar.appearance().shadowImage = UIImage()
+    }
+    
     var body: some View {
         
         NavigationView {
@@ -84,7 +89,8 @@ struct LoginScreen: View {
                     
                 }
                 
-                NavigationLink(destination: TabBarHome()){
+                NavigationLink(destination: TabBarHome()
+                    .navigationBarBackButtonHidden(true)){
 
                     Text("Login")
                         .bold()
@@ -97,6 +103,7 @@ struct LoginScreen: View {
 
 
                 }
+
                     
 //                Button(action: {
 //
@@ -121,14 +128,19 @@ struct LoginScreen: View {
                     .multilineTextAlignment(.center)
                     
             }
-            .navigationBarTitle("Login")
-            .navigationBarItems(
-                trailing:
-                    NavigationLink(
-                        destination: RegisterScreen(), label: {
-                        Text("Register").font(.headline)
-                    })
-            )
+//                .navigationBarHidden(true)
+
+                .navigationBarTitle("Login" , displayMode: .inline)
+//                .navigationViewStyle(StackNavigationViewStyle())
+                .navigationBarItems(
+                    trailing:
+                        NavigationLink(
+                            destination: RegisterScreen(), label: {
+                            Text("Register").font(.headline)
+                        }))
+
+            
+
             
         }
         

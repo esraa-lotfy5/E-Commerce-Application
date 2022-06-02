@@ -15,7 +15,7 @@ struct CategoryScreen: View {
     @State private var searchTapped = false
 
     var body: some View {
-        NavigationView{
+        
         VStack{
             
             
@@ -34,8 +34,9 @@ struct CategoryScreen: View {
             }
             
         }
-        .navigationBarTitle("Category")
-               }
+        //.navigationBarTitle("category")
+
+        
     }
 }
 

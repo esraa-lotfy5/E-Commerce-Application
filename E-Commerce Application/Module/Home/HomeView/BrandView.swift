@@ -19,7 +19,8 @@ struct BrandsView: View {
 
 struct GridCell: View {
     var product : ProductBrand
-    
+    @State private var isActive = false
+
     var body: some View {
 
         VStack(){
@@ -29,13 +30,17 @@ struct GridCell: View {
             .scaledToFit()
             .cornerRadius(20)
             .padding([.horizontal, .top], 7)
+          
             
             Text(product.vendor).lineLimit(2)
                 .font(.headline)
             .padding()
         }.border(Color.gray,width: 4)
-        .cornerRadius(10)
-
+            .cornerRadius(10)
+            .onTapGesture {
+                self.isActive.toggle() } // activate link on image tap
+            .background(NavigationLink(destination:  // link in background
+            CategoryScreen(), isActive: $isActive) { EmptyView() })
     }
  
 }
