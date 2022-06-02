@@ -11,12 +11,20 @@ import SwiftUI
 struct HomeScreen: View {
 
 var body: some View {
-    NavigationView{
-    VStack{
-        NavigationHome()
-        BannerView()
-        BrandsView()
-    }
-    }
+  //  NavigationView{
+    
+        NavigationView{
+            VStack{
+                NavigationHome()
+                BannerView()
+                BrandsView()
+             //   TabBarHome()
+                
+            }
+        .navigationBarTitle("Home")
+        }
+
+    
+   // }
     }
 }
