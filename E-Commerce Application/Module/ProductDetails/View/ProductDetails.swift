@@ -51,6 +51,10 @@ struct ProductDetails: View {
                             .background(Color.white)
                             .cornerRadius(10)
                             .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                            Spacer()
+                            Text("Details").bold().padding(15)
+                            Spacer()
+                            Spacer()
                         }
                         Spacer()
                     }
@@ -158,8 +162,8 @@ struct ProductDetails: View {
                     
                 }
                 
-            }
-            .navigationBarTitle(Text("Details"), displayMode: .inline)
+            }.navigationBarBackButtonHidden(true)
+//            .navigationBarTitle(Text("Details"), displayMode: .inline)
 //            .navigationBarTitle("Details")
 //            .navigationBarTitleDisplayMode(.inline)
 //        }

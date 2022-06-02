@@ -47,9 +47,11 @@ struct OrderListView: View {
                     .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                 }
                 Spacer()
+                Text("Your Orders  ").bold()
+                Spacer()
             }
             if product.count != 0 {
-                HeaderView(header: "Your Orders", cartNum: "\(self.$cartCount.wrappedValue)", image: "cart")
+                HeaderView(header: "", cartNum: "\(self.$cartCount.wrappedValue)", image: "cart")
                 List {
                     ForEach(product , id: \.self) { item in
                         VStack{
@@ -125,7 +127,7 @@ struct OrderListView: View {
             else {
                 emptyOrderList()
             }
-        }
+        }.navigationBarBackButtonHidden(true)
 //        }
     }
     

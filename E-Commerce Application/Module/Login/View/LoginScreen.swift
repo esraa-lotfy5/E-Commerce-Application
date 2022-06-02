@@ -26,6 +26,10 @@ struct LoginScreen: View {
             
             VStack {
                 
+                Spacer()
+                Text("Login").bold().foregroundColor(.blue)
+                
+                
                 TextField("Email", text: self.$email)
                     .padding()
                     .padding(.bottom, -25)
@@ -91,6 +95,7 @@ struct LoginScreen: View {
                 
                 NavigationLink(destination: TabBarHome()
                     .navigationBarBackButtonHidden(true)
+//                    .navigationViewStyle(StackNavigationViewStyle())
 //                    .navigationBarHidden(true)
                 ){
 
@@ -105,6 +110,27 @@ struct LoginScreen: View {
 
 
                 }
+                
+                //MARK:- REGESTER BUTTON
+                NavigationLink(destination: RegisterScreen()
+                                    .navigationBarBackButtonHidden(true)
+                //                    .navigationViewStyle(StackNavigationViewStyle())
+                //                    .navigationBarHidden(true)
+                                ){
+
+                                    Text("Register")
+                                        .bold()
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .foregroundColor(Color.white)
+                                        .background(Color.blue)
+                                        .cornerRadius(10)
+                                        .padding()
+
+
+                                }
+
+                Spacer()
 
                     
 //                Button(action: {
@@ -140,8 +166,6 @@ struct LoginScreen: View {
                             destination: RegisterScreen(), label: {
                             Text("Register").font(.headline)
                         }))
-
-            
 
             
         }

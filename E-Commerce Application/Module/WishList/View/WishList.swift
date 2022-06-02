@@ -43,13 +43,16 @@ struct WishList: View {
                           .background(Color.white)
                           .cornerRadius(10)
                           .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer()
+                        Text("WishList  ").bold()
+                        Spacer()
                       }
                       Spacer()
                   }
             if product.count != 0 {
                 Section{
                                 HStack{
-                                 HeaderWishListView(header: "Your WishList", cartNum: "\(self.$cartCount.wrappedValue)", image: "heart")
+                                 HeaderWishListView(header: "", cartNum: "\(self.$cartCount.wrappedValue)", image: "heart")
 
                                Spacer()
                                 Text("\(self.$cartCount.wrappedValue)")
@@ -81,7 +84,7 @@ struct WishList: View {
                 emptyWishList()
             }
         }
-        
+        .navigationBarBackButtonHidden(true)
     }
     
     private func delete(with indexSet: IndexSet) {

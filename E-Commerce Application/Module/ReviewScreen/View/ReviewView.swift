@@ -33,8 +33,10 @@ struct ReviewView: View {
                           }
                       
                      Spacer().frame(width:90)
-
-                    HeaderView(header: "Review", cartNum: "", image: "star").padding()
+                    Spacer()
+                    Text("Reviews  ").bold()
+                    Spacer()
+                    HeaderView(header: "", cartNum: "", image: "star").padding()
                     Spacer()
                 }
                 Spacer()
@@ -85,7 +87,7 @@ struct ReviewView: View {
                     UITableView.appearance().separatorStyle = .none
 
                 }
-        }
+        }.navigationBarBackButtonHidden(true)
         
     }
 }

@@ -27,6 +27,8 @@ struct WishListRow: View {
             .background(Color.blue.opacity(0.10))
             .cornerRadius(15)
         }
+    .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
         
     }
 }

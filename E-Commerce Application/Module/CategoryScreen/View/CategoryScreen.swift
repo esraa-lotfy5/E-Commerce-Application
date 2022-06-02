@@ -33,7 +33,7 @@ struct CategoryScreen: View {
                 
             }
             
-        }
+        }.navigationBarBackButtonHidden(true)
         //.navigationBarTitle("category")
 
         

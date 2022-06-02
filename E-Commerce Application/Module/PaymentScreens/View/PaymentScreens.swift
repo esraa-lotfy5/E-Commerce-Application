@@ -124,7 +124,7 @@ struct PaymentScreen: View {
                     .cornerRadius(10)
                     .padding()
             }
-        }
+        }.navigationBarBackButtonHidden(true)
     }
     
 }
@@ -200,7 +200,7 @@ struct PaymentOptions: View {
                     .padding()
             }
             Spacer()
-        }
+        }.navigationBarBackButtonHidden(true)
         
         
         
@@ -303,7 +303,7 @@ struct OrderPayments: View {
                 }.padding()
                 
                 
-            }
+            }.navigationBarBackButtonHidden(true)
             
             //////////
             NavigationLink(destination: Text("")) {

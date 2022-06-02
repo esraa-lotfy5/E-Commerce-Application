@@ -16,9 +16,8 @@ var body: some View {
                 BannerView()
                 BrandsView()
              //   TabBarHome()
-                
+             Spacer()
             }
-.navigationBarHidden(true)
-//        .navigationBarTitle("Home")
+    .navigationBarBackButtonHidden(true)
     }
 }

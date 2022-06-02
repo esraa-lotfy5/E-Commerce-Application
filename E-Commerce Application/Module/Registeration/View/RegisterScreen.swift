@@ -17,13 +17,33 @@ struct RegisterScreen: View {
     @State var errorMessage: String = ""
     @State private var hidePassword: Bool = true
     @State private var hideConfirmPassword: Bool = true
-    
+     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
-        
-        NavigationView {
-            
+                    
             VStack {
-            
+//                VStack {
+                    HStack (alignment: .top, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
+                        }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer().frame(width:50)
+                        Spacer()
+                        Text("Register").bold().padding(.top)
+                        Spacer()
+                        Spacer()
+                    }.frame(height:200)
+//                }
                 TextField("Username", text: self.$username)
                     .padding()
                     .padding(.bottom, -25)
@@ -147,9 +167,10 @@ struct RegisterScreen: View {
                 Text(self.errorMessage)
                     .foregroundColor(Color.red)
                     .multilineTextAlignment(.center)
-                    
-            }
-            .navigationBarTitle("Register")
+                Spacer().frame(height: 300)
+
+            
+//            .navigationBarTitle("Register")
         }
     }
     

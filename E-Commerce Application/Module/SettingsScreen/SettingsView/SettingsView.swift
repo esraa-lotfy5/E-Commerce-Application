@@ -18,7 +18,9 @@ struct SettingsView : View{
             BodySettingsView()
                 //.padding(.top)
             Spacer()
-        }
+        }.navigationBarBackButtonHidden(true)
+        
+
 
         
     }

@@ -61,7 +61,7 @@ struct ProfileScreen: View {
                     }
                 }
             }
-        }
+        }.navigationBarBackButtonHidden(true)
 //            .navigationBarTitle("Profile")
     }
 }
