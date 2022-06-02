@@ -14,12 +14,40 @@ struct CategoryNavigationBar: View {
     @State private var searchTapped = false
     @State private var isActive = false
     @State private var isActivef = false
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
         VStack{
             HStack {
            
                Spacer().frame(width: 24.0)
+            // --------Start back button -------------
+            
+                Button(action: {
+                    print(String("magnifyingglass button tapped"))
+                    
+                    self.presentationMode.wrappedValue.dismiss()
+                    
+                    
+                    
+                    if(self.searchTapped){
+                        self.searchTapped = false
+                    }else{
+                        self.searchTapped = true
+                    }
+                })
+                {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.black)
+                    }
+                    .padding(15)
+                    .frame(width: 50, height: 40)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                }
+            // -------- End back button ---------
             //  --------- start of Search icon -----------------
                Button(action: {
                     print(String("magnifyingglass button tapped"))

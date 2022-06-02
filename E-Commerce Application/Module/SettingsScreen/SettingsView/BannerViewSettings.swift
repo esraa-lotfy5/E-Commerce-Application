@@ -11,6 +11,8 @@ import SwiftUI
 
 struct BannerViewSettings : View {
     @State private var searchTapped = false
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     var body: some View {
         VStack{
             HStack {
@@ -19,6 +21,10 @@ struct BannerViewSettings : View {
             //  --------- start of Search icon -----------------
                Button(action: {
                     print(String("magnifyingglass button tapped"))
+                
+                self.presentationMode.wrappedValue.dismiss()
+                
+                
                 if(self.searchTapped){
                     self.searchTapped = false
                 }else{

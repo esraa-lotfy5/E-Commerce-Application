@@ -66,7 +66,9 @@ struct NavigationHome : View {
                            }
                            .onTapGesture {
                             self.isActive.toggle() } // activate link on image tap
-                                              .background(NavigationLink(destination:  SettingsView(), isActive: $isActive) { EmptyView() })
+                            .background(NavigationLink(destination:  SettingsView(), isActive: $isActive)
+                            { EmptyView() }                    .navigationBarBackButtonHidden(true)
+)
                            
                            .padding(15)
                            .frame(width: 50, height: 40)

@@ -16,7 +16,7 @@ struct PaymentScreen: View {
         TextView(text: "Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
         TextView(text: "Order", font: Font.system(size: 12, weight: Font.Weight.regular))
     ]
-
+    
     let indicators = [
         StepperIndicationType.custom(Image(systemName:"1.circle.fill").font(.largeTitle).eraseToAnyView()),
         StepperIndicationType.custom(Image(systemName:"2.circle").font(.largeTitle).eraseToAnyView()),
@@ -28,85 +28,110 @@ struct PaymentScreen: View {
     @State var address :String = ""
     @State var city :String = ""
     @State var state :String = ""
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
     
     var body: some View {
         
+        VStack {
+            
+            VStack {
+                VStack {
+                    HStack (alignment: .top, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
+                        }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer().frame(width:50)
+                        
+                        VStack{
+                            Spacer().frame(height:100)
+                            StepsC(steps: steps, indicators: indicators)
+                        }
+                        .padding(.all)
+                        Spacer()
+                        Spacer()
+                        
+                    }.frame(height:200)
+                }
+                ScrollView(.horizontal,showsIndicators: false){
+                    
+                    HStack(alignment :.top,spacing: 10){
+                        ForEach(addressess){ address in
+                            AddressItem(address: address)
+                        }
+                    }.padding()
+                }
+            }
+            
             VStack {
                 
-                VStack {
-                        Spacer()
-                        StepsC(steps: steps, indicators: indicators)
-                        Spacer()
-                    
-                    
-                    
-                    ScrollView(.horizontal,showsIndicators: false){
-                        
-                        HStack(alignment :.top,spacing: 10){
-                            ForEach(addressess){ address in
-                                AddressItem(address: address)
-                            }
-                        }.padding()
-                    }
-                }
                 
-                VStack {
+                TextField("Name", text: self.$name)
+                    .padding()
+                    .padding(.bottom, -25)
+                    .foregroundColor(Color.blue)
                 
+                Divider().padding()
                 
-                    TextField("Name", text: self.$name)
-                        .padding()
-                        .padding(.bottom, -25)
-                        .foregroundColor(Color.blue)
-                    
-                    Divider().padding()
-                    
-                    TextField("Address", text: self.$address)
-                        .padding()
-                        .padding(.bottom, -15)
-                        .foregroundColor(Color.blue)
-                    
-                    Divider().padding().padding(.top, -15)
-                    
-                    TextField("City", text: self.$city)
-                        .padding()
-                        .padding(.bottom, -15)
-                        .foregroundColor(Color.blue)
-                    
-                    Divider().padding().padding(.top, -15)
+                TextField("Address", text: self.$address)
+                    .padding()
+                    .padding(.bottom, -15)
+                    .foregroundColor(Color.blue)
                 
-                    TextField("State", text: self.$state)
-                        .padding()
-                        .padding(.bottom, -15)
-                        .foregroundColor(Color.blue)
-                    
-                    Divider().padding().padding(.top, -15)
-                    
-                }
-                    
-
-                    
-                    Spacer()
+                Divider().padding().padding(.top, -15)
                 
-                        
-                NavigationLink(destination: PaymentOptions()) {
-                    
-                    Text("Next").bold()
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .padding()
-        }
+                TextField("City", text: self.$city)
+                    .padding()
+                    .padding(.bottom, -15)
+                    .foregroundColor(Color.blue)
+                
+                Divider().padding().padding(.top, -15)
+                
+                TextField("State", text: self.$state)
+                    .padding()
+                    .padding(.bottom, -15)
+                    .foregroundColor(Color.blue)
+                
+                Divider().padding().padding(.top, -15)
+                
+            }
+            
+            
+            
+            Spacer()
+            
+            
+            NavigationLink(destination: PaymentOptions()) {
+                
+                Text("Next").bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding()
+            }
         }
     }
-
+    
 }
 
 struct PaymentOptions: View {
     @State private var paymentIndex = 0
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var paymentsOptions = ["Apple Pay","Cash On Delivery"]
     
@@ -124,8 +149,34 @@ struct PaymentOptions: View {
     var body: some View {
         
         VStack {
-            Spacer()
-            StepsC(steps: steps, indicators: indicators)
+            HStack (alignment: .top, spacing: 0){
+                //MARK:- back button
+                Spacer().frame(width:10)
+
+                HStack{
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                }
+                .onTapGesture {
+                    self.presentationMode.wrappedValue.dismiss()
+                    
+                }
+                .frame(width: 50, height: 40)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                Spacer().frame(width:50)
+                
+                VStack{
+                    Spacer().frame(height:100)
+                    StepsC(steps: steps, indicators: indicators)
+                }
+                .padding(.all)
+                Spacer()
+                Spacer()
+                
+            }.frame(height:200)
+            
             
             Spacer()
             
@@ -169,7 +220,7 @@ struct OrderPayments: View {
         StepperIndicationType.custom(Image(systemName:"2.circle.fill").font(.largeTitle).eraseToAnyView()),
         StepperIndicationType.custom(Image(systemName:"3.circle.fill").font(.largeTitle).eraseToAnyView())
     ]
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>    
     @State private var cobon = ""
     @State var subTotal : Double = 976.0
     @State var shippingFees : Double = 30.0
@@ -182,12 +233,33 @@ struct OrderPayments: View {
         
         
         VStack {
-            
-            VStack{
-                Spacer().frame(height:100)
-                StepsC(steps: steps, indicators: indicators)
-            }
-            .padding(.all)
+            HStack (alignment: .top, spacing: 0){
+                //MARK:- back button
+                Spacer().frame(width:10)
+
+                HStack{
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.black)
+                }
+                .onTapGesture {
+                    self.presentationMode.wrappedValue.dismiss()
+                    
+                }
+                .frame(width: 50, height: 40)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                Spacer().frame(width:50)
+                
+                VStack{
+                    Spacer().frame(height:100)
+                    StepsC(steps: steps, indicators: indicators)
+                }
+                .padding(.all)
+                Spacer()
+                Spacer()
+                
+            }.frame(height:200)
             VStack(alignment: .leading){
                 Spacer()
                 Form{
@@ -285,8 +357,8 @@ struct StepsC: View {
 
 struct PaymentScreen_Previews: PreviewProvider {
     static var previews: some View {
-//        PaymentScreen(addressess: [Address(id: 1, name: "My home #1", address: "438 Dark Suprt Avenune ", city: " San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 2, name: "My home #2", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 3, name: "My home #3", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 4, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 5, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 6, name: "My home #5", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 7, name: "My home #6", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "city", zipCode: 112, state: "state", defultShippingAddress: false)] )
-//        OrderPayments()
-        PaymentOptions()
+        PaymentScreen(addressess: [Address(id: 1, name: "My home #1", address: "438 Dark Suprt Avenune ", city: " San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 2, name: "My home #2", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 3, name: "My home #3", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 4, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 5, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 6, name: "My home #5", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 7, name: "My home #6", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "city", zipCode: 112, state: "state", defultShippingAddress: false)] )
+        //        OrderPayments()
+        //        PaymentOptions()
     }
 }

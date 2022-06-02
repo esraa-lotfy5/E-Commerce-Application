@@ -16,7 +16,7 @@ struct ProductDetails: View {
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
     let colorWhite = Color(red: 1, green: 1, blue: 1)
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>   
     var productSizes = "OS"
     var productColors = "black"
     
@@ -34,6 +34,27 @@ struct ProductDetails: View {
                     //                    PageView(pages: modelData.features.map { FeatureCard(landmark: $0) })
 //                                                            .aspectRatio(3 / 2, contentMode: .fit)
                     
+                    HStack{
+                        HStack (alignment: .top, spacing: 0){
+                            //MARK:- back button
+                            Spacer().frame(width:10)
+                            
+                            HStack{
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.black)
+                            }
+                            .onTapGesture {
+                                self.presentationMode.wrappedValue.dismiss()
+                                
+                            }
+                            .frame(width: 50, height: 40)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        }
+                        Spacer()
+                    }
+//                    Spacer().frame(width:50)
                     
                     PageView(pages: [FeatureCard(image: Image("bag1")), FeatureCard(image: Image("bag2")), FeatureCard(image: Image("bag3")), FeatureCard(image: Image("bag4"))])
 //                        .scaledToFit()

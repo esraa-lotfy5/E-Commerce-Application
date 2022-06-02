@@ -90,7 +90,9 @@ struct LoginScreen: View {
                 }
                 
                 NavigationLink(destination: TabBarHome()
-                    .navigationBarBackButtonHidden(true)){
+                    .navigationBarBackButtonHidden(true)
+//                    .navigationBarHidden(true)
+                ){
 
                     Text("Login")
                         .bold()
@@ -128,7 +130,7 @@ struct LoginScreen: View {
                     .multilineTextAlignment(.center)
                     
             }
-//                .navigationBarHidden(true)
+                .navigationBarHidden(true)
 
                 .navigationBarTitle("Login" , displayMode: .inline)
 //                .navigationViewStyle(StackNavigationViewStyle())

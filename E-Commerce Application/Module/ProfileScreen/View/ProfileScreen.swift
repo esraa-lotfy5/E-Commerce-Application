@@ -11,12 +11,12 @@ import SwiftUI
 struct ProfileScreen: View {
     var userloggedIn : Bool
     var userName : String = "Esraa"
-    
+      @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
 //        NavigationView{
         ScrollView{
             VStack{
-                ProfileNavigationBar()
+                ProfileNavigationBar(presentationMode:presentationMode)
                 if(userloggedIn){
                     //  --------- start of user name row -----------------
                     HStack{

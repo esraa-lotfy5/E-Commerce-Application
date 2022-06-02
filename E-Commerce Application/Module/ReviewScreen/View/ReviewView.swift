@@ -10,9 +10,33 @@ import SwiftUI
 
 struct ReviewView: View {
     var rate : Int = 2
+      @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
             VStack{
-                HeaderView(header: "Review", cartNum: "", image: "star")
+                HStack{
+                          HStack (alignment: .top, spacing: 0){
+                              //MARK:- back button
+                              Spacer().frame(width:10)
+                              
+                              HStack{
+                                  Image(systemName: "chevron.left")
+                                      .foregroundColor(.black)
+                              }
+                              .onTapGesture {
+                                  self.presentationMode.wrappedValue.dismiss()
+                                  
+                              }
+                              .frame(width: 50, height: 40)
+                              .background(Color.white)
+                              .cornerRadius(10)
+                              .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                          }
+                      
+                     Spacer().frame(width:90)
+
+                    HeaderView(header: "Review", cartNum: "", image: "star").padding()
+                    Spacer()
+                }
                 Spacer()
                 Spacer()
                 

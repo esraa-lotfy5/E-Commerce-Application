@@ -23,10 +23,29 @@ struct WishList: View {
     @State var totalPrice : Int = 0
     @State var productPrice  : Double = 0.0
     @State var checked = false
-
+ @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
         VStack {
-            
+            HStack{
+                      HStack (alignment: .top, spacing: 0){
+                          //MARK:- back button
+                          Spacer().frame(width:10)
+                          
+                          HStack{
+                              Image(systemName: "chevron.left")
+                                  .foregroundColor(.black)
+                          }
+                          .onTapGesture {
+                              self.presentationMode.wrappedValue.dismiss()
+                              
+                          }
+                          .frame(width: 50, height: 40)
+                          .background(Color.white)
+                          .cornerRadius(10)
+                          .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                      }
+                      Spacer()
+                  }
             if product.count != 0 {
                 Section{
                                 HStack{
