@@ -89,7 +89,8 @@ struct LoginScreen: View {
                     
                 }
                 
-                NavigationLink(destination: TabBarHome()){
+                NavigationLink(destination: TabBarHome()
+                    .navigationBarBackButtonHidden(true)){
 
                     Text("Login")
                         .bold()
@@ -102,6 +103,7 @@ struct LoginScreen: View {
 
 
                 }
+
                     
 //                Button(action: {
 //
@@ -127,14 +129,16 @@ struct LoginScreen: View {
                     
             }
 //                .navigationBarHidden(true)
+
                 .navigationBarTitle("Login" , displayMode: .inline)
+//                .navigationViewStyle(StackNavigationViewStyle())
                 .navigationBarItems(
                     trailing:
                         NavigationLink(
                             destination: RegisterScreen(), label: {
                             Text("Register").font(.headline)
-                        })
-            )
+                        }))
+
             
 
             

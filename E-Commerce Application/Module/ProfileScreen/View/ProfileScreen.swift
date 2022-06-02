@@ -13,7 +13,7 @@ struct ProfileScreen: View {
     var userName : String = "Esraa"
     
     var body: some View {
-        NavigationView{
+//        NavigationView{
         ScrollView{
             VStack{
                 ProfileNavigationBar()
@@ -62,10 +62,10 @@ struct ProfileScreen: View {
                 }
             }
         }
-            .navigationBarTitle("Profile")
-                   }
+//            .navigationBarTitle("Profile")
     }
 }
+
 
 struct ProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
