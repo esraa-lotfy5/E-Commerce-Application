@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NavigationHome : View {
     @State private var searchTapped = false
-
+    @State private var isActive = false
     var body : some View {
 //
 //        ZStack{
@@ -50,25 +50,30 @@ struct NavigationHome : View {
                    
                        Spacer().frame(width: 24.0)
                     //  --------- start of Search icon -----------------
-                       Button(action: {
-                            print(String("settings is clicked"))
-                        if(self.searchTapped){
-                            self.searchTapped = false
-                        }else{
-                            self.searchTapped = true
-                        }
-                       })
-                       {
+//                       Button(action: {
+//                            print(String("settings is clicked"))
+////                        if(self.searchTapped){
+////                            self.searchTapped = false
+////                        }else{
+////                            self.searchTapped = true
+////                        }
+//                       })
+//                       {
+                        
                            HStack {
                                Image(systemName: "gear")
                                    .foregroundColor(.black)
                            }
+                           .onTapGesture {
+                            self.isActive.toggle() } // activate link on image tap
+                                              .background(NavigationLink(destination:  SettingsView(), isActive: $isActive) { EmptyView() })
+                           
                            .padding(15)
                            .frame(width: 50, height: 40)
                            .background(Color.white)
                            .cornerRadius(10)
                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                       }
+                       
                     //  ------------ end of search icon --------------------
                        Spacer()
                     //  ------------- start of header text --------------------------

@@ -89,8 +89,8 @@ struct LoginScreen: View {
                     
                 }
                 
-                NavigationLink(destination: CategoryScreen()){
-                 
+                NavigationLink(destination: TabBarHome()){
+
                     Text("Login")
                         .bold()
                         .padding()
@@ -99,8 +99,8 @@ struct LoginScreen: View {
                         .background(Color.blue)
                         .cornerRadius(10)
                         .padding()
-                        
-                        
+
+
                 }
                     
 //                Button(action: {
