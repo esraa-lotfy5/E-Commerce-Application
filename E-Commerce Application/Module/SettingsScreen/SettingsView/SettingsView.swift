@@ -13,8 +13,10 @@ struct SettingsView : View{
 
     var body: some View{
         VStack{
-            BannerViewSettings().padding(.bottom)
-            SettingsBodyView().padding(.top)
+            BannerViewSettings()
+                //.padding(.bottom)
+            BodySettingsView()
+                //.padding(.top)
             Spacer()
         }
 

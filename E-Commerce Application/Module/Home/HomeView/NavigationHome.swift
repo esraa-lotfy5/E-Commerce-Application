@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct NavigationHome : View {
-    @State private var searchTapped = false
+    @State private var searchHomeTapped = false
     @State private var isActive = false
     var body : some View {
 //
@@ -100,7 +100,12 @@ struct NavigationHome : View {
 //                    Spacer().frame(width:8)
                     //  --------- start of fav icon -----------------
                     Button(action: {
-                        print(String("setting is clicked"))
+                        print(String("serch is clicked"))
+                        if(self.searchHomeTapped){
+                                           self.searchHomeTapped = false
+                                       }else{
+                                           self.searchHomeTapped = true
+                                       }
                     })
                     {
                         HStack {
@@ -118,8 +123,9 @@ struct NavigationHome : View {
                 }.padding(.bottom, 16)
                    .padding(.top, 16)
                     HStack{
-                if(self.searchTapped){
+                if(self.searchHomeTapped){
 
+                    SearchBarIcon()
                 }
                     }
                 }
