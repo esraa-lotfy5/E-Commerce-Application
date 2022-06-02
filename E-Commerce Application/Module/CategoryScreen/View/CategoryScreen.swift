@@ -16,7 +16,7 @@ struct CategoryScreen: View {
 
     var body: some View {
         
-        NavigationView {
+//        NavigationView {
             
             VStack{
                 
@@ -103,9 +103,10 @@ struct CategoryScreen: View {
                     }
                 }
                 
-            }.navigationBarHidden(true)
+            }
+//            .navigationBarHidden(true)
         
-        }
+//        }
     }
     }
 

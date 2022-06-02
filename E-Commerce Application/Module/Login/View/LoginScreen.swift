@@ -83,24 +83,38 @@ struct LoginScreen: View {
                         .padding(.trailing, 25)
                     
                 }
+                
+                NavigationLink(destination: CategoryScreen()){
+                 
+                    Text("Login")
+                        .bold()
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding()
+                        
+                        
+                }
                     
-                Button(action: {
-
-                    if self.validateFields() {
-                        // continue with login
-                    } else {
-                        self.showErrorMessage("You need to provide email and password")
-                    }
-                    
-                }) {
-                    
-                    Text("Login").bold()
-                    
-                }.padding().frame(maxWidth: .infinity)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding()
+//                Button(action: {
+//
+//                    if self.validateFields() {
+//                        // continue with login
+//                    } else {
+//                        self.showErrorMessage("You need to provide email and password")
+//                    }
+//
+//                }) {
+//
+//                    Text("Login").bold()
+//
+//                }.padding().frame(maxWidth: .infinity)
+//                    .foregroundColor(Color.white)
+//                    .background(Color.blue)
+//                    .cornerRadius(10)
+//                    .padding()
                 
                 Text(self.errorMessage)
                     .foregroundColor(Color.red)
