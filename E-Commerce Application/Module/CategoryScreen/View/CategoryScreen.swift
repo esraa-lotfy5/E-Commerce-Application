@@ -34,6 +34,8 @@ struct CategoryScreen: View {
             }
             
         }
+        //.navigationBarTitle("category")
+
         
     }
 }
