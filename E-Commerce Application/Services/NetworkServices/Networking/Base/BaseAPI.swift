@@ -30,8 +30,13 @@ class BaseAPI<T: TargetType> {
                     completion(.failure(error))
                     return
                 }
+                
+//                print(response.debugDescription)
+//                print( try? response.result.get() )
                 if statusCode == 200 {
                     // successful request
+                    
+                    
                     guard let response = try? response.result.get() else {
                         // Add custom error
                         print("Error while getting response")

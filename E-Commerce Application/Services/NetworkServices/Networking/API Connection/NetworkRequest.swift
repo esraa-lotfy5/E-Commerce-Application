@@ -18,7 +18,7 @@ extension NetworkRequest : TargetType {
     var baseURL: String {
         switch self {
         default: //9d169ad72dd7620e70f56b28ae6146d9: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
-            return "https://madalex20220.myshopify.com/admin/api/2022-04/"
+            return "https://@madalex20220.myshopify.com/admin/api/2022-04/"
         }
     }
     
@@ -63,8 +63,8 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
         case .getProductDetials:
-            return .requestParameters(parameters: ["username" : "9d169ad72dd7620e70f56b28ae6146d9" , "password" : "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"], encoding: JSONEncoding.default)
-
+//            return .requestParameters(parameters: ["username" : "9d169ad72dd7620e70f56b28ae6146d9" , "password" : "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@"], encoding: JSONEncoding.default)
+            return .requestPlain
                 
         }
     }
@@ -75,8 +75,8 @@ extension NetworkRequest : TargetType {
         default:
 
             return [
-                "Accept":"Application/json",
-                "X-Shopify-Access-Token":"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",
+//                "Accept":"Application/json",
+                "X-Shopify-Access-Token":"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"
             ]
         }
     }

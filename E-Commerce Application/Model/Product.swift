@@ -10,28 +10,31 @@ import Foundation
 
 // MARK: - Product
 struct ProductsResults: Decodable {
-    let product: Product?
+    let product: ProductDetail?
+    private enum CodingKeys: String, CodingKey {
+        case product = "product"
+    }
 }
 
 // MARK: - ProductElement
-struct Product: Decodable {
-//    var id: Int?
+struct ProductDetail: Decodable {
+    var id: Int?
     var title:String?
-//    var  body_html : String?
-//    var vendor :String?
-//    var product_type: String?
-//    var created_at: String?
-//    var handle: String?
-//    var updated_at, published_at: String?
+    var  body_html : String?
+    var vendor :String?
+    var product_type: String?
+    var created_at: String?
+    var handle: String?
+    var updated_at, published_at: String?
 //    var template_suffix: JSONNull?
-//    var status:String?
-//    var published_scope:String?
-//    var tags :String?
-//    var admin_graphql_api_id: String?
-//    var variants: [Variant]?
-//    var options: [Option]?
-//    var images: [ProductImage]?
-//    var image: ProductImage?
+    var status:String?
+    var published_scope:String?
+    var tags :String?
+    var admin_graphql_api_id: String?
+    var variants: [Variant]?
+    var options: [Option]?
+    var images: [ProductImage]?
+    var image: ProductImage?
 
 //    enum CodingKeys: String, CodingKey {
 //        case id, title
@@ -81,7 +84,7 @@ struct Option: Decodable {
     var product_id, id: Int?
     var name: String?
     var position: Int?
-//    var values: [String]?
+    var values: [String]?
 
 //    enum CodingKeys: String, CodingKey {
 //        case productID = "product_id"

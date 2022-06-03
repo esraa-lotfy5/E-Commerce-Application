@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+//import Kingfisher
+
 
 struct ProductDetails: View {
     
@@ -19,31 +21,22 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var product: Product
-    init(product : Product){
-        self.product = product
-        
-        self.productDetailsViewModel.getProductDetails(id: "6870135275659") { (result) in
-//            print("i get it")
-//            print(try? result.get()?.products ?? [])
-            print(try? result.get().debugDescription ?? " ")
-
-        }
-    }
+    var product: ProductDetail
+    var productid :String = "6870135275659"
+//    init(product : ProductDetail){
+//        self.product = product
+//
+//        self.productDetailsViewModel.getProductDetails(id: "6870135275659") { (result) in
+//            print(try? result.get().debugDescription ?? " ")
+//
+//        }
+//    }
     
     var body: some View {
-        
-//        NavigationView {
-            
+                    
             ScrollView {
                 
                 VStack {
-                    
-                    //                    ProductDetailsImage(image: Image(product.image?.src ?? ""))
-                    
-                    
-                    //                    PageView(pages: modelData.features.map { FeatureCard(landmark: $0) })
-//                                                            .aspectRatio(3 / 2, contentMode: .fit)
                     
                     HStack{
                         HStack (alignment: .top, spacing: 0){
@@ -70,8 +63,9 @@ struct ProductDetails: View {
                         Spacer()
                     }
 //                    Spacer().frame(width:50)
-                    
+                    //MARK:- image with kingfisher 
                     PageView(pages: [FeatureCard(image: Image("bag1")), FeatureCard(image: Image("bag2")), FeatureCard(image: Image("bag3")), FeatureCard(image: Image("bag4"))])
+//                    PageView(pages: [productDetailsViewModel.Products?.imagesz])
 //                        .scaledToFit()
                         .aspectRatio(3 / 2, contentMode: .fit)
                     
@@ -79,14 +73,14 @@ struct ProductDetails: View {
                     VStack(alignment: .leading) {
                         
                         HStack {
-                            Text( "").bold() // product.title ??
+                            Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                             Spacer()
-//                            Text("$\(product.variants?[0].price ?? "")").foregroundColor(.blue)
+                            Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
                         }
                         
                         VStack(alignment: .center){
                             
-                            Text("") //product.body_html ??
+                            Text(productDetailsViewModel.Products?.body_html ?? "") //product.body_html ??
                                 .font(.subheadline)
                                 .foregroundColor(.secondary).padding(.top, 5).padding(.bottom, 5)
                                 .frame(
@@ -153,24 +147,30 @@ struct ProductDetails: View {
                             .alert(isPresented: self.$showingAlert) {
                                 Alert(
                                     title: Text("Item add"),
-                                    message: Text("\(String(describing: "")) was successfully added to cart") //product.title ?? 
+                                    message: Text("\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart") //product.title ??
                                 )
                                 
                             }
                         
                         Text("Details").bold()
                         
-                        ProductDetailsContent(title: "Vendor", details:  "N/A", backgroundColor: colorGray) //product.vendor ?? "N/A"
+                        ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray) //product.vendor ?? "N/A"
                         
-                        ProductDetailsContent(title: "Type", details:  "N/A", backgroundColor: colorWhite).padding(.top, -8) // product.product_type ??
+                        ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite).padding(.top, -8) // product.product_type ??
                         
-                        ProductDetailsContent(title: "Sizes", details: productSizes ?? "N/A", backgroundColor: colorGray).padding(.top, -8)
+                        ProductDetailsContent(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values?.first ??  "N/A", backgroundColor: colorGray).padding(.top, -8)
                         
                         
-                        ProductDetailsContent(title: "Colors", details: productColors ?? "N/A", backgroundColor: colorWhite).padding(.top, -8)
+                        ProductDetailsContent(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.first   ?? "N/A", backgroundColor: colorWhite).padding(.top, -8)
                         
                     }.padding()
                     
+                }.onAppear{
+                    self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
+                              print(try? result.get().debugDescription ?? " ")
+
+                          }
+                      
                 }
                 
             }.navigationBarBackButtonHidden(true)
