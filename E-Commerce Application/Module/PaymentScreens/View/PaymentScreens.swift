@@ -23,7 +23,7 @@ struct PaymentScreen: View {
         StepperIndicationType.custom(Image(systemName:"3.circle").font(.largeTitle).eraseToAnyView())
     ]
     
-    var addressess : [Address]
+    var addressess : [FakeAddress]
     @State var  name : String = ""
     @State var address :String = ""
     @State var city :String = ""
@@ -32,6 +32,9 @@ struct PaymentScreen: View {
     
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
+    
+    
+    @ObservedObject  var vm = AddressViewModel()
     
     var body: some View {
         
@@ -116,13 +119,37 @@ struct PaymentScreen: View {
             
             NavigationLink(destination: PaymentOptions()) {
                 
-                Text("Next").bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding()
+                Button(action:{
+                    
+                    var addressPar  = [
+                    
+                        "address" :[
+                        
+                            "address1" : address,
+                        
+                            "city" : city,
+                            "phone" : name,
+                            "country" : state
+                        
+                        
+                        ]
+                        
+                       
+                        
+                    
+                    ]
+                    
+                    vm.postApi(address: addressPar)
+                    
+                }, label:{
+                    Text("SAVE")
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .frame(maxWidth :.infinity)
+                        .background(Color.accentColor)
+                        .cornerRadius(15)
+                } )
+                .padding()
             }
         }.navigationBarBackButtonHidden(true)
     }
@@ -357,7 +384,7 @@ struct StepsC: View {
 
 struct PaymentScreen_Previews: PreviewProvider {
     static var previews: some View {
-        PaymentScreen(addressess: [Address(id: 1, name: "My home #1", address: "438 Dark Suprt Avenune ", city: " San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 2, name: "My home #2", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 3, name: "My home #3", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 4, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 5, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 6, name: "My home #5", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),Address(id: 7, name: "My home #6", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "city", zipCode: 112, state: "state", defultShippingAddress: false)] )
+        PaymentScreen(addressess: [FakeAddress(id: 1, name: "My home #1", address: "438 Dark Suprt Avenune ", city: " San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 2, name: "My home #2", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 3, name: "My home #3", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 4, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 5, name: "My home #4", address: "438 Dark Suprt Avenune ", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 6, name: "My home #5", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "San Francisco ,CA, 94528", zipCode: 112, state: "state", defultShippingAddress: false),FakeAddress(id: 7, name: "My home #6", address: "438 Dark Suprt Avenune , San Francisco ,CA, 94528", city: "city", zipCode: 112, state: "state", defultShippingAddress: false)] )
         //        OrderPayments()
         //        PaymentOptions()
     }

@@ -14,9 +14,12 @@ struct SearchBarIcon: View {
     @State private var searchWord : String = ""
     
     var body: some View {
+        
         HStack{
+            
             Spacer().frame(width: 24)
             VStack{
+                
             TextField("Search", text: $searchWord)
                 .font(.title)
                 .frame(width: UIScreen.main.bounds.size.width-100, alignment: .center)
@@ -26,6 +29,7 @@ struct SearchBarIcon: View {
                 .background(Color.black)
                 }
             Spacer().frame(width: 24.0)
+            
         }.padding(.bottom, 16)
 
     }

@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct AddressItem: View {
-    var address : Address
+    var address : FakeAddress
     var body: some View {
         
         
@@ -41,7 +41,7 @@ struct AddressItem: View {
 
 struct AddressItem_Previews: PreviewProvider {
     static var previews: some View {
-        AddressItem(address:Address(id: 1, name: "aya", address: "ahooo", city: "maddya", zipCode: 112, state:
+        AddressItem(address:FakeAddress(id: 1, name: "aya", address: "ahooo", city: "maddya", zipCode: 112, state:
             "cairo", defultShippingAddress: false))
         
     }
