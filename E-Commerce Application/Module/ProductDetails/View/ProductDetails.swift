@@ -7,12 +7,16 @@
 //
 
 import SwiftUI
-//import class Kingfisher.KingfisherManager
 import Kingfisher
+
+
 struct ProductDetails: View {
-    
+    @State var isAvailable : Bool = false
+    @State var addToCartColor : Color = Color.blue
     @State var productCount = 1
     @State private var showingAlert = false
+    @State var productQuantity = 0
+    @State var productVariants : [Variant] = []
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
     
@@ -20,206 +24,256 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var product: ProductDetail
-    var productid :String = "6870135275659"
-//    init(product : ProductDetail){
-//        self.product = product
-//
-//        self.productDetailsViewModel.getProductDetails(id: "6870135275659") { (result) in
-//            print(try? result.get().debugDescription ?? " ")
-//
-//        }
-//    }
+    var productid :String = "6870133932171"//  "6870135275659" //
+ 
     
     var body: some View {
-                    
-            ScrollView {
-                
-                VStack {
-                    HStack{
-                        HStack (alignment: .top, spacing: 0){
-                            //MARK:- back button
-                            Spacer().frame(width:10)
-                            
-                            HStack{
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(.black)
-                            }
-                            .onTapGesture {
-                                self.presentationMode.wrappedValue.dismiss()
-                                
-                            }
-                            .frame(width: 50, height: 40)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                            Spacer()
-                            Text("Details").bold().padding(15)
-                            Spacer()
-                            Spacer()
+        
+        ScrollView {
+            
+            VStack {
+                HStack{
+                    HStack (alignment: .top, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
                         }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer()
+                        Text("Details").bold().padding(15)
+                        Spacer()
                         Spacer()
                     }
-//                    Spacer().frame(width:50)
-                    //MARK:- image with kingfisher
+                    Spacer()
+                }
+             
+                PageView(pages: [
                     
-//                       PageView(pages:[
-//                        productDetailsViewModel.Products?.images?.forEach({ (c) in
-//                            FeatureCard(image:
-//                                KFImage.url(URL(string: c.src ?? " "))
-//                                    .placeholder { Image("bag2") }
-//                                    .resizable()
-//                                    .onSuccess { r in print("done") }
-//                                    .onFailure { r in print("failure") }
-//                                    .loadImmediately())
-//                        })])
-                          
+                    FeatureCard(image:
+                                    KFImage.url(URL(string:
+                                                        productDetailsViewModel.Products?.images?[0].src ?? " "))
+                                        .placeholder { Image("default") }
+                        .resizable()
+                        .onSuccess { r in print("done") }
+                        .onFailure { r in print("failure") }
+                        .loadImmediately()),
                     
-                                        
-                    PageView(pages: [
-                        
-                        FeatureCard(image:
-                        KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
-                            .placeholder { Image("bag2") }
-                            .resizable()
-                            .onSuccess { r in print("done") }
-                            .onFailure { r in print("failure") }
-                            .loadImmediately()),
-                                     
-                        FeatureCard(image:  KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
-                            .placeholder { Image("bag2") }
-                            .resizable()
-                            .onSuccess { r in print("done") }
-                            .onFailure { r in print("failure") }
-                            .loadImmediately()),
-                                     
-                        
-                        FeatureCard(image: KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
-                            .placeholder { Image("bag2") }
-                            .resizable()
-                            .onSuccess { r in print("done") }
-                            .onFailure { r in print("failure") }
-                            .loadImmediately()),
-                        
-                        
-                        
-                        
-                        FeatureCard(image: KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
-                            .placeholder { Image("bag2") }
-                            .resizable()
-                            .onSuccess { r in print("done") }
-                            .onFailure { r in print("failure") }
-                            .loadImmediately())])
+                    FeatureCard(image:  KFImage.url(URL(string:    productDetailsViewModel.Products?.images?[1].src! ?? " "))
+                        .placeholder { Image("default") }
+                        .resizable()
+                        .onSuccess { r in print("done") }
+                        .onFailure { r in print("failure") }
+                        .loadImmediately()),
                     
-                    VStack(alignment: .leading) {
+                    FeatureCard(image: KFImage.url(URL(string:    productDetailsViewModel.Products?.images?[2].src! ?? " "))
+                        .placeholder { Image("default") }
+                        .resizable()
+                        .onSuccess { r in print("done") }
+                        .onFailure { r in print("failure") }
+                        .loadImmediately())
+                ]).frame( height: 300)
+                
+                VStack(alignment: .leading) {
+                    //#TODO: TITLE AND PRICE
+                    HStack {
                         
-                        HStack {
-                            Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
-                            Spacer()
-                            Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
+                        Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
+                        Spacer()
+                        Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
+                        
+                    }
+                    
+                    
+                    //#TODO: quanitity AND status
+
+                    HStack{
+                        Text(productQuantity.description + " ")
+                            .foregroundColor(Color.blue)
+                            .font(Font.headline)
+                        
+                        Text(productDetailsViewModel.Products?.status ==  "active" ?  "available"  : "not available")
+                            .foregroundColor(Color.blue)
+                            .font(Font.headline)
+                    }
+                    
+                    
+                    //#TODO: HTML BODY
+
+                    VStack(alignment: .center){
+                        
+                        Spacer()
+                        Text(productDetailsViewModel.Products?.body_html ?? "") //product.body_html ??
+                            .font(.subheadline)
+                            .foregroundColor(.secondary).padding(.top, 5).padding(.bottom, 5)
+                            .frame(
+                                minWidth: 0,
+                                maxWidth: .infinity,
+                                minHeight: 0,
+                                maxHeight: .infinity,
+                                alignment: .topLeading
+                            )
+                    }
+                    
+                    //#TODO: REVIEW AND COUNTER
+
+                    VStack{
+                    HStack {
+                        
+                        NavigationLink(destination: ReviewView()){
+                            
+                            Image(systemName: "star.fill").resizable().frame(width: 25, height: 25).foregroundColor(Color.yellow)
+                            
+                            Text("4.9").bold().foregroundColor(.black)
+                            
+                            
                         }
                         
-                        VStack(alignment: .center){
-                            
-                            Text(productDetailsViewModel.Products?.body_html ?? "") //product.body_html ??
-                                .font(.subheadline)
-                                .foregroundColor(.secondary).padding(.top, 5).padding(.bottom, 5)
-                                .frame(
-                                    minWidth: 0,
-                                    maxWidth: .infinity,
-                                    minHeight: 0,
-                                    maxHeight: .infinity,
-                                    alignment: .topLeading
-                                )
-                        }
-                        
-                        HStack {
-                                                
-                            NavigationLink(destination: ReviewView()){
-                             
-                                    Image(systemName: "star.fill").resizable().frame(width: 25, height: 25).foregroundColor(Color.yellow)
-                                    
-                                    Text("4.9").bold().foregroundColor(.black)
-                                    
-                                    
-                            }
-                            
-                            Spacer()
-                            
-                            Button(action: {
-                                if self.productCount > 1 {
-                                    self.productCount -= 1
-                                }
-                                
-                            }) {
-                                Image(systemName: "minus.square.fill")
-                                    .resizable()
-                                    .foregroundColor(.blue)
-                                    .frame(width: 25, height: 25)
-                            }
-                            
-                            Text("\(self.productCount)").bold()
-                            
-                            Button(action: {
-                                self.productCount += 1
-                            }) {
-                                Image(systemName: "plus.square.fill")
-                                    .resizable()
-                                    .foregroundColor(.blue)
-                                    .frame(width: 25, height: 25)
-                            }
-                        }
+                        Spacer()
                         
                         Button(action: {
-                            
-                            self.showingAlert.toggle()
-                          
+                            if self.productCount > 1 {
+                                self.productCount -= 1
+                            }
                             
                         }) {
-                            
-                            Image(systemName: "cart")
-                            Text("Add to cart").bold()
-                            
-                        }.padding()
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(Color.white)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .alert(isPresented: self.$showingAlert) {
-                                Alert(
-                                    title: Text("Item add"),
-                                    message: Text("\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart") //product.title ??
-                                )
-                                
-                            }
+                            Image(systemName: "minus.square.fill")
+                                .resizable()
+                                .foregroundColor(.blue)
+                                .frame(width: 25, height: 25)
+                        }
                         
-                        Text("Details").bold()
+                        Text("\(self.productCount)").bold()
                         
-                        ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray) //product.vendor ?? "N/A"
-                        
-                        ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite).padding(.top, -8) // product.product_type ??
-                        
-                        ProductDetailsContent(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values?.first ??  "N/A", backgroundColor: colorGray).padding(.top, -8)
+                        Button(action: {
+                            self.productCount += 1
+                        }) {
+                            Image(systemName: "plus.square.fill")
+                                .resizable()
+                                .foregroundColor(.blue)
+                                .frame(width: 25, height: 25)
+                        }
                         
                         
-                        ProductDetailsContent(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.first   ?? "N/A", backgroundColor: colorWhite).padding(.top, -8)
+                        
+                    
+                    }
+                        
+//                        VStack{
+//                        //#TODO: VARIANTs
+//
+//                            ScrollView (.horizontal, showsIndicators: false) {
+//                                HStack {
+//                                    ForEach(productVariants , id: \.self){ item  in
+//
+//                                        Text(item.title ?? "")
+//
+//                                    }
+//                                }
+//                            }.frame(height: 100)
+//                        }
+//
+                    }
+                    
+         
+                
+                    //
+                    //}
+                    //                            //#TODO: varients
+                    //                            List{
+                    //                                ForEach(productVariants , id: \.self){ item  in
+                    ////                                    Circle()
+                    ////
+                    ////                                        .fill(Color(String(item.title?.suffix(from: item.title!.index(item.title!.startIndex, offsetBy: 1)) ?? "white")))
+                    ////                                        .frame(width: 100, height: 100)
+                    //                                    Text(item.title ?? "")
+                    //
+                    //                                }
+                    //
+                    //                            }
+                                            
+                                         
+                    
+                    
+                    //#TODO: add to Cart BUTTON
+                    //  MISSING :
+                    //  handling coredata and change product amount (( but it will be in the payment level!))
+                    Button(action: {
+                        
+                        self.showingAlert.toggle()
+                        
+                        
+                    }) {
+                        
+                        Image(systemName: "cart")
+                        Text("Add to cart").bold()
                         
                     }.padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color.white)
+                        .background(addToCartColor)
+                        .cornerRadius(10)
+                        .alert(isPresented: self.$showingAlert) {
+                            Alert(
+                                title: Text("Item add"),
+                                message: Text("\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart") //product.title ??
+                            )
+                            
+                        }
+                        .disabled(isAvailable)
+                    Text("Details").bold()
                     
-                }.onAppear{
-                    self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
-                              print(try? result.get().debugDescription ?? " ")
-
-                          }
-                      
+                    ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray) //product.vendor ?? "N/A"
+                    
+                    ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite).padding(.top, -8) // product.product_type ??
+                    
+                    ProductDetailsContent(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values?.first ??  "N/A", backgroundColor: colorGray).padding(.top, -8)
+                    
+                    
+                    ProductDetailsContent(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.first   ?? "N/A", backgroundColor: colorWhite).padding(.top, -8)
+                    
+                }.padding()
+                
+            }.onAppear{
+                self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
+                    print(try? result.get()?.product.debugDescription)
+                    print( productDetailsViewModel.Products?.images?[1].src!)
+                    self.productVariants = productDetailsViewModel.Products?.variants ?? []
+                    if productDetailsViewModel.Products?.status ==  "active" {
+                        isAvailable =  false
+                    }
+                    else{
+                        isAvailable = true
+                        addToCartColor = Color.gray
+                    }
                 }
                 
-            }.navigationBarBackButtonHidden(true)
-//            .navigationBarTitle(Text("Details"), displayMode: .inline)
-//            .navigationBarTitle("Details")
-//            .navigationBarTitleDisplayMode(.inline)
-//        }
-    
+                
+                //MARK:- product inventory_quantity
+                self.productDetailsViewModel.getProductInventoryQuantity(id: self.productid) { (result) in
+                    productQuantity = try! result.get()?.count ?? 0
+                    print(try? result.get()?.count)
+
+                }
+           
+                
+            }
+            
+        }.navigationBarBackButtonHidden(true)
+        //            .navigationBarTitle(Text("Details"), displayMode: .inline)
+        //            .navigationBarTitle("Details")
+        //            .navigationBarTitleDisplayMode(.inline)
+        //        }
+        
     }
 }
 //

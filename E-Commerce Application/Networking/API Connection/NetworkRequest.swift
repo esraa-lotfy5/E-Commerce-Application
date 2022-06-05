@@ -12,6 +12,8 @@ enum NetworkRequest{
     case getCategoryID
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
+    case getProductInventoryQuantity(productID : String)
+
 }
 
 extension NetworkRequest : TargetType {
@@ -33,8 +35,10 @@ extension NetworkRequest : TargetType {
         case .getProductDetials(let productID):
             print(productID)
             return "products/\(productID).json"
-    
+            
         
+        case .getProductInventoryQuantity(productID: let productID):
+            return "products/\(productID)/variants/count.json"
         }
     }
     
@@ -50,6 +54,9 @@ extension NetworkRequest : TargetType {
             return .get
 
                 
+        case .getProductInventoryQuantity(productID: let productID):
+            return .get
+
         }
     }
     
@@ -63,9 +70,12 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
         case .getProductDetials:
-//            return .requestParameters(parameters: ["username" : "9d169ad72dd7620e70f56b28ae6146d9" , "password" : "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@"], encoding: JSONEncoding.default)
             return .requestPlain
-                
+        
+        case .getProductInventoryQuantity(productID: let productID):
+            return .requestPlain
+
+        
         }
     }
     
@@ -75,7 +85,6 @@ extension NetworkRequest : TargetType {
         default:
 
             return [
-//                "Accept":"Application/json",
                 "X-Shopify-Access-Token":"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"
             ]
         }

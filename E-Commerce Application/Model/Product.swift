@@ -56,7 +56,7 @@ struct ProductDetail: Decodable {
 }
 
 // MARK: - Image
-struct ProductImage: Decodable {
+struct ProductImage: Decodable  {
     var product_id, id, position: Int?
     var created_at, updated_at: String?
 //    var alt: JSONNull?
@@ -93,7 +93,8 @@ struct Option: Decodable {
 }
 
 // MARK: - Variant
-struct Variant: Decodable {
+struct Variant: Decodable, Hashable {
+ 
     var product_id, id: Int?
     var title, price, sku: String?
     var position: Int?

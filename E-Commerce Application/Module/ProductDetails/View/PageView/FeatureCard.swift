@@ -16,6 +16,7 @@ struct FeatureCard: View {
     var body: some View {
         image.resizable()
             .scaledToFit()
+//            .frame( height: 250)
 //            .aspectRatio(3 / 2, contentMode: .fit)
     }
 }
