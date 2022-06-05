@@ -7,20 +7,22 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FeatureCard: View {
-    var image: Image
-
+//    var image: Image
+    var image : KFImage
+    
     var body: some View {
         image.resizable()
             .scaledToFit()
 //            .aspectRatio(3 / 2, contentMode: .fit)
     }
 }
-
-struct FeatureCard_Previews: PreviewProvider {
-    static var previews: some View {
-        FeatureCard(image: Image("bag1"))
-
-    }
-}
+//
+//struct FeatureCard_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeatureCard(image: Image("bag1"))
+//
+//    }
+//}

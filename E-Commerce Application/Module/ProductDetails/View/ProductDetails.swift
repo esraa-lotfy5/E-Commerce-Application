@@ -63,41 +63,57 @@ struct ProductDetails: View {
 //                    Spacer().frame(width:50)
                     //MARK:- image with kingfisher
                     
+//                       PageView(pages:[
+//                        productDetailsViewModel.Products?.images?.forEach({ (c) in
+//                            FeatureCard(image:
+//                                KFImage.url(URL(string: c.src ?? " "))
+//                                    .placeholder { Image("bag2") }
+//                                    .resizable()
+//                                    .onSuccess { r in print("done") }
+//                                    .onFailure { r in print("failure") }
+//                                    .loadImmediately())
+//                        })])
+                          
                     
-//                    PageView(pages: [FeatureCard(image: Image("bag1")), FeatureCard(image: Image("bag2")), FeatureCard(image: Image("bag3")), FeatureCard(image: Image("bag4"))])
-//                        .aspectRatio(3 / 2, contentMode: .fit)
-                    
-//                        PageView(pages: [productDetailsViewModel.Products?.imagesz])
-                    //                        .scaledToFit()
-                    
-                    
-                    KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
-                       .placeholder { Image("bag2") }
-
-                    .resizable()
-                    .onSuccess { r in print("done") }
-                        .onFailure { r in print("failure") }
-                    .loadImmediately() // Add this after the last chained call for `KFImage`
-                    .frame(height: 100)
+                                        
+                    PageView(pages: [
+                        
+                        FeatureCard(image:
+                        KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
+                            .placeholder { Image("bag2") }
+                            .resizable()
+                            .onSuccess { r in print("done") }
+                            .onFailure { r in print("failure") }
+                            .loadImmediately()),
+                                     
+                        FeatureCard(image:  KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
+                            .placeholder { Image("bag2") }
+                            .resizable()
+                            .onSuccess { r in print("done") }
+                            .onFailure { r in print("failure") }
+                            .loadImmediately()),
+                                     
+                        
+                        FeatureCard(image: KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
+                            .placeholder { Image("bag2") }
+                            .resizable()
+                            .onSuccess { r in print("done") }
+                            .onFailure { r in print("failure") }
+                            .loadImmediately()),
+                        
+                        
+                        
+                        
+                        FeatureCard(image: KFImage.url(URL(string: "https://cdn.shopify.com//s//files//1//0589//7509//2875//products//85cc58608bf138a50036bcfe86a3a362.jpg?v=1653403067"))
+                            .placeholder { Image("bag2") }
+                            .resizable()
+                            .onSuccess { r in print("done") }
+                            .onFailure { r in print("failure") }
+                            .loadImmediately())])
                     
                     VStack(alignment: .leading) {
                         
                         HStack {
-//                            KFImage(URL(string: "https://example.com/image.png")!).body.padding()
-//                            Image(uiImage: UIImage.kf)
-
-//                            Image.KF.setImage(with: URL(string: "https://example.com/image.png"))
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                             Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                             Spacer()
                             Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
