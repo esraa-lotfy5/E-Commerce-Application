@@ -8,11 +8,10 @@
 
 import Foundation
 
-struct Addresss :Codable {
+struct Addresss :Codable{
     
     var address1:String
     var city :String
-    var phone :String
     var country :String
     
     

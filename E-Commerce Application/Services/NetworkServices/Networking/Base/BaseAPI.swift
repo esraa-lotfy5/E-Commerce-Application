@@ -70,7 +70,7 @@ class BaseAPI<T: TargetType> {
                         return
                     }
                     
-                    if statusCode == 200 {
+                    if statusCode >= 200 && statusCode < 300 {
                         // successful request
                         guard let response = try? response.result.get() else {
                             // Add custom error
@@ -81,13 +81,14 @@ class BaseAPI<T: TargetType> {
                         }
                         
                         // return the result
-                        print("\(responseClass) result returned successfully")
-                        completion(.success(response as! M))
+                        print("\(responseClass) result returned successfully: \(response)")
+                        completion(.success(response as? M))
                         
                     } else {
                         // Add custom error based on status code
                         print("Status code not successful 200")
                         let error = NSError(domain: target.baseURL, code: statusCode, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.genericError])
+                        print(error)
                         completion(.failure(error))
                     
                     }

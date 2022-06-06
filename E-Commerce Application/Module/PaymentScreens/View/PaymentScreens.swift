@@ -121,24 +121,19 @@ struct PaymentScreen: View {
                 
                 Button(action:{
                     
-                    var addressPar  = [
+                    let addressPar  = [
                     
                         "address" :[
                         
-                            "address1" : address,
-                        
-                            "city" : city,
-                            "phone" : name,
-                            "country" : state
+                            "address1": address,
+                            "city": city,
+                            "country": state
                         
                         
                         ]
-                        
-                       
-                        
                     
                     ]
-                    
+                    print(addressPar)
                     vm.postApi(address: addressPar)
                     
                 }, label:{

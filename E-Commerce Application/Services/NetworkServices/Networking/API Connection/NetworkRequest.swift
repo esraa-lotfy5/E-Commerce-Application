@@ -13,7 +13,7 @@ enum NetworkRequest{
     case getCategoryID
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
-    case postAddress(address:Parameters,addrsesId : Int64 )
+    case postAddress(address:Parameters)
 }
 
 extension NetworkRequest : TargetType {
@@ -36,8 +36,8 @@ extension NetworkRequest : TargetType {
             print(productID)
             return "products/\(productID).json"
             
-        case .postAddress(let addressid):
-            return "customers/\(addressid)/addresses.json"
+        case .postAddress:
+            return "customers/5753625772171/addresses.json"
     
       //  https://9d169ad72dd7620e70f56b28ae6146d9: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@madalex20220.myshopify.com/admin/api/2022-01/customers/5752440225931/addresses.json
         }
@@ -74,7 +74,7 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
             
-        case .postAddress(let parameters , let _):
+        case .postAddress(let parameters):
             return.requestParameters(parameters: parameters, encoding: URLEncoding.default)
                 
         }
