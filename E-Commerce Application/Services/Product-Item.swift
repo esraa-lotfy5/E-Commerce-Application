@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct ProductItem : Identifiable{
-    var id : UUID = UUID(),
-    image : String,
-    name : String,
-    Description : String,
-    price : String
-}
+//struct ProductItem : Identifiable{
+//    var id : UUID = UUID(),
+//    image : String,
+//    name : String,
+//    Description : String,
+//    price : String
+//}

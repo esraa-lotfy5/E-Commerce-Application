@@ -113,22 +113,22 @@ struct LoginScreen: View {
                 
                 //MARK:- REGESTER BUTTON
                 NavigationLink(destination: RegisterScreen()
-                                    .navigationBarBackButtonHidden(true)
-                //                    .navigationViewStyle(StackNavigationViewStyle())
-                //                    .navigationBarHidden(true)
-                                ){
-
-                                    Text("Register")
-                                        .bold()
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .foregroundColor(Color.white)
-                                        .background(Color.blue)
-                                        .cornerRadius(10)
-                                        .padding()
-
-
-                                }
+                    .navigationBarBackButtonHidden(true)
+                               //                    .navigationViewStyle(StackNavigationViewStyle())
+                               //                    .navigationBarHidden(true)
+                ){
+                    
+                    Text("Register")
+                        .bold()
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding()
+                    
+                    
+                }
 
                 Spacer()
 
