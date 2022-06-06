@@ -8,8 +8,16 @@
 
 import Foundation
 
-struct Addresss :Codable{
+
+struct AllAddress :Codable{
     
+    var addresses :[Addresss]!
+    
+}
+
+struct Addresss :Codable,Identifiable{
+    var id :Int64
+
     var address1:String
     var city :String
     var country :String

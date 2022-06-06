@@ -33,8 +33,10 @@ struct PaymentScreen: View {
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
     
+    //view Model
     
     @ObservedObject  var vm = AddressViewModel()
+    
     
     var body: some View {
         
@@ -72,7 +74,7 @@ struct PaymentScreen: View {
                 ScrollView(.horizontal,showsIndicators: false){
                     
                     HStack(alignment :.top,spacing: 10){
-                        ForEach(addressess){ address in
+                        ForEach(vm.comingAddressess){ address in
                             AddressItem(address: address)
                         }
                     }.padding()

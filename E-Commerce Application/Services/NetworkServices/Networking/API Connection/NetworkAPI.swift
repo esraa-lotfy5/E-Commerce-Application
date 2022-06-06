@@ -12,6 +12,7 @@ import Alamofire
 
 protocol NetworkAPIProtocol {
     func postAddress(coustmerId : String,address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void)
+    func getAddress(coustmerId :String, completion: @escaping(Result<AllAddress?, NSError>) -> Void)
 
 }
 
@@ -24,8 +25,14 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
             
             
     }
-    
-    
-    
+
 }
+    
+    func getAddress(coustmerId :String, completion: @escaping(Result<AllAddress?, NSError>) -> Void){
+        self.fetchData(target: .getAddress(coustomerId: coustmerId), responseClass: AllAddress.self){(result) in
+            completion(result)
+        }
+    }
+
+    
 }

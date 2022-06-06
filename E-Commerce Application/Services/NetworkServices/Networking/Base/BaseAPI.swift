@@ -11,7 +11,7 @@ import Alamofire
 
 class BaseAPI<T: TargetType> {
     
-    func fetchData<M: Decodable>(target: T, responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
+    func fetchData<M: Codable>(target: T, responseClass: M.Type, completion: @escaping (Result<M?, NSError>) -> Void) {
         let method = Alamofire.HTTPMethod(rawValue: target.method.rawValue)
         let headers = Alamofire.HTTPHeaders(target.headers ?? [:])
         let params = buildParams(task: target.task)
@@ -33,7 +33,9 @@ class BaseAPI<T: TargetType> {
                     guard let response = try? response.result.get() else {
                         // Add custom error
                         print("Error while getting response")
+                        
                         let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.genericError])
+                        print(error)
                         completion(.failure(error))
                         return
                     }

@@ -14,12 +14,15 @@ import Alamofire
 class AddressViewModel:ObservableObject{
     
     var api :NetworkAPIProtocol = NetworkAPI()
+    @Published  var comingAddressess :[Addresss] = []
     
-    
+    init() {
+        getAddress()
+    }
    
     
     func postApi (address: Parameters){
-        api.postAddress( coustmerId: "5753763004555", address: address) {(result) in
+        api.postAddress( coustmerId: "5754051854475", address: address) {(result) in
         switch result {
         case .success(let response):
             let addressResponse = response
@@ -31,6 +34,28 @@ class AddressViewModel:ObservableObject{
         }
         
     }
+    }
+    
+    func getAddress(){
+        api.getAddress(coustmerId: "5754051854475") {(result) in
+            switch result {
+            case .success(let response):
+                let addressResponse = response
+                
+                self.comingAddressess = addressResponse?.addresses ?? []
+                print(self.comingAddressess)
+                for address in addressResponse?.addresses ?? [] {
+                    
+                    print("addresss : \(address.address1)")
+                }
+        
+                //print("address \(String(describing: addressResponse?.city))")
+            case .failure(let error):
+                // Show UI Error
+                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+            }
+            
+        }
     }
     
     

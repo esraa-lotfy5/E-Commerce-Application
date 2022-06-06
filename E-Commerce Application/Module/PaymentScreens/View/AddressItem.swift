@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct AddressItem: View {
-    var address : FakeAddress
+    var address : Addresss
     var body: some View {
         
         
@@ -23,11 +23,11 @@ struct AddressItem: View {
             
             VStack{
                 
-                Text(address.name)
+                Text(address.address1)
                     .font(.title)
                     .foregroundColor(.black)
                 
-                Text(address.address)
+                Text("\(address.city),\(address.country) ")
 //                    .font(.title)
                     .foregroundColor(.gray)
             }
@@ -41,8 +41,7 @@ struct AddressItem: View {
 
 struct AddressItem_Previews: PreviewProvider {
     static var previews: some View {
-        AddressItem(address:FakeAddress(id: 1, name: "aya", address: "ahooo", city: "maddya", zipCode: 112, state:
-            "cairo", defultShippingAddress: false))
+        AddressItem(address:Addresss(id: 1, address1: "aya", city: "alexandria", country: "Egypt"))
         
     }
 }
