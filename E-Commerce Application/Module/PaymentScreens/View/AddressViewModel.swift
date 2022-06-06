@@ -19,7 +19,7 @@ class AddressViewModel:ObservableObject{
    
     
     func postApi (address: Parameters){
-        api.postAddress( address: address) {(result) in
+        api.postAddress( coustmerId: "5753763004555", address: address) {(result) in
         switch result {
         case .success(let response):
             let addressResponse = response

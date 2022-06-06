@@ -11,15 +11,15 @@ import Alamofire
 
 
 protocol NetworkAPIProtocol {
-    func postAddress(address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void)
+    func postAddress(coustmerId : String,address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void)
 
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
    
-   func postAddress(address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void){
+   func postAddress(coustmerId : String,address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void){
         
-        self.writeData(target: .postAddress(address: address), responseClass: Addresss.self) { (result) in
+       self.writeData(target: .postAddress(address: address, Coustomerid: coustmerId), responseClass: Addresss.self) { (result) in
             completion(result)
             
             
