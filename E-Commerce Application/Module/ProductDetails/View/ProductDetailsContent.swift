@@ -35,6 +35,8 @@ struct ProductDetailsContentScrollView: View {
     var details: [String]
     var backgroundColor: Color
     @Binding var text: String
+    @State var isSelected : Bool = false
+    @State var color : Color = Color.black
     var body: some View {
         
         HStack {
@@ -44,12 +46,23 @@ struct ProductDetailsContentScrollView: View {
                 HStack {
                     ForEach(details , id: \.self){ item  in
 
-                        Text(item)
-                            .onTapGesture {
-                                print("selected Color = \(item)")
-                                _text.wrappedValue = item                           }
                         
-                        }
+                        
+                        Button(action: {
+                            _text.wrappedValue = item
+                            print("item \(item) tapped")
+                        }, label: {
+                            Text(item)
+                                .foregroundColor( _text.wrappedValue == item ? .black: .white)  // <-- Here
+                                .fontWeight(.semibold)
+                                .padding(3)
+                                .background(Color.blue)
+                                .cornerRadius(5)
+                            
+                        })
+             
+
+                    }
                 }
             .frame(height: 50)
             
@@ -67,3 +80,26 @@ struct ProductDetailsContent_Previews: PreviewProvider {
         )
     }
 }
+
+
+
+
+
+
+
+
+//                        Text(item)
+//                            .foregroundColor(isSelected ? Color.white : Color.black)
+//                            .onTapGesture {
+//                                print("selected Color = \(item)")
+//                                _text.wrappedValue = item
+//                                if isSelected == false {
+//                                    isSelected = true
+//                                }
+//                                else{
+//                                    isSelected = false
+//                                }
+//
+//                            } .padding(3)
+//                            .background(Color.blue)
+//                            .cornerRadius(5)

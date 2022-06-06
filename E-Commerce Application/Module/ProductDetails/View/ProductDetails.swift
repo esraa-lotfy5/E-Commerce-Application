@@ -19,8 +19,8 @@ struct ProductDetails: View {
     @State var productVariants : [Variant] = []
     @State var varients : [String] = []
 
-    @State   var selectedColor = "c"
-    @State   var selectedSize = "c"
+    @State   var selectedColor = ""
+    @State   var selectedSize = ""
     
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -172,16 +172,8 @@ struct ProductDetails: View {
                                             
                     }
                         
-//                        HStack{
-//
-//                            List{
-//                                ForEach (self.varients ,id: \.self) { item in
-//                                    Text(item)
-//                                }
-//                            }
-//                        }
                         
-                    }
+            }
                     
          
                 
@@ -190,10 +182,29 @@ struct ProductDetails: View {
                     
                     //#TODO: add to Cart BUTTON
                     //  MISSING :
-                    //  handling coredata and change product amount (( but it will be in the payment level!))
+                    //  change product amount (( but it will be in the payment level!))
+                    //
+                    // 1) get all draftOrder
+                    // 2) loop on them to get the draftorder of the current customer if exist , if not create one
+                    // 3) check the quantity of the current product on the inventroy --> notfound
+                    // 4) check the quantity of the product that the customer pick
+                    // 5)
+                    
                     Button(action: {
                         
                         self.showingAlert.toggle()
+                        
+                        productDetailsViewModel.Products?.variants?.filter({ varient in
+                            
+                            if varient.option2 == selectedColor && varient.option1 == selectedSize{
+                                print("product Varient ID \(varient.id)")
+                            }else{
+                                print("not Selected Items")
+                            }
+                            return true
+                        })
+                        
+                        
                         
                         
                     }) {
@@ -209,7 +220,7 @@ struct ProductDetails: View {
                         .alert(isPresented: self.$showingAlert) {
                             Alert(
                                 title: Text("Item add"),
-                                message: Text("\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart") //product.title ??
+                                message: Text("\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart")
                             )
                             
                         }
@@ -227,7 +238,7 @@ struct ProductDetails: View {
                     ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorGray)
                         .padding(.top, -8)
                     
-                    ProductDetailsContentScrollView(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorWhite, text: self.$selectedColor)
+                    ProductDetailsContentScrollView(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorWhite, text: self.$selectedSize)
                         .padding(.top, -8)
 
                     

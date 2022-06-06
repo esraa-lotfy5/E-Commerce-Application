@@ -13,6 +13,9 @@ enum NetworkRequest{
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
     case getProductInventoryQuantity(productID : String)
+    case postDraftOrder
+    case updateDraftOrder (draftOrderID: String)
+    
 
 }
 
@@ -39,6 +42,13 @@ extension NetworkRequest : TargetType {
         
         case .getProductInventoryQuantity(productID: let productID):
             return "products/\(productID)/variants/count.json"
+            
+            
+        case .postDraftOrder:
+            return "draft_orders.json"
+            
+        case .updateDraftOrder(draftOrderID: let draftOrderID):
+            return "draft_orders/\(draftOrderID).json"
         }
     }
     
@@ -56,6 +66,12 @@ extension NetworkRequest : TargetType {
                 
         case .getProductInventoryQuantity(productID: let productID):
             return .get
+            
+        case .postDraftOrder:
+            return .post
+            
+        case .updateDraftOrder:
+            return .put
 
         }
     }
@@ -75,13 +91,22 @@ extension NetworkRequest : TargetType {
         case .getProductInventoryQuantity(productID: let productID):
             return .requestPlain
 
+        case .postDraftOrder:
+            return .requestPlain
         
+        case .updateDraftOrder:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
     
+        case .postDraftOrder :
+            return [
+                "Accept":"application/json",
+                "X-Shopify-Access-Token":"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"
+                ]
         default:
 
             return [
