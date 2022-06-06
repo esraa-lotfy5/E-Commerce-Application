@@ -17,6 +17,12 @@ struct ProductDetails: View {
     @State private var showingAlert = false
     @State var productQuantity = 0
     @State var productVariants : [Variant] = []
+    @State var varients : [String] = []
+
+    @State   var selectedColor = "c"
+    @State   var selectedSize = "c"
+    
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
     
@@ -24,8 +30,8 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var productid :String = "6870133932171"//  "6870135275659" //
- 
+    var productid :String =  "6870133932171"// "6870135275659" //
+    
     
     var body: some View {
         
@@ -86,7 +92,8 @@ struct ProductDetails: View {
                 VStack(alignment: .leading) {
                     //#TODO: TITLE AND PRICE
                     HStack {
-                        
+                        Text(selectedColor)
+
                         Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                         Spacer()
                         Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
@@ -100,7 +107,7 @@ struct ProductDetails: View {
                         Text(productQuantity.description + " ")
                             .foregroundColor(Color.blue)
                             .font(Font.headline)
-                        
+                  
                         Text(productDetailsViewModel.Products?.status ==  "active" ?  "available"  : "not available")
                             .foregroundColor(Color.blue)
                             .font(Font.headline)
@@ -162,46 +169,23 @@ struct ProductDetails: View {
                                 .foregroundColor(.blue)
                                 .frame(width: 25, height: 25)
                         }
-                        
-                        
-                        
-                    
+                                            
                     }
                         
-//                        VStack{
-//                        //#TODO: VARIANTs
+//                        HStack{
 //
-//                            ScrollView (.horizontal, showsIndicators: false) {
-//                                HStack {
-//                                    ForEach(productVariants , id: \.self){ item  in
-//
-//                                        Text(item.title ?? "")
-//
-//                                    }
+//                            List{
+//                                ForEach (self.varients ,id: \.self) { item in
+//                                    Text(item)
 //                                }
-//                            }.frame(height: 100)
+//                            }
 //                        }
-//
+                        
                     }
                     
          
                 
-                    //
-                    //}
-                    //                            //#TODO: varients
-                    //                            List{
-                    //                                ForEach(productVariants , id: \.self){ item  in
-                    ////                                    Circle()
-                    ////
-                    ////                                        .fill(Color(String(item.title?.suffix(from: item.title!.index(item.title!.startIndex, offsetBy: 1)) ?? "white")))
-                    ////                                        .frame(width: 100, height: 100)
-                    //                                    Text(item.title ?? "")
-                    //
-                    //                                }
-                    //
-                    //                            }
-                                            
-                                         
+              
                     
                     
                     //#TODO: add to Cart BUTTON
@@ -230,24 +214,35 @@ struct ProductDetails: View {
                             
                         }
                         .disabled(isAvailable)
+                    
+                    
+                    
+                    
+                    
                     Text("Details").bold()
                     
-                    ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray) //product.vendor ?? "N/A"
+                    ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorWhite)
+                        .padding(.top, -8)
                     
-                    ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite).padding(.top, -8) // product.product_type ??
+                    ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorGray)
+                        .padding(.top, -8)
                     
-                    ProductDetailsContent(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values?.first ??  "N/A", backgroundColor: colorGray).padding(.top, -8)
+                    ProductDetailsContentScrollView(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorWhite, text: self.$selectedColor)
+                        .padding(.top, -8)
+
                     
-                    
-                    ProductDetailsContent(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.first   ?? "N/A", backgroundColor: colorWhite).padding(.top, -8)
-                    
+                    ProductDetailsContentScrollView(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorGray, text: self.$selectedColor)
+                        .padding(.top, -8)
+                        
                 }.padding()
                 
             }.onAppear{
+                
                 self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
                     print(try? result.get()?.product.debugDescription)
                     print( productDetailsViewModel.Products?.images?[1].src!)
-                    self.productVariants = productDetailsViewModel.Products?.variants ?? []
+                                        
+                    self.varients = self.productDetailsViewModel.Products?.options?.first?.values! ?? ["nil"]
                     if productDetailsViewModel.Products?.status ==  "active" {
                         isAvailable =  false
                     }

@@ -25,6 +25,39 @@ struct ProductDetailsContent: View {
     }
 }
 
+
+
+
+
+struct ProductDetailsContentScrollView: View {
+    
+    var title: String
+    var details: [String]
+    var backgroundColor: Color
+    @Binding var text: String
+    var body: some View {
+        
+        HStack {
+            Text(title)
+            Spacer(minLength: 100)
+
+                HStack {
+                    ForEach(details , id: \.self){ item  in
+
+                        Text(item)
+                            .onTapGesture {
+                                print("selected Color = \(item)")
+                                _text.wrappedValue = item                           }
+                        
+                        }
+                }
+            .frame(height: 50)
+            
+        }.padding().background(backgroundColor)
+        
+    }
+}
+
 struct ProductDetailsContent_Previews: PreviewProvider {
     static var previews: some View {
         ProductDetailsContent(
