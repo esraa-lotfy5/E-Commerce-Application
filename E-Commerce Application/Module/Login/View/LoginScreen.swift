@@ -15,6 +15,10 @@ struct LoginScreen: View {
     @State var errorMessage: String = ""
     @State private var hidePassword: Bool = true
     
+    @ObservedObject private var loginViewModel = LoginViewModel()
+    @State private var proceedWithLogin: Bool = false
+    @State private var showProgressView: Bool = false
+    
     init(){
             UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
             UINavigationBar.appearance().shadowImage = UIImage()
@@ -80,36 +84,70 @@ struct LoginScreen: View {
                     }
                 }
                 
+//                Button(action: {
+//
+//                    // navigate to forgot password
+//
+//                }) {
+//
+//                    Text("Forgot Password?")
+//                        .foregroundColor(Color.blue)
+//                        .frame(maxWidth: .infinity, alignment: .trailing)
+//                        .padding(.trailing, 25)
+//
+//                }
+//
+//                NavigationLink(destination: TabBarHome()
+//                    .navigationBarBackButtonHidden(true)
+//
+////                    .navigationViewStyle(StackNavigationViewStyle())
+////                    .navigationBarHidden(true)
+//                ){
+//
+//                    Text("Login")
+//                        .bold()
+//                        .padding()
+//                        .frame(maxWidth: .infinity)
+//                        .foregroundColor(Color.white)
+//                        .background(Color.blue)
+//                        .cornerRadius(10)
+//                        .padding()
+//
+//
+//                }
+                
+                NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                    EmptyView()
+                }
+                
+                
                 Button(action: {
-
-                    // navigate to forgot password
+                    
+                    if self.validateFields() {
+                        // continue with register
+                        loginCustomer(email: email, password: password)
+                    }
                     
                 }) {
                     
-                    Text("Forgot Password?")
-                        .foregroundColor(Color.blue)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 25)
+                    if showProgressView {
+                        
+                        if #available(iOS 14.0, *) {
+                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        }
+                        
+                    } else {
+                        Text("Login")
+                            .bold()
+                            
+                    }
                     
-                }
-                
-                NavigationLink(destination: TabBarHome()
-                    .navigationBarBackButtonHidden(true)
-//                    .navigationViewStyle(StackNavigationViewStyle())
-//                    .navigationBarHidden(true)
-                ){
-
-                    Text("Login")
-                        .bold()
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .padding()
-
-
-                }
+                }.padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding()
                 
                 //MARK:- REGESTER BUTTON
                 NavigationLink(destination: RegisterScreen()
@@ -118,7 +156,7 @@ struct LoginScreen: View {
                                //                    .navigationBarHidden(true)
                 ){
                     
-                    Text("Register")
+                    Text("Create an Account")
                         .bold()
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -156,16 +194,17 @@ struct LoginScreen: View {
                     .multilineTextAlignment(.center)
                     
             }
+//            .navigationBarTitle("Login")
                 .navigationBarHidden(true)
-
                 .navigationBarTitle("Login" , displayMode: .inline)
+                
 //                .navigationViewStyle(StackNavigationViewStyle())
-                .navigationBarItems(
-                    trailing:
-                        NavigationLink(
-                            destination: RegisterScreen(), label: {
-                            Text("Register").font(.headline)
-                        }))
+//                .navigationBarItems(
+//                    trailing:
+//                        NavigationLink(
+//                            destination: RegisterScreen(), label: {
+//                            Text("Register").font(.headline)
+//                        }))
 
             
         }
@@ -178,12 +217,60 @@ struct LoginScreen: View {
             return true
         }
         
+        showErrorMessage("Please fill all the fields!")
         return false
         
     }
     
     func showErrorMessage(_ errorMessage: String) {
         self.errorMessage = errorMessage
+    }
+    
+    func loginCustomer(email: String, password: String) {
+        
+        showProgressView = true
+        
+        loginViewModel.loginCustomer(email: email, password: password) { result in
+            
+            switch result {
+            
+            case .success(let customersResponse):
+                print("login screen customer: \(customersResponse)")
+                
+                let lowerEmail = email.lowercased()
+                
+                let authenticatedCustomer = customersResponse?.customers.filter {
+                    $0.email == lowerEmail && $0.tags == password
+                }
+                
+                print("login customer: \(authenticatedCustomer)")
+                
+                guard let customer = authenticatedCustomer else {
+                    
+                    showErrorMessage("authentication failed!")
+                    showProgressView = false
+                    return
+                    
+                }
+                
+                if customer.count > 0 {
+                    print("logged in successfully \(customer)")
+                    showProgressView = false
+                    proceedWithLogin = true
+                } else {
+                    showErrorMessage("authentication failed!")
+                    showProgressView = false
+                }
+                
+                
+            case .failure(let error):
+                print("login screen error: \(error.localizedDescription)")
+                showProgressView = false
+                showErrorMessage(error.localizedDescription)
+            }
+            
+        }
+        
     }
     
 }

@@ -13,6 +13,7 @@ struct Constants {
     static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-01/"
     
     // endpoints
+    static let endPointLogin = "customers.json"
     static let endPointCreateCustomer = "customers.json"
     
 }

@@ -76,6 +76,7 @@ class BaseAPI<T: TargetType> {
                     
                     // successful request
                     guard let response = try? response.result.get() else {
+                        
                         // Add custom error
                         print("Error while getting response")
                         let error = NSError(domain: target.baseURL, code: 0, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.genericError])
@@ -96,6 +97,7 @@ class BaseAPI<T: TargetType> {
                         completion(.failure(error))
                         
                     } else {
+                        
                         // Add custom error based on status code
                         print("Status code not between 200 and 300")
                         let error = NSError(domain: target.baseURL, code: statusCode, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.genericError])

@@ -15,6 +15,7 @@ struct Customer: Decodable {
     var last_name: String?
     var email: String?
     var phone: String?
+    var tags: String?
     var password: String?
     var password_confirmation: String?
     
@@ -24,6 +25,7 @@ struct Customer: Decodable {
         case last_name
         case email
         case phone
+        case tags
         case password
         case password_confirmation
     }
@@ -39,7 +41,6 @@ struct Customer: Decodable {
 //    var password: NSString
 //    var password_confirmation: NSString
     
-    
 }
 
 struct CustomerResponse: Decodable {
@@ -48,6 +49,16 @@ struct CustomerResponse: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case customer
+    }
+    
+}
+
+struct CustomersResponse: Decodable {
+    
+    var customers: [Customer]
+    
+    enum CodingKeys: String, CodingKey {
+        case customers
     }
     
 }

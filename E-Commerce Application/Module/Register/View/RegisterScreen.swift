@@ -189,16 +189,6 @@ struct RegisterScreen: View {
                     
                 }
                 
-//                .sheet(isPresented: $showProgressView) {
-//                    if #available(iOS 14.0, *) {
-//                        ProgressView()
-//                    } else {
-//                        // Fallback on earlier versions
-//                    }
-//                }
-//                ProgressView()
-                
-                
                 NavigationLink(destination: HomeScreen(), isActive: $proceedWithRegister) {
                     EmptyView()
                 }
@@ -290,16 +280,6 @@ struct RegisterScreen: View {
         
         // +15132546015
         showProgressView = true
-        
-//        let customer: Parameters = [ "customer": [
-//            "first_name": firstName,
-//            "last_name": lastName,
-//            "email": email,
-//            //                    "phone": phone,
-//            "password": password,
-//            "password_confirmation": confirmPassword
-//        ]
-//        ]
         
         let customer: Parameters = [ "customer": [
             "first_name": firstName,

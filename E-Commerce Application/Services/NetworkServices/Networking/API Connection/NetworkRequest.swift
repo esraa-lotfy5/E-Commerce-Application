@@ -9,12 +9,12 @@
 import Foundation
 import Alamofire
 
-
 enum NetworkRequest{
     case getCategoryID
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
     
+    case loginCustomer
     case registerCustomer(customer: Parameters)
 }
 
@@ -39,6 +39,10 @@ extension NetworkRequest : TargetType {
         case .getProductDetials(let productID):
             print(productID)
             return "products/\(productID).json"
+            
+        case .loginCustomer:
+            return Constants.endPointLogin
+            
         case .registerCustomer:
             return Constants.endPointCreateCustomer
         
@@ -54,6 +58,9 @@ extension NetworkRequest : TargetType {
             return .get
             
         case .getProductDetials:
+            return .get
+            
+        case .loginCustomer:
             return .get
             
         case .registerCustomer:
@@ -72,6 +79,9 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
         case .getProductDetials:
+            return .requestPlain
+            
+        case .loginCustomer:
             return .requestPlain
             
         case .registerCustomer(let customer):
