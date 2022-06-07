@@ -38,7 +38,14 @@ class RegisterViewModel: ObservableObject {
                 
             case .failure(let error):
                 print("error: \(error.localizedDescription)")
-                completion(.failure(error))
+                
+                var provideError = error
+                
+                if error.localizedDescription == ErrorMessages.statusCode422 {
+                    provideError = NSError(domain: Constants.baseUrl, code: 422, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.emailAndPhoneError])
+                }
+                
+                completion(.failure(provideError))
             }
             
         }

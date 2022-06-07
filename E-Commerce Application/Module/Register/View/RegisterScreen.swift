@@ -293,7 +293,7 @@ struct RegisterScreen: View {
         registerViewModel.registerCustomer(customer: customer) { result in
             
             switch result {
-                
+            
             case .success(let customer):
                 print("customer id in register screen: \(customer?.id)")
                 proceedWithRegister = true

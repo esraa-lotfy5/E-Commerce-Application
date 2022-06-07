@@ -90,10 +90,10 @@ class BaseAPI<T: TargetType> {
                     
                 } else {
                     
-                    if statusCode == 422 { // email or phone taken
+                    if statusCode == 422 { // handle error while posting
                         
                         print("Status code is 422")
-                        let error = NSError(domain: target.baseURL, code: statusCode, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.emailAndPhoneError])
+                        let error = NSError(domain: target.baseURL, code: statusCode, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.statusCode422])
                         completion(.failure(error))
                         
                     } else {

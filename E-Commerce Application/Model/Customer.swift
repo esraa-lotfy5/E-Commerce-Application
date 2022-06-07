@@ -34,13 +34,6 @@ struct Customer: Decodable {
 //    var total_Spent: String
 //    var currency: String
     
-//    var first_name: NSString
-//    var last_name: NSString
-//    var email: NSString
-//    var phone: NSString
-//    var password: NSString
-//    var password_confirmation: NSString
-    
 }
 
 struct CustomerResponse: Decodable {

@@ -73,7 +73,7 @@ struct CategoryCell: View {
         
         .onTapGesture { self.isActive.toggle() } // activate link on image tap
                    .background(NavigationLink(destination:  // link in background
-                   ProductDetails(product: ProductDetail()), isActive: $isActive) { EmptyView() })
+                   ProductDetails(product: Product()), isActive: $isActive) { EmptyView() })
     }
 }
 
