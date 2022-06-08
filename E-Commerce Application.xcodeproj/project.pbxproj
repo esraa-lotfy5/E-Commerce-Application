@@ -76,6 +76,7 @@
 		BC4B1C86284F7F93003A6138 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C85284F7F93003A6138 /* LoginViewModel.swift */; };
 		BC4B1C8C284F7FB1003A6138 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C89284F7FB1003A6138 /* RegisterViewModel.swift */; };
 		BC4B1C8D284F7FB1003A6138 /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C8B284F7FB1003A6138 /* RegisterScreen.swift */; };
+		BCAEBC76285162250050E524 /* FakeAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAEBC75285162250050E524 /* FakeAddress.swift */; };
 		D5EB3D7698ABF007CE2A1F82 /* Pods_E_Commerce_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -164,6 +165,7 @@
 		BC4B1C85284F7F93003A6138 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BC4B1C89284F7FB1003A6138 /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		BC4B1C8B284F7FB1003A6138 /* RegisterScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
+		BCAEBC75285162250050E524 /* FakeAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeAddress.swift; sourceTree = "<group>"; };
 		C7E10D176604350891750C79 /* Pods-E-Commerce ApplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D12F88E8F1ED3D871A07E083 /* Pods-E-Commerce Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce Application.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce Application/Pods-E-Commerce Application.debug.xcconfig"; sourceTree = "<group>"; };
 		EBD56879B8196BA006BD4741 /* Pods-E-Commerce ApplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.release.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 		9BE725772848AD230093388A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BCAEBC75285162250050E524 /* FakeAddress.swift */,
 				BC4B1C7C284F7F3B003A6138 /* Customer.swift */,
 				BC4B1C7D284F7F3B003A6138 /* ErrorResponse.swift */,
 				9BE725782848AD230093388A /* Product.swift */,
@@ -615,6 +618,7 @@
 			isa = PBXGroup;
 			children = (
 				BC4B1C6F284F7F17003A6138 /* BaseAPI.swift */,
+				BC4B1C6E284F7F17003A6138 /* TargetType.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -622,7 +626,6 @@
 		BC4B1C70284F7F17003A6138 /* CoreDataServices */ = {
 			isa = PBXGroup;
 			children = (
-				BC4B1C6E284F7F17003A6138 /* TargetType.swift */,
 				BC4B1C71284F7F17003A6138 /* E_Commerce_Application.xcdatamodeld */,
 			);
 			path = CoreDataServices;
@@ -896,6 +899,7 @@
 				9BE725712848AD0A0093388A /* HomeScreen.swift in Sources */,
 				9BE725692848AD0A0093388A /* emptyWishList.swift in Sources */,
 				0988272F284648BA005564D0 /* SceneDelegate.swift in Sources */,
+				BCAEBC76285162250050E524 /* FakeAddress.swift in Sources */,
 				9BE725732848AD0A0093388A /* FakePojo.swift in Sources */,
 				9BE725532848AD0A0093388A /* PageView.swift in Sources */,
 				9BE7255E2848AD0A0093388A /* ProfileWishlist.swift in Sources */,

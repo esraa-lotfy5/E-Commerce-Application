@@ -19,15 +19,20 @@ enum NetworkRequest{
     
     case postAddress(address: Parameters, Coustomerid: String)
     case getAddress(coustomerId: String)
+    
+    case getProductInventoryQuantity(productID : String)
+    case postDraftOrder( draftOrderID:  Int ,parameters :  Parameters )
+    case getDraftOrders
+    case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
+    case getCurrentUser
+    case deleteDraftOrder(darftOrderID:Int)
+    
 }
 
 extension NetworkRequest : TargetType {
     var baseURL: String {
         switch self {
-        default: //9d169ad72dd7620e70f56b28ae6146d9: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
-//            return "https://@madalex20220.myshopify.com/admin/api/2022-04/"
-//            return "https://@madalex20220.myshopify.com/admin/api/2022-01/"
-            return Constants.baseUrl
+        default: return Constants.baseUrl
         }
     }
     
@@ -55,6 +60,25 @@ extension NetworkRequest : TargetType {
             
         case.getAddress(let coustomerId):
             return "customers/\(coustomerId)/addresses.json"
+            
+        case .getProductInventoryQuantity(productID: let productID):
+            return "products/\(productID)/variants/count.json"
+            
+            
+        case .postDraftOrder:
+            return "draft_orders.json"
+            
+        case .getDraftOrders:
+            return "draft_orders.json"
+
+        case .updateDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
+            print("request 33  \(draftOrderID)")
+            return "draft_orders/\(draftOrderID).json"
+            
+        case .getCurrentUser:
+            return "users/current.json"
+        case .deleteDraftOrder(darftOrderID: let draftOrderID):
+            return "draft_orders/\(draftOrderID).json"
         
         }
     }
@@ -81,6 +105,24 @@ extension NetworkRequest : TargetType {
 
         case.getAddress :
             return.get
+            
+        case .getProductInventoryQuantity(productID: let productID):
+            return .get
+            
+        case .postDraftOrder:
+            return .post
+            
+        case .getDraftOrders:
+            return .get
+            
+        case .updateDraftOrder:
+            return .put
+            
+        case .getCurrentUser:
+            return .get
+
+        case .deleteDraftOrder(darftOrderID: let darftOrderID):
+            return .delete
 
         }
     }
@@ -108,6 +150,23 @@ extension NetworkRequest : TargetType {
             
         case .getAddress:
             return.requestPlain
+            
+        case .getProductInventoryQuantity(productID: let productID):
+            return .requestPlain
+
+        case .getDraftOrders:
+            return .requestPlain
+            
+        case .postDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
+            return .requestParameters(parameters: Parameters, encoding: URLEncoding.default)
+        
+        case .updateDraftOrder(draftOrderID: let draftOrderID , parameters : let parameters ):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+//            return.requestPlain
+        case .getCurrentUser:
+            return .requestPlain
+        case .deleteDraftOrder(darftOrderID: let darftOrderID):
+            return .requestPlain
             
         }
     }

@@ -9,13 +9,13 @@
 import Foundation
 
 
-struct FakeAddress :Identifiable{
-    var id :Int
-    var name :String
-    var address :String
-    var city :String
-    var zipCode :Int
-    var state : String
-    var defultShippingAddress :Bool
-    
-}
+//struct FakeAddress :Identifiable{
+//    var id :Int
+//    var name :String
+//    var address :String
+//    var city :String
+//    var zipCode :Int
+//    var state : String
+//    var defultShippingAddress :Bool
+//
+//}

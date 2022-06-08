@@ -15,6 +15,9 @@ protocol NetworkAPIProtocol {
     
     func postAddress(coustmerId : String,address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void)
     func getAddress(coustmerId :String, completion: @escaping(Result<AllAddress?, NSError>) -> Void)
+    
+//    func getAllDraftOrders(completion: @escaping(Result<DraftOrders?, NSError>) -> Void)
+//    func deleteDraftOrder(draftOrder:Int)
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
@@ -44,5 +47,19 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
             completion(result)
         }
     }
+    
+//    func deleteDraftOrder(draftOrder: Int) {
+//        self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass: DraftOrders.self) { (result) in
+//            print(result)
+//            
+//        }
+//    }
+//
+//    func getAllDraftOrders(completion: @escaping (Result<DraftOrders?, NSError>) -> Void) {
+//        self.fetchData(target: .getDraftOrders , responseClass:
+//        DraftOrders.self) { (result) in
+//            completion(result)
+//        }
+//    }
 
 }

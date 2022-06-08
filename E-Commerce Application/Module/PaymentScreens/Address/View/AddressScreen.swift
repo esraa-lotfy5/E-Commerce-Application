@@ -162,25 +162,11 @@ struct AddressScreen: View {
                     }.frame(height:200)
                 }
                 
-            }.navigationBarBackButtonHidden(true)
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            }.navigationBarBackButtonHidden(true).onAppear {
+                
+                vm.getAddress()
+                
+            }
             
         }
     }
