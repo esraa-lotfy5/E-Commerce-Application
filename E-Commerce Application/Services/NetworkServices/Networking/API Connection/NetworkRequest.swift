@@ -16,6 +16,9 @@ enum NetworkRequest{
     
     case loginCustomer
     case registerCustomer(customer: Parameters)
+    
+    case postAddress(address: Parameters, Coustomerid: String)
+    case getAddress(coustomerId: String)
 }
 
 extension NetworkRequest : TargetType {
@@ -45,6 +48,13 @@ extension NetworkRequest : TargetType {
             
         case .registerCustomer:
             return Constants.endPointCreateCustomer
+            
+        case .postAddress(_,let coustmerId):
+            print(coustmerId)
+            return "customers/\(coustmerId)/addresses.json"
+            
+        case.getAddress(let coustomerId):
+            return "customers/\(coustomerId)/addresses.json"
         
         }
     }
@@ -65,6 +75,12 @@ extension NetworkRequest : TargetType {
             
         case .registerCustomer:
             return .post
+            
+        case .postAddress :
+            return .post
+
+        case.getAddress :
+            return.get
 
         }
     }
@@ -85,8 +101,13 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
         case .registerCustomer(let customer):
-            
             return .requestParameters(parameters: customer, encoding: URLEncoding.default)
+            
+        case .postAddress(let parameters,_):
+            return.requestParameters(parameters: parameters, encoding: URLEncoding.default)
+            
+        case .getAddress:
+            return.requestPlain
             
         }
     }

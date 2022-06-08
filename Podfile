@@ -9,6 +9,7 @@ target 'E-Commerce Application' do
   pod 'StepperView','~> 1.6.7'
   pod 'Alamofire','~> 5.0.0-rc.2'
   pod 'Kingfisher', '~> 5.0'
+  pod 'BraintreeDropIn'
 
   target 'E-Commerce ApplicationTests' do
     inherit! :search_paths

@@ -1,5 +1,32 @@
 PODS:
   - Alamofire (5.0.5)
+  - Braintree/ApplePay (5.9.0):
+    - Braintree/Core
+  - Braintree/Card (5.9.0):
+    - Braintree/Core
+  - Braintree/Core (5.9.0)
+  - Braintree/PaymentFlow (5.9.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+  - Braintree/PayPal (5.9.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+  - Braintree/PayPalDataCollector (5.9.0)
+  - Braintree/ThreeDSecure (5.9.0):
+    - Braintree/Card
+    - Braintree/PaymentFlow
+  - Braintree/UnionPay (5.9.0):
+    - Braintree/Card
+  - Braintree/Venmo (5.9.0):
+    - Braintree/Core
+  - BraintreeDropIn (9.6.0):
+    - Braintree/ApplePay (~> 5.9)
+    - Braintree/Card (~> 5.9)
+    - Braintree/Core (~> 5.9)
+    - Braintree/PayPal (~> 5.9)
+    - Braintree/ThreeDSecure (~> 5.9)
+    - Braintree/UnionPay (~> 5.9)
+    - Braintree/Venmo (~> 5.9)
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
@@ -7,20 +34,25 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.2)
+  - BraintreeDropIn
   - Kingfisher (~> 5.0)
   - StepperView (~> 1.6.7)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Braintree
+    - BraintreeDropIn
     - Kingfisher
     - StepperView
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  Braintree: 0fc239fcba70ed286130ed38ea18e3da6b7e9259
+  BraintreeDropIn: 31882df3fd8d5cb627339c3ecc857e480d8ef7b8
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   StepperView: 9b88922ef65712410c0e95c460cd115d33cfd933
 
-PODFILE CHECKSUM: 6d3ec60d4b17d513d6601078cb541f832434edfb
+PODFILE CHECKSUM: f5e8a09f9e20465c3412ea61e3e4a6219783adde
 
 COCOAPODS: 1.11.3

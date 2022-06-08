@@ -251,6 +251,7 @@ struct OrderPayments: View {
         StepperIndicationType.custom(Image(systemName:"2.circle.fill").font(.largeTitle).eraseToAnyView()),
         StepperIndicationType.custom(Image(systemName:"3.circle.fill").font(.largeTitle).eraseToAnyView())
     ]
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var cobon = ""
     @State var subTotal : Double = 976.0

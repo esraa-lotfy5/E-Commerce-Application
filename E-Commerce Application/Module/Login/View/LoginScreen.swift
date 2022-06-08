@@ -20,8 +20,8 @@ struct LoginScreen: View {
     @State private var showProgressView: Bool = false
     
     init(){
-            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-            UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
     }
     
     var body: some View {
@@ -237,10 +237,8 @@ struct LoginScreen: View {
             case .success(let customersResponse):
                 print("login screen customer: \(customersResponse)")
                 
-                let lowerEmail = email.lowercased()
-                
                 let authenticatedCustomer = customersResponse?.customers.filter {
-                    $0.email == lowerEmail && $0.tags == password
+                    $0.email?.lowercased() == email.lowercased() && $0.tags == password
                 }
                 
                 print("login customer: \(authenticatedCustomer)")
