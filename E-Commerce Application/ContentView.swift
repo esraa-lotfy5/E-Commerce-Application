@@ -34,7 +34,8 @@ struct ContentView: View {
 //        OrderListView(product: [Product2(name: "test", price: 20.0, size: "S", desc: "desc")])
 //        CategoryScreen()
 //        HomeScreen()
-        LoginScreen()
+//        LoginScreen()
+        OrdersView()
     }
 }
 

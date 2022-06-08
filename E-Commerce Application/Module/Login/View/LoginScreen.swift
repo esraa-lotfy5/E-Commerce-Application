@@ -230,7 +230,7 @@ struct LoginScreen: View {
         
         showProgressView = true
         
-        loginViewModel.loginCustomer(email: email, password: password) { result in
+        loginViewModel.loginCustomer() { result in
             
             switch result {
             

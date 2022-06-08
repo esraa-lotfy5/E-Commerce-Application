@@ -72,6 +72,8 @@
 		BC4B1C86284F7F93003A6138 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C85284F7F93003A6138 /* LoginViewModel.swift */; };
 		BC4B1C8C284F7FB1003A6138 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C89284F7FB1003A6138 /* RegisterViewModel.swift */; };
 		BC4B1C8D284F7FB1003A6138 /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B1C8B284F7FB1003A6138 /* RegisterScreen.swift */; };
+		BCF95B002850DBD700603231 /* OrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF95AFF2850DBD700603231 /* OrdersViewModel.swift */; };
+		BCF95B022850DBDE00603231 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF95B012850DBDE00603231 /* OrdersView.swift */; };
 		D5EB3D7698ABF007CE2A1F82 /* Pods_E_Commerce_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469D3EC93C5E2DCF9C5078F2 /* Pods_E_Commerce_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -156,6 +158,8 @@
 		BC4B1C85284F7F93003A6138 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BC4B1C89284F7FB1003A6138 /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		BC4B1C8B284F7FB1003A6138 /* RegisterScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
+		BCF95AFF2850DBD700603231 /* OrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewModel.swift; sourceTree = "<group>"; };
+		BCF95B012850DBDE00603231 /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		C7E10D176604350891750C79 /* Pods-E-Commerce ApplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D12F88E8F1ED3D871A07E083 /* Pods-E-Commerce Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce Application.debug.xcconfig"; path = "Target Support Files/Pods-E-Commerce Application/Pods-E-Commerce Application.debug.xcconfig"; sourceTree = "<group>"; };
 		EBD56879B8196BA006BD4741 /* Pods-E-Commerce ApplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E-Commerce ApplicationTests.release.xcconfig"; path = "Target Support Files/Pods-E-Commerce ApplicationTests/Pods-E-Commerce ApplicationTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 		0988275428464ABF005564D0 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				BCF95AFC2850DBB300603231 /* StashedOrders */,
 				BC4B1C87284F7FB1003A6138 /* Register */,
 				9BE725182848AD070093388A /* CategoryScreen */,
 				9BE725422848AD090093388A /* Home */,
@@ -593,6 +598,31 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BCF95AFC2850DBB300603231 /* StashedOrders */ = {
+			isa = PBXGroup;
+			children = (
+				BCF95AFE2850DBC900603231 /* ViewModel */,
+				BCF95AFD2850DBC300603231 /* View */,
+			);
+			path = StashedOrders;
+			sourceTree = "<group>";
+		};
+		BCF95AFD2850DBC300603231 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BCF95B012850DBDE00603231 /* OrdersView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BCF95AFE2850DBC900603231 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BCF95AFF2850DBD700603231 /* OrdersViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		CE151C82085CD6ED388BC391 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -794,6 +824,7 @@
 				9B3E7B422846A95E00E7597F /* ReviewView.swift in Sources */,
 				9BE7256D2848AD0A0093388A /* ProductCell.swift in Sources */,
 				9BE725522848AD0A0093388A /* PageViewController.swift in Sources */,
+				BCF95B022850DBDE00603231 /* OrdersView.swift in Sources */,
 				0988272D284648BA005564D0 /* AppDelegate.swift in Sources */,
 				9BE725512848AD0A0093388A /* PageControl.swift in Sources */,
 				BC4B1C79284F7F17003A6138 /* Product-Item.swift in Sources */,
@@ -806,6 +837,7 @@
 				BC4B1C83284F7F78003A6138 /* TabBarHome.swift in Sources */,
 				BC4B1C86284F7F93003A6138 /* LoginViewModel.swift in Sources */,
 				9BE725702848AD0A0093388A /* BrandView.swift in Sources */,
+				BCF95B002850DBD700603231 /* OrdersViewModel.swift in Sources */,
 				9BE7254E2848AD0A0093388A /* ProductDetailsImage.swift in Sources */,
 				9BE7255B2848AD0A0093388A /* ProfileNavigationBar.swift in Sources */,
 				9BE7256E2848AD0A0093388A /* ProductScreen.swift in Sources */,

@@ -16,6 +16,7 @@ enum NetworkRequest{
     
     case loginCustomer
     case registerCustomer(customer: Parameters)
+    case createOrder(order: Parameters)
 }
 
 extension NetworkRequest : TargetType {
@@ -45,6 +46,9 @@ extension NetworkRequest : TargetType {
             
         case .registerCustomer:
             return Constants.endPointCreateCustomer
+            
+        case .createOrder:
+            return Constants.endPointCreateOrder
         
         }
     }
@@ -64,6 +68,9 @@ extension NetworkRequest : TargetType {
             return .get
             
         case .registerCustomer:
+            return .post
+            
+        case .createOrder:
             return .post
 
         }
@@ -85,8 +92,10 @@ extension NetworkRequest : TargetType {
             return .requestPlain
             
         case .registerCustomer(let customer):
-            
             return .requestParameters(parameters: customer, encoding: URLEncoding.default)
+            
+        case .createOrder(let order):
+            return .requestParameters(parameters: order, encoding: URLEncoding.default)
             
         }
     }

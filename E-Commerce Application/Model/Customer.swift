@@ -30,10 +30,6 @@ struct Customer: Decodable {
         case password_confirmation
     }
     
-//    var orders_count: Int
-//    var total_Spent: String
-//    var currency: String
-    
 }
 
 struct CustomerResponse: Decodable {
