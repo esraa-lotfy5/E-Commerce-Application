@@ -29,7 +29,7 @@ struct ProductDetailsContent: View {
 
 
 
-struct ProductDetailsContentScrollView: View {
+struct ProductDetailsContentWithOptions: View {
     
     var title: String
     var details: [String]
@@ -58,7 +58,6 @@ struct ProductDetailsContentScrollView: View {
                                 .padding(3)
                                 .background(Color.blue)
                                 .cornerRadius(5)
-                            
                         })
              
 

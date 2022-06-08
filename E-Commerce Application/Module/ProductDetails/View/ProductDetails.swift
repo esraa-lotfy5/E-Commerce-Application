@@ -92,12 +92,9 @@ struct ProductDetails: View {
                 VStack(alignment: .leading) {
                     //#TODO: TITLE AND PRICE
                     HStack {
-                        Text(selectedColor)
-
                         Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                         Spacer()
                         Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
-                        
                     }
                     
                     
@@ -193,12 +190,13 @@ struct ProductDetails: View {
                     Button(action: {
                         
                         self.showingAlert.toggle()
+                        
                         //#TODO: getting the varient of the product
                         productDetailsViewModel.Products?.variants?.filter({ varient in
                             
                             if varient.option2 == selectedColor && varient.option1 == selectedSize{
                                 varientID = varient.id
-//                                print("product Varient ID \(varient.id)")
+                                print("product Varient ID \(varient.id)")
                             }
                             return true
                         })
@@ -210,8 +208,9 @@ struct ProductDetails: View {
                         lineItem.quantity = productCount
                         
 //                        productDetailsViewModel.getAllDarftOrder()
-                        productDetailsViewModel.updatDraftOrder(lineItem: lineItem)
-                        
+//                        productDetailsViewModel.updatDraftOrder(lineItem: lineItem)
+                        guard let productVarientId = varientID else {return}
+                        productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount)
                         
                        
                         
@@ -240,17 +239,17 @@ struct ProductDetails: View {
                     
                     Text("Details").bold()
                     
-                    ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorWhite)
+                    ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray)
                         .padding(.top, -8)
                     
-                    ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorGray)
+                    ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite)
                         .padding(.top, -8)
                     
-                    ProductDetailsContentScrollView(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorWhite, text: self.$selectedSize)
+                    ProductDetailsContentWithOptions(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
                         .padding(.top, -8)
 
                     
-                    ProductDetailsContentScrollView(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorGray, text: self.$selectedColor)
+                    ProductDetailsContentWithOptions(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorWhite, text: self.$selectedColor)
                         .padding(.top, -8)
                         
                 }.padding()

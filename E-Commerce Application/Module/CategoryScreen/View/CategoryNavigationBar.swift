@@ -83,7 +83,7 @@ struct CategoryNavigationBar: View {
                    }
                    .onTapGesture {self.isActivef.toggle() }
                     
-                    .background(NavigationLink(destination:OrderListView(product: [Product2( name: "test", price: 89.0, size: "S", desc: "desc")]), isActive: $isActivef) { EmptyView() })
+                    .background(NavigationLink(destination:OrderListView(), isActive: $isActivef) { EmptyView() })
                  
                    .padding(15)
                    .frame(width: 50, height: 40)

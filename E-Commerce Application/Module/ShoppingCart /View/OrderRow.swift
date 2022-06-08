@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
-
+import Kingfisher
 struct OrderRow: View {
-    var product : Product2
+    var product : DraftOrder
     
     @Binding var productPrice : Double
     @State var checked = false
@@ -19,15 +19,16 @@ struct OrderRow: View {
             //MARK: Image
             
             //First
-            ProductImage3(imageName: "G")
+            ProductImage3(imageName: product.noteAttributes?.first?.value ?? "default")
             VStack{
                 //Second
                 ProductRowDetails(product: product, productPrice: $productPrice )
                 
             }//VSTACK
         }
-        .background(Color.gray.opacity(0.26))
-        .cornerRadius(15)
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
         
     //HSTACK
 }
@@ -37,12 +38,16 @@ struct OrderRow: View {
 struct ProductImage3: View {
     var imageName :String
     var body: some View {
-        Image(imageName)
+        
+        KFImage.url(URL(string:   imageName))
+            .placeholder { Image("default") }
             .resizable()
+            .onSuccess { r in print("done") }
+            .onFailure { r in print("failure") }
+            .loadImmediately()
             .cornerRadius(15)
             .frame(width: 100, height: 150)
-            .scaledToFit()
-            .padding()
+                    .padding()
             
     }
 }

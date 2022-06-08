@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DraftOrders : Codable{
+struct DraftOrders : Decodable {
     let draftOrders: [DraftOrder]
     
     private enum CodingKeys: String, CodingKey {
@@ -16,7 +16,9 @@ class DraftOrders : Codable{
     }
 
 }
-class DraftOrder : Codable {
+struct DraftOrder : Decodable , Identifiable {
+
+
 
         let id: Int?
         let note: String?
@@ -83,7 +85,7 @@ class DraftOrder : Codable {
 
 
 
-struct LineItems: Codable {
+struct LineItems: Decodable {
 
     var id: Int?
     var variantId: Int?
@@ -110,7 +112,7 @@ struct LineItems: Codable {
 
 
 
-struct TaxLines: Codable {
+struct TaxLines: Decodable {
 
     let rate: Double
     let title: String
@@ -123,7 +125,7 @@ struct TaxLines: Codable {
     }
 }
 
-struct NoteAttributes: Codable {
+struct NoteAttributes: Decodable {
 
     let name: String
     let value: String
@@ -133,7 +135,7 @@ struct NoteAttributes: Codable {
         case value = "value"
     }
 }
-struct Customer: Codable {
+struct Customer: Decodable {
 
     let id: Int
     let email: String

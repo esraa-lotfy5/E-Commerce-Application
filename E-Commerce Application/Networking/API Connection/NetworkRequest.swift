@@ -13,10 +13,11 @@ enum NetworkRequest{
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
     case getProductInventoryQuantity(productID : String)
-    case postDraftOrder
+    case postDraftOrder( draftOrderID:  Int ,parameters :  Parameters )
     case getDraftOrders
     case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
     case getCurrentUser
+    case deleteDraftOrder(darftOrderID:Int)
 
 }
 
@@ -50,12 +51,15 @@ extension NetworkRequest : TargetType {
         case .getDraftOrders:
             return "draft_orders.json"
 
-        case .updateDraftOrder( draftOrderID: let draftOrderID):
-            print("request 33\(draftOrderID)")
-            return "draft_orders/872478310539.json"
+        case .updateDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
+            print("request 33  \(draftOrderID)")
+            return "draft_orders/\(draftOrderID).json"
             
         case .getCurrentUser:
             return "users/current.json"
+        case .deleteDraftOrder(darftOrderID: let draftOrderID):
+            return "draft_orders/\(draftOrderID).json"
+
         }
     }
     
@@ -86,6 +90,8 @@ extension NetworkRequest : TargetType {
         case .getCurrentUser:
             return .get
 
+        case .deleteDraftOrder(darftOrderID: let darftOrderID):
+            return .delete
         }
     }
     
@@ -107,13 +113,15 @@ extension NetworkRequest : TargetType {
         case .getDraftOrders:
             return .requestPlain
             
-        case .postDraftOrder:
-            return .requestPlain
+        case .postDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
+            return .requestParameters(parameters: Parameters, encoding: URLEncoding.default)
         
         case .updateDraftOrder(draftOrderID: let draftOrderID , parameters : let parameters ):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
 //            return.requestPlain
         case .getCurrentUser:
+            return .requestPlain
+        case .deleteDraftOrder(darftOrderID: let darftOrderID):
             return .requestPlain
         }
     }
