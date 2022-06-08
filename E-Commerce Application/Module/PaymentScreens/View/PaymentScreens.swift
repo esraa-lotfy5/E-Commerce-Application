@@ -13,9 +13,9 @@ import BraintreeDropIn
 struct PaymentScreen: View {
     
     let steps = [
-        TextView(text: "Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
-        TextView(text: "Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
-        TextView(text: "Order", font: Font.system(size: 12, weight: Font.Weight.regular))
+        TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
+        TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
+        TextView(text: "\(" ") Order", font: Font.system(size: 12, weight: Font.Weight.regular))
     ]
     
     let indicators = [
@@ -43,37 +43,14 @@ struct PaymentScreen: View {
     
     var body: some View {
         
-        VStack {
-            
-            VStack {
+      
                 VStack {
-                    HStack (alignment: .top, spacing: 0){
-                        //MARK:- back button
-                        Spacer().frame(width:10)
-                        HStack{
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                        }
-                        .onTapGesture {
-                            self.presentationMode.wrappedValue.dismiss()
-                            
-                        }
-                        .frame(width: 50, height: 40)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                        Spacer().frame(width:50)
+                   
                         
-                        VStack{
-                            Spacer().frame(height:100)
+                            Spacer()
                             StepsC(steps: steps, indicators: indicators)
-                        }
-                        .padding(.all)
-                        Spacer()
-                        Spacer()
-                        
-                    }.frame(height:200)
-                }
+                            Spacer()
+            
                 ScrollView(.horizontal,showsIndicators: false){
                     
                     HStack(alignment :.top,spacing: 10){
@@ -82,8 +59,6 @@ struct PaymentScreen: View {
                         }
                     }.padding()
                 }
-            }
-            
             VStack {
                 
                 
@@ -127,33 +102,63 @@ struct PaymentScreen: View {
              EmptyView()
             }
             
-            Button(action:{
-                
-                let addressPar  = [
-                
-                    "address" :[
-                    
-                        "address1": address,
-                        "city": city,
-                        "country": state
-                    
-                    
-                    ]
-                
-                ]
-                print(addressPar)
-                vm.postApi(address: addressPar)
-                self.active = true
-                
-            }, label:{
-                Text("SAVE")
-                    .foregroundColor(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth :.infinity)
-                    .background(Color.accentColor)
-                    .cornerRadius(15)
-            } )
-            .padding()
+            VStack {
+                VStack {
+                    HStack (alignment: .top, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
+                        }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer().frame(width:50)
+                        
+                        Button(action:{
+                            
+                            let addressPar  = [
+                            
+                                "address" :[
+                                
+                                    "address1": address,
+                                    "city": city,
+                                    "country": state
+                                
+                                
+                                ]
+                            
+                            ]
+                            print(addressPar)
+                            vm.postApi(address: addressPar)
+                            self.active = true
+                            
+                        }, label:{
+                            Text("SAVE")
+                                .foregroundColor(.white)
+                                .frame(height: 55)
+                                .frame(maxWidth :.infinity)
+                                .background(Color.accentColor)
+                                .cornerRadius(15)
+                        } )
+                        .padding()
+                        
+                        Spacer()
+                        Spacer()
+                        
+                    }.frame(height:200)
+                }
+              
+            }
+            
+            
+   
             
         }.navigationBarBackButtonHidden(true)
     }
@@ -165,11 +170,10 @@ struct PaymentOptions: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var paymentsOptions = ["PayPal","Cash On Delivery"]
-    
     let steps = [
-        TextView(text: "Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
-        TextView(text: "Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
-        TextView(text: "Order", font: Font.system(size: 12, weight: Font.Weight.regular))
+        TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
+        TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
+        TextView(text: " \(" ") Order", font: Font.system(size: 12, weight: Font.Weight.regular))
     ]
     
     let indicators = [
@@ -180,36 +184,22 @@ struct PaymentOptions: View {
     var body: some View {
         
         VStack {
-            HStack (alignment: .top, spacing: 0){
-                //MARK:- back button
-                Spacer().frame(width:10)
-
-                HStack{
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.black)
-                }
-                .onTapGesture {
-                    self.presentationMode.wrappedValue.dismiss()
-                    
-                }
-                .frame(width: 50, height: 40)
-                .background(Color.white)
-                .cornerRadius(10)
-                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                Spacer().frame(width:50)
+          
+                Spacer()
                 
-                VStack{
-                    Spacer().frame(height:100)
+               
                     StepsC(steps: steps, indicators: indicators)
-                }
-                .padding(.all)
+                
+                
+                Spacer()
+                Spacer()
+                Spacer()
                 Spacer()
                 Spacer()
                 
-            }.frame(height:200)
             
             
-            Spacer()
+         
             
             
             Picker(selection:$paymentIndex, label: Text("Payments")) {
@@ -219,18 +209,54 @@ struct PaymentOptions: View {
             }
             .padding(.leading, 10)
             Spacer()
-            Spacer()
-            Spacer()
+           
             NavigationLink(destination: OrderPayments()) {
-                Text("Next").bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding()
+                
+                
+         
+                
+                VStack {
+                    VStack {
+                        HStack (alignment: .top, spacing: 0){
+                            //MARK:- back button
+                            Spacer().frame(width:10)
+                            HStack{
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.black)
+                            }
+                            .onTapGesture {
+                                self.presentationMode.wrappedValue.dismiss()
+                                
+                            }
+                            .frame(width: 50, height: 40)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                            Spacer().frame(width:50)
+                            
+                            Text("Next").bold()
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(Color.white)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .padding()
+                            
+                            Spacer()
+                            Spacer()
+                            
+                            
+                            
+                        }.frame(height:200)
+                    }
+                  
+                }
+                
+    
             }
-            Spacer()
+         
+        
+        
         }.navigationBarBackButtonHidden(true)
         
         
@@ -241,9 +267,9 @@ struct PaymentOptions: View {
 struct OrderPayments: View {
     
     let steps = [
-        TextView(text: "Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
-        TextView(text: "Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
-        TextView(text: "Order", font: Font.system(size: 12, weight: Font.Weight.regular))
+        TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
+        TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
+        TextView(text: " \(" ") Order", font: Font.system(size: 12, weight: Font.Weight.regular))
     ]
     
     let indicators = [
@@ -274,33 +300,15 @@ struct OrderPayments: View {
         let resultD = NSDecimalNumber(decimal: test)
         
         VStack {
-            HStack (alignment: .top, spacing: 0){
-                //MARK:- back button
-                Spacer().frame(width:10)
+          
 
-                HStack{
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.black)
-                }
-                .onTapGesture {
-                    self.presentationMode.wrappedValue.dismiss()
-                    
-                }
-                .frame(width: 50, height: 40)
-                .background(Color.white)
-                .cornerRadius(10)
-                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                Spacer().frame(width:50)
-                
-                VStack{
-                    Spacer().frame(height:100)
+                    Spacer()
                     StepsC(steps: steps, indicators: indicators)
-                }
-                .padding(.all)
+              
                 Spacer()
                 Spacer()
                 
-            }.frame(height:200)
+           
             VStack(alignment: .leading){
                 Spacer()
                 Form{
@@ -343,27 +351,69 @@ struct OrderPayments: View {
                     }
                 }.padding()
                 
+                Spacer()
+                Spacer()
+                
+                NavigationLink(destination: Text("")) {
+                    
+               
+                    
+                    VStack {
+                        VStack {
+                            HStack (alignment: .top, spacing: 0){
+                                //MARK:- back button
+                                Spacer().frame(width:10)
+                                HStack{
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(.black)
+                                }
+                                .onTapGesture {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                    
+                                }
+                                .frame(width: 50, height: 40)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                                Spacer().frame(width:50)
+                                
+                                Button(action: { self.showDropIn = true }) {
+                                    HStack {
+                                        Spacer()
+                                        Text("Select Payment Method")
+                                            .fontWeight(.bold)
+                                            .font(.body)
+                                        Spacer()
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(height: 55)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(15)
+                                }
+                               
+                                Spacer()
+                            }.edgesIgnoringSafeArea(.vertical)
+                               
+                                
+                                
+                                
+                            }.frame(height:200)
+                        }
+                      
+                    }
+                    
+        
+                }
+                
+                
+                
+              
                 
             }.navigationBarBackButtonHidden(true)
             
             //////////
             
-            Button(action: { self.showDropIn = true }) {
-                HStack {
-                    Spacer()
-                    Text("Select Payment Method")
-                        .fontWeight(.bold)
-                        .font(.body)
-                    Spacer()
-                }
-                .padding(.vertical, 12)
-                .foregroundColor(.white)
-                .background(Color.blue)
-            }
-            .padding(.top, 40)
-            .padding(.horizontal, 20)
-            Spacer()
-        }.edgesIgnoringSafeArea(.vertical)
+          
         
         if self.showDropIn {
             BTDropInRepresentable(authorization: tokenizationKey, amount: resultD,handler: { controller, result, error in
@@ -388,9 +438,7 @@ struct OrderPayments: View {
             }).edgesIgnoringSafeArea(.vertical)
         }
             
-            Spacer()
-            Spacer()
-            Spacer()
+           
         }
         
         
