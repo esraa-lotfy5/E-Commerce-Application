@@ -95,70 +95,74 @@ struct PaymentScreen: View {
             
             
             Spacer()
-            
-            
-            NavigationLink(destination: PaymentOptions(),isActive: $active) {
-                
-             EmptyView()
-            }
-            
-            VStack {
-                VStack {
-                    HStack (alignment: .top, spacing: 0){
-                        //MARK:- back button
-                        Spacer().frame(width:10)
-                        HStack{
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
+                    
+                    
+                    
+                    
+                    VStack {
+                        VStack {
+                            HStack (alignment: .top, spacing: 0){
+                                //MARK:- back button
+                                Spacer().frame(width:10)
+                                HStack{
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(.black)
+                                }
+                                .onTapGesture {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                    
+                                }
+                                .frame(width: 50, height: 40)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                                Spacer().frame(width:50)
+                                
+                                
+                                NavigationLink(destination: PaymentOptions(),isActive: $active) {
+                                    
+                                 EmptyView()
+                                }
+                                
+                                
+                                Button(action:{
+                                    
+                                    let addressPar  = [
+                                    
+                                        "address" :[
+                                        
+                                            "address1": address,
+                                            "city": city,
+                                            "country": state
+                                        
+                                        
+                                        ]
+                                    
+                                    ]
+                                    print(addressPar)
+                                    vm.postApi(address: addressPar)
+                                    self.active = true
+                                    
+                                }, label:{
+                                    Text("SAVE")
+                                        .foregroundColor(.white)
+                                        .frame(height: 55)
+                                        .frame(maxWidth :.infinity)
+                                        .background(Color.accentColor)
+                                        .cornerRadius(15)
+                                } )
+                                .padding()
+                                
+                                Spacer()
+                                Spacer()
+                                
+                            }.frame(height:200)
                         }
-                        .onTapGesture {
-                            self.presentationMode.wrappedValue.dismiss()
-                            
-                        }
-                        .frame(width: 50, height: 40)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                        Spacer().frame(width:50)
-                        
-                        Button(action:{
-                            
-                            let addressPar  = [
-                            
-                                "address" :[
-                                
-                                    "address1": address,
-                                    "city": city,
-                                    "country": state
-                                
-                                
-                                ]
-                            
-                            ]
-                            print(addressPar)
-                            vm.postApi(address: addressPar)
-                            self.active = true
-                            
-                        }, label:{
-                            Text("SAVE")
-                                .foregroundColor(.white)
-                                .frame(height: 55)
-                                .frame(maxWidth :.infinity)
-                                .background(Color.accentColor)
-                                .cornerRadius(15)
-                        } )
-                        .padding()
-                        
-                        Spacer()
-                        Spacer()
-                        
-                    }.frame(height:200)
-                }
-              
-            }
-            
-            
-   
+                      
+                    }
+                    
+                    
+      
             
         }.navigationBarBackButtonHidden(true)
     }
@@ -210,7 +214,7 @@ struct PaymentOptions: View {
             .padding(.leading, 10)
             Spacer()
            
-            NavigationLink(destination: OrderPayments()) {
+           
                 
                 
          
@@ -233,7 +237,7 @@ struct PaymentOptions: View {
                             .cornerRadius(10)
                             .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                             Spacer().frame(width:50)
-                            
+                            NavigationLink(destination: OrderPayments()) {
                             Text("Next").bold()
                                 .padding()
                                 .frame(maxWidth: .infinity)
@@ -241,7 +245,7 @@ struct PaymentOptions: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .padding()
-                            
+                            }
                             Spacer()
                             Spacer()
                             
@@ -253,7 +257,7 @@ struct PaymentOptions: View {
                 }
                 
     
-            }
+            
          
         
         
@@ -354,7 +358,7 @@ struct OrderPayments: View {
                 Spacer()
                 Spacer()
                 
-                NavigationLink(destination: Text("")) {
+                
                     
                
                     
@@ -377,6 +381,8 @@ struct OrderPayments: View {
                                 .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                                 Spacer().frame(width:50)
                                 
+                                NavigationLink(destination: Text("")) {
+                                
                                 Button(action: { self.showDropIn = true }) {
                                     HStack {
                                         Spacer()
@@ -394,7 +400,7 @@ struct OrderPayments: View {
                                 Spacer()
                             }.edgesIgnoringSafeArea(.vertical)
                                
-                                
+                            
                                 
                                 
                             }.frame(height:200)
