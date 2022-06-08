@@ -28,3 +28,15 @@ struct Addresss :Codable,Identifiable{
    // {"address":{"address1":"1 Rue des Carrieres","address2":"Suite 1234","city":"Montreal","company":"Fancy Co.","first_name":"Samuel","last_name":"de Champlain","phone":"819-555-5555","province":"Quebec","country":"Canada","zip":"G1R 4P5","name":"Samuel de Champlain","province_code":"QC","country_code":"CA","country_name":"Canada"}}
     
 }
+
+
+struct FakeAddress :Identifiable{
+    var id :Int
+    var name :String
+    var address :String
+    var city :String
+    var zipCode :Int
+    var state : String
+    var defultShippingAddress :Bool
+    
+}

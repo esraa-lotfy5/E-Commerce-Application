@@ -28,7 +28,7 @@ struct AddressItem: View {
                     .foregroundColor(.black)
                 
                 Text("\(address.city),\(address.country) ")
-//                    .font(.title)
+                //                    .font(.title)
                     .foregroundColor(.gray)
             }
             .padding()

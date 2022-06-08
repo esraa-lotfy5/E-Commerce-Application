@@ -19,21 +19,21 @@ class AddressViewModel:ObservableObject{
     init() {
         getAddress()
     }
-   
+    
     
     func postApi (address: Parameters){
         api.postAddress( coustmerId: "5754051854475", address: address) {(result) in
-        switch result {
-        case .success(let response):
-            let addressResponse = response
-    
-            print("address \(String(describing: addressResponse?.city))")
-        case .failure(let error):
-            // Show UI Error
-            print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+            switch result {
+            case .success(let response):
+                let addressResponse = response
+                
+                print("address \(String(describing: addressResponse?.city))")
+            case .failure(let error):
+                // Show UI Error
+                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+            }
+            
         }
-        
-    }
     }
     
     func getAddress(){
@@ -48,7 +48,7 @@ class AddressViewModel:ObservableObject{
                     
                     print("addresss : \(address.address1)")
                 }
-        
+                
                 //print("address \(String(describing: addressResponse?.city))")
             case .failure(let error):
                 // Show UI Error
