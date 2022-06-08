@@ -14,8 +14,9 @@ enum NetworkRequest{
     case getProductDetials(productID : String)
     case getProductInventoryQuantity(productID : String)
     case postDraftOrder
-    case updateDraftOrder (draftOrderID: String)
-    
+    case getDraftOrders
+    case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
+    case getCurrentUser
 
 }
 
@@ -36,7 +37,6 @@ extension NetworkRequest : TargetType {
             return "collections/\(categoryID)/products.json"
             
         case .getProductDetials(let productID):
-            print(productID)
             return "products/\(productID).json"
             
         
@@ -47,8 +47,15 @@ extension NetworkRequest : TargetType {
         case .postDraftOrder:
             return "draft_orders.json"
             
-        case .updateDraftOrder(draftOrderID: let draftOrderID):
-            return "draft_orders/\(draftOrderID).json"
+        case .getDraftOrders:
+            return "draft_orders.json"
+
+        case .updateDraftOrder( draftOrderID: let draftOrderID):
+            print("request 33\(draftOrderID)")
+            return "draft_orders/872478310539.json"
+            
+        case .getCurrentUser:
+            return "users/current.json"
         }
     }
     
@@ -70,8 +77,14 @@ extension NetworkRequest : TargetType {
         case .postDraftOrder:
             return .post
             
+        case .getDraftOrders:
+            return .get
+            
         case .updateDraftOrder:
             return .put
+            
+        case .getCurrentUser:
+            return .get
 
         }
     }
@@ -91,22 +104,28 @@ extension NetworkRequest : TargetType {
         case .getProductInventoryQuantity(productID: let productID):
             return .requestPlain
 
+        case .getDraftOrders:
+            return .requestPlain
+            
         case .postDraftOrder:
             return .requestPlain
         
-        case .updateDraftOrder:
+        case .updateDraftOrder(draftOrderID: let draftOrderID , parameters : let parameters ):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+//            return.requestPlain
+        case .getCurrentUser:
             return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
-    
-        case .postDraftOrder :
-            return [
-                "Accept":"application/json",
-                "X-Shopify-Access-Token":"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"
-                ]
+
+//        case .getDraftOrders :
+//            return [
+//                "Content-Type":"application/json",
+//                "X-Shopify-Access-Token":"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"
+//                ]
         default:
 
             return [

@@ -21,7 +21,8 @@ struct ProductDetails: View {
 
     @State   var selectedColor = ""
     @State   var selectedSize = ""
-    
+    @State var varientID:Int?
+
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
@@ -31,7 +32,6 @@ struct ProductDetails: View {
     var productSizes = "OS"
     var productColors = "black"
     var productid :String =  "6870133932171"// "6870135275659" //
-    
     
     var body: some View {
         
@@ -185,7 +185,7 @@ struct ProductDetails: View {
                     //  change product amount (( but it will be in the payment level!))
                     //
                     // 1) get all draftOrder
-                    // 2) loop on them to get the draftorder of the current customer if exist , if not create one
+                    // 2) loop on them to get the draftorder of the current customer if exist ,  (( if not create one ))
                     // 3) check the quantity of the current product on the inventroy --> notfound
                     // 4) check the quantity of the product that the customer pick
                     // 5)
@@ -193,19 +193,27 @@ struct ProductDetails: View {
                     Button(action: {
                         
                         self.showingAlert.toggle()
-                        
+                        //#TODO: getting the varient of the product
                         productDetailsViewModel.Products?.variants?.filter({ varient in
                             
                             if varient.option2 == selectedColor && varient.option1 == selectedSize{
-                                print("product Varient ID \(varient.id)")
-                            }else{
-                                print("not Selected Items")
+                                varientID = varient.id
+//                                print("product Varient ID \(varient.id)")
                             }
                             return true
                         })
                         
+                     
+                        // TODO: set the new product to the line items to be appended to the draftOrder
+                        var lineItem : LineItems = LineItems()
+                        lineItem.variantId = varientID
+                        lineItem.quantity = productCount
+                        
+//                        productDetailsViewModel.getAllDarftOrder()
+                        productDetailsViewModel.updatDraftOrder(lineItem: lineItem)
                         
                         
+                       
                         
                     }) {
                         
@@ -250,9 +258,7 @@ struct ProductDetails: View {
             }.onAppear{
                 
                 self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
-                    print(try? result.get()?.product.debugDescription)
-                    print( productDetailsViewModel.Products?.images?[1].src!)
-                                        
+                    
                     self.varients = self.productDetailsViewModel.Products?.options?.first?.values! ?? ["nil"]
                     if productDetailsViewModel.Products?.status ==  "active" {
                         isAvailable =  false
@@ -261,13 +267,16 @@ struct ProductDetails: View {
                         isAvailable = true
                         addToCartColor = Color.gray
                     }
+                    
+                    
+                    
+                    
                 }
                 
                 
                 //MARK:- product inventory_quantity
                 self.productDetailsViewModel.getProductInventoryQuantity(id: self.productid) { (result) in
                     productQuantity = try! result.get()?.count ?? 0
-                    print(try? result.get()?.count)
 
                 }
            
