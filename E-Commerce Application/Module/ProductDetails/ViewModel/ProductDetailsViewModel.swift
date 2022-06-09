@@ -31,6 +31,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func getProductInventoryQuantity(id:String , completion : @escaping (Result <ProductInventoryQuantity? , NSError>) -> Void){
         networkapi.getProductInventoryQuantity(id: id) { (result) in
             self.productInventoryQuantity = try? result.get()
+            print("fquantity: \(self.productInventoryQuantity?.count)")
         }
     }
     

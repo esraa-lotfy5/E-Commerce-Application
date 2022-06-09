@@ -270,7 +270,7 @@ struct ProductDetails: View {
                 //TODO: - product inventory_quantity
                 self.productDetailsViewModel.getProductInventoryQuantity(id: self.productid) { (result) in
                     productQuantity = try! result.get()?.count ?? 0
-
+                    print("from home \(productQuantity)")
                 }
            
                 
