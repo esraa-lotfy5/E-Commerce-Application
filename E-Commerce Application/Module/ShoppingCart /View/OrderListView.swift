@@ -18,21 +18,19 @@ struct Product2 : Hashable , Identifiable {
 }
 
 struct OrderListView: View {
-    @State var product : [Product2] = []//display
-    @State var sProduct : [Product2] = [] //calc total price
-    
     @State var shoppingCartCount : Int = 0
     @State var shoppingCartProducts : [DraftOrder] = []
     @State var cartCount : Int = 0
     @State var counter : Int = 0
     @State var productPrice  : Double = 0.0
+    @State var totalPrice : Double = 0.0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     
     
     init(){
         shoppingCartViewModel.getAllDraftOrders()
-        shoppingCartProducts = shoppingCartViewModel.shoppingCartProducts
+//        shoppingCartProducts = shoppingCartViewModel.shoppingCartProducts
         
     }
     var body: some View {
@@ -69,31 +67,22 @@ struct OrderListView: View {
                             OrderRow(product: item, productPrice: self.$productPrice).opacity(0.9)
                         Section{
                             Stepper.init("", onIncrement: {
-//                                self.sProduct.append(item) // to calc total
-                                
-//                                let index = self.shoppingCartProducts.firstIndex(of: item)
-//                                let pName = self.product[index!].name
-//
-//                                let originalProduct = self.sProduct.filter { $0.name == pName }
-//
-//
-//                                self.product[index!].price! += (originalProduct.first?
-//                                    .price!)!
+                                counter += 1
+                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! + 1, draftOrderID: item.id!)
+                                shoppingCartViewModel.getAllDraftOrders()
                                 
                             }, onDecrement: {
-//                                let index = self.shoppingCartProducts.firstIndex(of: item)
-//                                let pName = self.product[index!].name
-//                                let originalProduct = self.sProduct.filter { $0.name == pName }
-//
-////                                let orignalPrice = self.sProduct[sIndex].price ?? 0.0
-//                                let price =  self.product[index!].price! - (originalProduct.first?.price!)!
-//                                if (price == 0.0 ) {
-//                                    self.product.remove(at: index!)
-//                                    self.sProduct.remove(at: self.product.firstIndex(of: originalProduct.first!)!)
-//                                }else{
-//                                    self.product[index!].price! = price
-//                                }
-//                                self.product.remove(at: self.product.firstIndex(of: item)!)
+                                if((item.lineItems?.first?.quantity)! - 1) == 0{
+                                    //TODO: delete
+                                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                    shoppingCartViewModel.getAllDraftOrders()
+                                    
+                                }
+                                else{
+                                    //TODO: update
+                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
+                                shoppingCartViewModel.getAllDraftOrders()
+                                }
                                 
                             })
                             }
@@ -101,23 +90,27 @@ struct OrderListView: View {
                     }.onDelete(perform: delete)
                 }.background(Color.white)
                     .onAppear {
-//                    self.totalPrice = Int(self.product.reduce(0.0){$0 + $1.price!})
-                    self.sProduct = self.product
-
-                    self.$cartCount.wrappedValue = self.product.count
-                    UITableView.appearance().separatorStyle = .none
-                   
-                    
-                }
+                        
+                        UITableView.appearance().separatorStyle = .none
+                    }
                 //MARK: TOTAL PRICE
                 Section{
                     HStack{
-//                        Text("Total Price: \(Double(shoppingCartProducts.lineItems?.first?.price.reduce(0.0){$0 + ( $1.price!)} ?? 0.0)) LE")
-                        Text("price")
+                        VStack(alignment: .leading){
+                            //\(shoppingCartViewModel.shoppingCartProducts.first?.currency)
+                            Text("subTotal : \(shoppingCartViewModel.subTotalPrice , specifier: "%.2f") " )
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                        Text("Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") ")
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                        Text("Total Price: \(shoppingCartViewModel.totalPrice,  specifier: "%.2f") ")
+
                         .foregroundColor(.blue)
                         .font(.headline)
-                        .padding()
-                   Spacer()
+                        }
+                        
+                        Spacer()
                         Text("\(self.shoppingCartProducts.count)")
                         .foregroundColor(.blue)
 
@@ -130,6 +123,8 @@ struct OrderListView: View {
                     
                     NavigationLink("CheckOut",destination: AddressScreen())
 
+                }.onAppear{
+                  
                 }
             }
             else {
@@ -140,6 +135,7 @@ struct OrderListView: View {
                     }
             }
         }.navigationBarBackButtonHidden(true)
+        
     }
     
     private func delete(with indexSet: IndexSet) {

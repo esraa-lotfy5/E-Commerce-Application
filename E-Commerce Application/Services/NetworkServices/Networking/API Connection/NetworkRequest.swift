@@ -71,7 +71,6 @@ extension NetworkRequest : TargetType {
             return "draft_orders.json"
 
         case .updateDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
-            print("request 33  \(draftOrderID)")
             return "draft_orders/\(draftOrderID).json"
             
         case .getCurrentUser:

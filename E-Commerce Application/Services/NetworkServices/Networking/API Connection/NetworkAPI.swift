@@ -21,6 +21,7 @@ protocol NetworkAPIProtocol {
     func postDraftOrder(parameter: Parameters)
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void)
     func getProductInventoryQuantity(id:String , completion : @escaping (Result <ProductInventoryQuantity? , NSError>) -> Void)
+    func updateDraftOrder(draftOrderID: Int,parameter: Parameters)
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
@@ -81,6 +82,13 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     func postDraftOrder(parameter: Parameters) {
         self.writeData(target: .
             postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in
+            
+        }
+    }
+    
+    func updateDraftOrder(draftOrderID: Int,parameter: Parameters) {
+        self.writeData(target: .
+            updateDraftOrder(draftOrderID: draftOrderID,parameters: parameter), responseClass: DraftOrder.self) { result in
             
         }
     }

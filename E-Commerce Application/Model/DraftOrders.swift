@@ -42,9 +42,9 @@ struct DraftOrder : Decodable , Identifiable {
 //        let taxLines: [TaxLines]
         let tags: String?
         let noteAttributes: [NoteAttributes]?
-//        let totalPrice: String
-//        let subtotalPrice: String
-//        let totalTax: String
+        let totalPrice: String
+        let subtotalPrice: String
+        let totalTax: String
 //        let paymentTerms: Any
         let adminGraphqlApiId: String?
 //        let customer: Customer
@@ -71,9 +71,9 @@ struct DraftOrder : Decodable , Identifiable {
 //            case taxLines = "tax_lines"
             case tags = "tags"
             case noteAttributes = "note_attributes"
-//            case totalPrice = "total_price"
-//            case subtotalPrice = "subtotal_price"
-//            case totalTax = "total_tax"
+            case totalPrice = "total_price"
+            case subtotalPrice = "subtotal_price"
+            case totalTax = "total_tax"
 //            case paymentTerms = "payment_terms"
             case adminGraphqlApiId = "admin_graphql_api_id"
 //            case customer = "customer"
