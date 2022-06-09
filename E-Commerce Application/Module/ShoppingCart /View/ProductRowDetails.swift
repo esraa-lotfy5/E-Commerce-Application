@@ -5,10 +5,9 @@
 //  Created by NourAllah Ahmed on 5/29/22.
 //  Copyright © 2022 NourAllah Ahmed. All rights reserved.
 //
-
 import SwiftUI
 struct ProductRowDetails: View {
-    @State var product : Product2
+    @State var product : DraftOrder
 
     @Binding var productPrice : Double
     
@@ -17,17 +16,17 @@ struct ProductRowDetails: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading){
-                Text("\(product.name ?? "nil")")
+                Text("\(product.lineItems?.first?.name ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(.top)
                 //MARK: Size
-                Text("Size: \(product.size ?? "nil")")
+                Text("Size: \(product.status ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(.bottom)
                 
-                Text("Desc: \(product.desc ?? "nil")")
+                Text("quantity: \(product.lineItems?.first?.quantity ?? 0)")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(.bottom)
@@ -36,7 +35,7 @@ struct ProductRowDetails: View {
             Spacer()
             //MARK: Price
             VStack (alignment: .trailing ){
-                Text("\(((product.price)! * total ).description)")
+                Text("\((Double(product.lineItems?.first?.price ?? "0.0")! * total ).description)")
                     .foregroundColor(.blue)
                     .font(.headline)
                     .padding(.all)

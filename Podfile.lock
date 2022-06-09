@@ -27,15 +27,13 @@ PODS:
     - Braintree/ThreeDSecure (~> 5.9)
     - Braintree/UnionPay (~> 5.9)
     - Braintree/Venmo (~> 5.9)
-  - Kingfisher (5.15.8):
-    - Kingfisher/Core (= 5.15.8)
-  - Kingfisher/Core (5.15.8)
+  - Kingfisher (6.3.1)
   - StepperView (1.6.7)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.2)
   - BraintreeDropIn
-  - Kingfisher (~> 5.0)
+  - Kingfisher (~> 6.3.1)
   - StepperView (~> 1.6.7)
 
 SPEC REPOS:
@@ -50,9 +48,9 @@ SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
   Braintree: 0fc239fcba70ed286130ed38ea18e3da6b7e9259
   BraintreeDropIn: 31882df3fd8d5cb627339c3ecc857e480d8ef7b8
-  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   StepperView: 9b88922ef65712410c0e95c460cd115d33cfd933
 
-PODFILE CHECKSUM: f5e8a09f9e20465c3412ea61e3e4a6219783adde
+PODFILE CHECKSUM: 2e5601e290ffbd5d1a9d6cc03a0d75cf5218695a
 
 COCOAPODS: 1.11.3

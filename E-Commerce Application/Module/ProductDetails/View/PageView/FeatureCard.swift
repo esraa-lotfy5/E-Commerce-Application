@@ -7,9 +7,10 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FeatureCard: View {
-    var image: Image
+    var image: KFImage
 
     var body: some View {
         image.resizable()
@@ -18,9 +19,3 @@ struct FeatureCard: View {
     }
 }
 
-struct FeatureCard_Previews: PreviewProvider {
-    static var previews: some View {
-        FeatureCard(image: Image("bag1"))
-
-    }
-}

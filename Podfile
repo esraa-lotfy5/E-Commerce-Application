@@ -8,7 +8,7 @@ target 'E-Commerce Application' do
   # Pods for E-Commerce Application
   pod 'StepperView','~> 1.6.7'
   pod 'Alamofire','~> 5.0.0-rc.2'
-  pod 'Kingfisher', '~> 5.0'
+  pod 'Kingfisher', '~> 6.3.1'
   pod 'BraintreeDropIn'
 
   target 'E-Commerce ApplicationTests' do

@@ -5,23 +5,31 @@
 //  Created by Abdelrhman Ahmed on 31/05/2022.
 //  Copyright © 2022 iti. All rights reserved.
 //
-
 import Foundation
 
 // MARK: - Product
-struct ProductsResult: Decodable {
-    var products: [Product]?
+struct ProductsResults: Decodable {
+    let product: ProductDetail?
+    private enum CodingKeys: String, CodingKey {
+        case product = "product"
+    }
 }
 
 // MARK: - ProductElement
-struct Product: Decodable {
+struct ProductDetail: Decodable {
     var id: Int?
-    var title, body_html, vendor, product_type: String?
+    var title:String?
+    var  body_html : String?
+    var vendor :String?
+    var product_type: String?
     var created_at: String?
     var handle: String?
     var updated_at, published_at: String?
 //    var template_suffix: JSONNull?
-    var status, published_scope, tags, admin_graphql_api_id: String?
+    var status:String?
+    var published_scope:String?
+    var tags :String?
+    var admin_graphql_api_id: String?
     var variants: [Variant]?
     var options: [Option]?
     var images: [ProductImage]?
@@ -43,22 +51,17 @@ struct Product: Decodable {
 //        case adminGraphqlAPIID = "admin_graphql_api_id"
 //        case variants, options, images, image
 //    }
-    
-//    init(from decoder: Decoder) throws {
-//        //
-//    }
 }
 
 // MARK: - Image
-struct ProductImage: Decodable {
+struct ProductImage: Decodable  {
     var product_id, id, position: Int?
     var created_at, updated_at: String?
 //    var alt: JSONNull?
     var width, height: Int?
     var src: String?
 //    var variantIDS: [JSONAny]
-    var admin_graphql_api_id: String?
-
+//    var admin_graphql_api_id: String?
 //    enum CodingKeys: String, CodingKey {
 //        case productID = "product_id"
 //        case id, position
@@ -87,7 +90,8 @@ struct Option: Decodable {
 }
 
 // MARK: - Variant
-struct Variant: Decodable {
+struct Variant: Decodable, Hashable {
+ 
     var product_id, id: Int?
     var title, price, sku: String?
     var position: Int?

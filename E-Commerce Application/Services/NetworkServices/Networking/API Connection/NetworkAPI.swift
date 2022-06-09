@@ -16,11 +16,27 @@ protocol NetworkAPIProtocol {
     func postAddress(coustmerId : String,address: Parameters, completion: @escaping(Result<Addresss?, NSError>) -> Void)
     func getAddress(coustmerId :String, completion: @escaping(Result<AllAddress?, NSError>) -> Void)
     
-//    func getAllDraftOrders(completion: @escaping(Result<DraftOrders?, NSError>) -> Void)
-//    func deleteDraftOrder(draftOrder:Int)
+    func getAllDraftOrders(completion: @escaping(Result<DraftOrders?, NSError>) -> Void)
+    func deleteDraftOrder(draftOrder:Int)
+    func postDraftOrder(parameter: Parameters)
+    func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void)
+    func getProductInventoryQuantity(id:String , completion : @escaping (Result <ProductInventoryQuantity? , NSError>) -> Void)
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
+    func getProductDetails(id: String, completion: @escaping (Result<ProductsResults?, NSError>) -> Void) {
+        self.fetchData(target: .getProductDetials(productID: id), responseClass:
+        ProductsResults.self) { (result) in
+            completion(result)
+        }
+    }
+    func getProductInventoryQuantity(id: String, completion: @escaping (Result<ProductInventoryQuantity?, NSError>) -> Void) {
+        self.fetchData(target: .getProductInventoryQuantity(productID: id), responseClass:
+                        ProductInventoryQuantity.self) { (result) in
+            
+            completion(result)
+        }
+    }
     
     func loginCustomer(completion: @escaping (Result<CustomersResponse?, NSError>) -> Void) {
         self.fetchData(target: .loginCustomer, responseClass: CustomersResponse.self) { (result) in
@@ -48,18 +64,34 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
         }
     }
     
-//    func deleteDraftOrder(draftOrder: Int) {
-//        self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass: DraftOrders.self) { (result) in
-//            print(result)
-//            
-//        }
-//    }
-//
-//    func getAllDraftOrders(completion: @escaping (Result<DraftOrders?, NSError>) -> Void) {
-//        self.fetchData(target: .getDraftOrders , responseClass:
-//        DraftOrders.self) { (result) in
-//            completion(result)
-//        }
-//    }
+    func deleteDraftOrder(draftOrder: Int) {
+        self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass: DraftOrders.self) { (result) in
+            print(result)
+            
+        }
+    }
 
+    func getAllDraftOrders(completion: @escaping (Result<DraftOrders?, NSError>) -> Void) {
+        self.fetchData(target: .getDraftOrders , responseClass:
+        DraftOrders.self) { (result) in
+            completion(result)
+        }
+    }
+
+    func postDraftOrder(parameter: Parameters) {
+        self.writeData(target: .
+            postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in
+            
+        }
+    }
+    
+//    func deleteDraftOrder(draftOrder: Int) {
+//        self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass:
+//        DraftOrders.self) { (result) in
+//            print(result)
+//
+//        }
+//    }
+  
+    
 }
