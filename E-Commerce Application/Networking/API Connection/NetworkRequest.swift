@@ -13,7 +13,7 @@ enum NetworkRequest{
     case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
     case getProductInventoryQuantity(productID : String)
-    case postDraftOrder( draftOrderID:  Int ,parameters :  Parameters )
+    case postDraftOrder( parameters :  Parameters )
     case getDraftOrders
     case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
     case getCurrentUser
@@ -113,10 +113,10 @@ extension NetworkRequest : TargetType {
         case .getDraftOrders:
             return .requestPlain
             
-        case .postDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
+        case .postDraftOrder(parameters : let Parameters ):
             return .requestParameters(parameters: Parameters, encoding: URLEncoding.default)
         
-        case .updateDraftOrder(draftOrderID: let draftOrderID , parameters : let parameters ):
+        case .updateDraftOrder( draftOrderID: let draftOrderID , parameters : let parameters ):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
 //            return.requestPlain
         case .getCurrentUser:
