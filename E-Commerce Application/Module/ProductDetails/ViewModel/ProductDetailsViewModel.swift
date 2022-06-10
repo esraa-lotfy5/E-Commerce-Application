@@ -53,14 +53,17 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     }
 
     
-    func postDraftOrder(variantId: Int , quantity : Int){
+    func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String){
         let parameters =     [
             "draft_order": [
                 "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
                 "note" : "cart",
                 "note_attributes": [
-                    ["name": "image","value":Products?.image?.src ?? "default"]
+                    ["name": "image","value":Products?.image?.src ?? "default"],
+                    ["name": "size","value" : selectedSize]
+                        
                         ]
+                
                 ,
                 "line_items": [[
                     "variant_id": variantId,

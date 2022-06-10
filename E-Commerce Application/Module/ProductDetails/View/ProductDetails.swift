@@ -32,7 +32,7 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var productid :String =  "6870133932171"// "6870135275659" //
+    var productid :String =  "6870135275659" //"6870133932171"// 
     
     var body: some View {
         
@@ -203,7 +203,7 @@ struct ProductDetails: View {
                         // TODO: check that the user choose size and color
                         guard let productVarientId = varientID else {return}
                         print("test product details \(productVarientId)")
-                        productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount)
+                            productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize)
                         
                         }
                     }) {

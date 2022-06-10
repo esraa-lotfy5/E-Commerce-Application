@@ -16,31 +16,33 @@ struct ProductRowDetails: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading){
-                Text("\(product.lineItems?.first?.name ?? "nil")")
+                Text("\(product.lineItems?.first?.vendor ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(.top)
+                
+                
                 //MARK: Size
-                Text("Size: \(product.status ?? "nil")")
+                Text("Size: \(product.noteAttributes?.last?.value ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
-                    .padding(.bottom)
+                    .padding(5)
                 
                 Text("quantity: \(product.lineItems?.first?.quantity ?? 0)")
                     .foregroundColor(.black)
                     .font(.headline)
-                    .padding(.bottom)
-                    .lineLimit(2)
-            }
-            Spacer()
-            //MARK: Price
-            VStack (alignment: .trailing ){
+                    .padding(5)
+                
+                
+                
+                //MARK: Price
+            
                 Text("\((Double(product.lineItems?.first?.price ?? "0.0")! * total ).description)")
                     .foregroundColor(.blue)
                     .font(.headline)
-                    .padding(.all)
-                
+                                
             }
+            Spacer()
         }
     }
  

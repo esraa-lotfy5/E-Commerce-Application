@@ -27,14 +27,17 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
     
     
     func getAllDraftOrders(){
+        self.shoppingCartProducts = []
+
         networkApi.getAllDraftOrders { result in
             print("request \(String(describing: try? result.get()?.draftOrders))")
             try? result.get()?.draftOrders.filter({ DraftOrder in
+
                 if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
                 {
                     
-                    self.shoppingCartProducts = []
                     if (DraftOrder.note == "cart"){
+                        
                         self.shoppingCartProducts.append(DraftOrder)
                     }
                     self.totalPrice =  self.shoppingCartProducts.reduce(0.0) {
@@ -79,6 +82,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
             ]
         ]
         networkApi.updateDraftOrder(draftOrderID:draftOrderID ,parameter: parameters)
+        self.getAllDraftOrders()
     
     }
     

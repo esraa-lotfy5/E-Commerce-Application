@@ -91,6 +91,8 @@ struct LineItems: Decodable {
     var productId: Int?
     var quantity: Int?
     var name: String?
+    var sku: String?
+    var vendor: String
     var price: String?
     var adminGraphqlApiId: String?
     private enum CodingKeys: String, CodingKey {
@@ -98,6 +100,8 @@ struct LineItems: Decodable {
         case variantId = "variant_id"
         case productId = "product_id"
         case quantity = "quantity"
+        case sku = "sku"
+        case vendor = "vendor"
         case name = "name"
         case price = "price"
         case adminGraphqlApiId = "admin_graphql_api_id"

@@ -30,7 +30,6 @@ struct OrderListView: View {
     
     init(){
         shoppingCartViewModel.getAllDraftOrders()
-//        shoppingCartProducts = shoppingCartViewModel.shoppingCartProducts
         
     }
     var body: some View {
@@ -67,51 +66,45 @@ struct OrderListView: View {
                             OrderRow(product: item, productPrice: self.$productPrice).opacity(0.9)
                         Section{
                             Stepper.init("", onIncrement: {
-                                counter += 1
-                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! + 1, draftOrderID: item.id!)
-                                shoppingCartViewModel.getAllDraftOrders()
+                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
                                 
                             }, onDecrement: {
                                 if((item.lineItems?.first?.quantity)! - 1) == 0{
                                     //TODO: delete
                                     shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-                                    shoppingCartViewModel.getAllDraftOrders()
-                                    
                                 }
                                 else{
                                     //TODO: update
+                                    
                                 shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
-                                shoppingCartViewModel.getAllDraftOrders()
+
                                 }
                                 
                             })
                             }
-                        }
+                        }.background(Color.white)
                     }.onDelete(perform: delete)
                 }.background(Color.white)
-                    .onAppear {
-                        
-                        UITableView.appearance().separatorStyle = .none
-                    }
+            
                 //MARK: TOTAL PRICE
                 Section{
                     HStack{
                         VStack(alignment: .leading){
-                            //\(shoppingCartViewModel.shoppingCartProducts.first?.currency)
-                            Text("subTotal : \(shoppingCartViewModel.subTotalPrice , specifier: "%.2f") " )
-                            .foregroundColor(.blue)
-                            .font(.headline)
-                        Text("Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") ")
-                            .foregroundColor(.blue)
-                            .font(.headline)
-                        Text("Total Price: \(shoppingCartViewModel.totalPrice,  specifier: "%.2f") ")
-
-                        .foregroundColor(.blue)
-                        .font(.headline)
+                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice , specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )   " )
+                            
+                                .foregroundColor(.blue)
+                                .font(.headline)
+                            Text("  Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" ) ")
+                                .foregroundColor(.blue)
+                                .font(.headline)
+                            Text("  Total Price: \(shoppingCartViewModel.totalPrice,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )")
+                            
+                                .foregroundColor(.blue)
+                                .font(.headline)
                         }
                         
                         Spacer()
-                        Text("\(self.shoppingCartProducts.count)")
+                        Text("\(shoppingCartViewModel.shoppingCartProducts.count)")
                         .foregroundColor(.blue)
 
                     Image(systemName: "cart" )
@@ -123,8 +116,6 @@ struct OrderListView: View {
                     
                     NavigationLink("CheckOut",destination: AddressScreen())
 
-                }.onAppear{
-                  
                 }
             }
             else {
@@ -134,17 +125,16 @@ struct OrderListView: View {
                         print("from else")
                     }
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
         
     }
     
     private func delete(with indexSet: IndexSet) {
        
-//        indexSet.forEach {
-//            shoppingCartViewModel.deleteDraftOrder(draftOrderID: shoppingCartProducts[$0].id!)
-//
-//            shoppingCartProducts.remove(at: $0)
-//        }
+        indexSet.forEach {
+            shoppingCartProducts.remove(at: $0)
+        }
 //        self.$cartCount.wrappedValue = self.product.count
 //        print($cartCount.wrappedValue)
     }
