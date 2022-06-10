@@ -15,6 +15,7 @@ struct Constants {
     // endpoints
     static let endPointLogin = "customers.json"
     static let endPointCreateCustomer = "customers.json"
+    static let endPointOrders = "orders.json"
     
 }
 

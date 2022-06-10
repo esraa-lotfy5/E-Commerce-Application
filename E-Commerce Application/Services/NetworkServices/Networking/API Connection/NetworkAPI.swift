@@ -21,6 +21,9 @@ protocol NetworkAPIProtocol {
     func postDraftOrder(parameter: Parameters)
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void)
     func getProductInventoryQuantity(id:String , completion : @escaping (Result <ProductInventoryQuantity? , NSError>) -> Void)
+    
+    func createOrder(order: Parameters, completion: @escaping(Result<[String: Any]?, NSError>) -> Void)
+    func getUserOrders(completion: @escaping(Result<OrdersResponse?, NSError>) -> Void)
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
@@ -82,6 +85,18 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
         self.writeData(target: .
             postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in
             
+        }
+    }
+    
+    func createOrder(order: Parameters, completion: @escaping (Result<[String : Any]?, NSError>) -> Void) {
+        self.writeData(target: .createOrder(order: order), responseClass: [String: Any].self) { (result) in
+            completion(result)
+        }
+    }
+    
+    func getUserOrders(completion: @escaping (Result<OrdersResponse?, NSError>) -> Void) {
+        self.fetchData(target: .getUserOrders, responseClass: OrdersResponse.self) { (result) in
+            completion(result)
         }
     }
     

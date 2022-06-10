@@ -24,8 +24,11 @@ enum NetworkRequest{
     case getDraftOrders
     case getCurrentUser
     case deleteDraftOrder(darftOrderID:Int)
-        case postDraftOrder( parameters :  Parameters )
-        case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
+    case postDraftOrder( parameters :  Parameters )
+    case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
+    
+    case createOrder(order: Parameters)
+    case getUserOrders
 }
 
 extension NetworkRequest : TargetType {
@@ -78,6 +81,12 @@ extension NetworkRequest : TargetType {
             return "users/current.json"
         case .deleteDraftOrder(darftOrderID: let draftOrderID):
             return "draft_orders/\(draftOrderID).json"
+            
+        case .createOrder:
+            return Constants.endPointOrders
+            
+        case .getUserOrders:
+            return Constants.endPointOrders
         
         }
     }
@@ -122,6 +131,12 @@ extension NetworkRequest : TargetType {
 
         case .deleteDraftOrder(darftOrderID: let darftOrderID):
             return .delete
+            
+        case .createOrder:
+            return .post
+            
+        case .getUserOrders:
+            return .get
 
         }
     }
@@ -166,6 +181,12 @@ extension NetworkRequest : TargetType {
         case .getCurrentUser:
             return .requestPlain
         case .deleteDraftOrder(darftOrderID: let darftOrderID):
+            return .requestPlain
+            
+        case .createOrder(let order):
+            return .requestParameters(parameters: order, encoding: URLEncoding.default)
+            
+        case .getUserOrders:
             return .requestPlain
             
         }

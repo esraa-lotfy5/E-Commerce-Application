@@ -116,7 +116,7 @@ struct LoginScreen: View {
 //
 //                }
                 
-                NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                NavigationLink(destination: TempOrderView().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
                     EmptyView()
                 }
                 
@@ -230,7 +230,7 @@ struct LoginScreen: View {
         
         showProgressView = true
         
-        loginViewModel.loginCustomer(email: email, password: password) { result in
+        loginViewModel.loginCustomer() { result in
             
             switch result {
             
@@ -245,7 +245,7 @@ struct LoginScreen: View {
                 
                 guard let customer = authenticatedCustomer else {
                     
-                    showErrorMessage("authentication failed!")
+                    showErrorMessage("Authentication Failed!")
                     showProgressView = false
                     return
                     
@@ -253,10 +253,19 @@ struct LoginScreen: View {
                 
                 if customer.count > 0 {
                     print("logged in successfully \(customer)")
+                    
+                    UserDefaults.standard.set(self.email, forKey: "email")
+                    UserDefaults.standard.set(customer[0].first_name, forKey: "first_name")
+                    UserDefaults.standard.set(customer[0].last_name, forKey: "last_name")
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    
                     showProgressView = false
                     proceedWithLogin = true
+                    
+                    
+                    
                 } else {
-                    showErrorMessage("authentication failed!")
+                    showErrorMessage("Authentication Failed!")
                     showProgressView = false
                 }
                 
