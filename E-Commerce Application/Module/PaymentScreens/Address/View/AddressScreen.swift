@@ -61,7 +61,6 @@ struct AddressScreen: View {
             }
             VStack {
                 
-                
                 TextField("Name", text: self.$name)
                     .padding()
                     .padding(.bottom, -25)
@@ -169,6 +168,7 @@ struct AddressScreen: View {
             
             
             
+                
             
             
             

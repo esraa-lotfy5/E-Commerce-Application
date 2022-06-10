@@ -11,6 +11,7 @@ import SwiftUI
 
 struct AddressItem: View {
     var address : Addresss
+    @ObservedObject  var vm = AddressViewModel()
     var body: some View {
         
         
@@ -33,9 +34,21 @@ struct AddressItem: View {
             }
             .padding()
             .multilineTextAlignment(.center)
+            
+            .onTapGesture {
+                vm.defultAddress = address
+                print(" address defultObject : \(vm.defultAddress.address1)")
+                print(" country defultObject : \(vm.defultAddress.country)")
+                print(" city defultObject : \(vm.defultAddress.city)")
+            }
         }
         .frame(width: 300 , height: 150)
-        
+        .onTapGesture {
+            vm.defultAddress = address
+            print(" address defultObject : \(vm.defultAddress.address1)")
+            print(" country defultObject : \(vm.defultAddress.country)")
+            print(" city defultObject : \(vm.defultAddress.city)")
+        }
         
     }}
 
