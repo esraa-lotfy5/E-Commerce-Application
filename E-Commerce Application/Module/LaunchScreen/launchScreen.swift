@@ -8,12 +8,14 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct SplachScreenView: View{
     @State private var isActive = false
     @State private var size = 0.8
     @State private var opacity = 0.5
-    
+    @State private var degree = 90.0
+
     var body : some View {
         if isActive{
             LoginScreen()
@@ -22,8 +24,20 @@ struct SplachScreenView: View{
         VStack{
             VStack{
                 Image(systemName: "cart")
-                    .font(.system(size: 150))
+                    .font(.system(size: 100))
                     .foregroundColor(.blue)
+                    .onAppear{
+                        withAnimation(.easeIn(duration:1.2)){
+                            self.size
+                            = 0.9
+                            self.opacity = 1.0
+                            self.degree = 1
+                        }
+                        
+                    }
+                    .rotationEffect(.degrees(degree))
+                
+              
                 Text("Shoppingoo")
                     .font(Font.custom("Baskerville-Bold", size: 26))
                     .foregroundColor(.black.opacity(0.80))
@@ -34,7 +48,7 @@ struct SplachScreenView: View{
             .onAppear{
                 withAnimation(.easeIn(duration:1.2)){
                     self.size
-                    = 0.9
+                    = 1.9
                     self.opacity = 1.0
                 }
             }
