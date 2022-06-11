@@ -27,45 +27,55 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     
     
     func getAllDraftOrders(){
+        DispatchQueue.global(qos: .background).async {
 
-        networkApi.getAllDraftOrders { result in
-            try? result.get()?.draftOrders.filter({ DraftOrder in
+            self.networkApi.getAllDraftOrders { [weak self] result in
 
-                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
-                {
-                    
-                    if (DraftOrder.note == "cart"){
+                try? result.get()?.draftOrders.filter({ DraftOrder in
+
+                    if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                    {
                         
-                        self.shoppingCartProducts.append(DraftOrder)
+                        if (DraftOrder.note == "cart"){
+                            
+                            self?.shoppingCartProducts.append(DraftOrder)
+                        }
+                        self?.totalPrice =  self?.shoppingCartProducts.reduce(0.0) {
+
+                            partialResult, draftorder in
+                            partialResult + Double(draftorder.totalPrice)!
+                            
+                        } ?? 0.0
+                        
+                        self?.subTotalPrice =  self?.shoppingCartProducts.reduce(0.0) {
+                            
+                            partialResult, draftorder in
+                            partialResult + Double(draftorder.subtotalPrice)!
+                            
+                        } ?? 0.0
+                        self?.totalTax =  self?.shoppingCartProducts.reduce(0.0) {
+                            
+                            partialResult, draftorder in
+                            partialResult + Double(draftorder.totalTax)!
+                            
+                        } ?? 0.0
                     }
-                    self.totalPrice =  self.shoppingCartProducts.reduce(0.0) {
-
-                        partialResult, draftorder in
-                        partialResult + Double(draftorder.totalPrice)!
-                        
-                      }
-                    
-                    self.subTotalPrice =  self.shoppingCartProducts.reduce(0.0) {
-                        
-                        partialResult, draftorder in
-                        partialResult + Double(draftorder.subtotalPrice)!
-                        
-                      }
-                    self.totalTax =  self.shoppingCartProducts.reduce(0.0) {
-                        
-                        partialResult, draftorder in
-                        partialResult + Double(draftorder.totalTax)!
-                        
-                      }
-                }
-                return true
-            })
+                    return true
+                })
+            }
         }
     }
     
     func deleteDraftOrder(draftOrderID: Int) {
-        networkApi.deleteDraftOrder(draftOrder: draftOrderID)
-        refreshPage()
+        DispatchQueue.global(qos: .background).async {
+
+            self.networkApi.deleteDraftOrder(draftOrder: draftOrderID)
+            DispatchQueue.main.async {
+                self.refreshPage()
+
+            }
+            
+        }
     }
     
     
@@ -80,18 +90,23 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                 ]]
             ]
         ]
-        print(shoppingCartProducts)
-        networkApi.updateDraftOrder(draftOrderID:draftOrderID ,parameter: parameters)
-        refreshPage()
-        print(shoppingCartProducts)
+        DispatchQueue.global(qos: .background).async { 
+
+            self.networkApi.updateDraftOrder(draftOrderID:draftOrderID ,parameter: parameters)
+            DispatchQueue.main.async {
+                self.refreshPage()
+
+            }
+        }
     }
     func refreshPage(){
         var updateProducts = [DraftOrder]()
         var updateTotalPrice :Double = 0.0
         var updateSubTotalPrice :Double = 0.0
         var updateTotalTax :Double = 0.0
+        DispatchQueue.global(qos: .background).async {
 
-        networkApi.getAllDraftOrders { result in
+            self.networkApi.getAllDraftOrders { [weak self] result in
             try? result.get()?.draftOrders.filter({ DraftOrder in
 
                 if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
@@ -122,15 +137,16 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                         
                       }
                 }
-                print("from refresh after network \(updateProducts)")
-                self.shoppingCartProducts = updateProducts
-                self.totalTax = updateTotalTax
-                self.totalPrice = updateTotalPrice
-                self.subTotalPrice = updateSubTotalPrice
+            
+                self?.shoppingCartProducts = updateProducts
+                self?.totalTax = updateTotalTax
+                self?.totalPrice = updateTotalPrice
+                self?.subTotalPrice = updateSubTotalPrice
                 return true
             })
             
             
+        }
         }
 
     }
