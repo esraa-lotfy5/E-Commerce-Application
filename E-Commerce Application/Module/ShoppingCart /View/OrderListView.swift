@@ -24,6 +24,7 @@ struct OrderListView: View {
     @State var counter : Int = 0
     @State var productPrice  : Double = 0.0
     @State var totalPrice : Double = 0.0
+    @State var loading =  false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     
@@ -66,26 +67,30 @@ struct OrderListView: View {
                             OrderRow(product: item, productPrice: self.$productPrice).opacity(0.9)
                         Section{
                             Stepper.init("", onIncrement: {
+                                loading = true
+
                                 shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
+
                                 
                             }, onDecrement: {
                                 if((item.lineItems?.first?.quantity)! - 1) == 0{
                                     //TODO: delete
                                     shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                    loading = true
                                 }
                                 else{
                                     //TODO: update
                                     
                                 shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
-
+                                    loading = true
                                 }
                                 
                             })
                             }
                         }.background(Color.white)
                     }.onDelete(perform: delete)
-                }.background(Color.white)
-            
+                }.background(Color.black)
+
                 //MARK: TOTAL PRICE
                 Section{
                     HStack{
@@ -118,12 +123,28 @@ struct OrderListView: View {
 
                 }
             }
+            
             else {
-                emptyOrderList()
-                    .frame(height: UIScreen.main.bounds.size.height - 150 )
-                    .onAppear{
-                        print("from else")
+                if ( loading == true ){
+                    
+                    if #available(iOS 14.0, *) {
+                        ProgressView().onAppear{
+                            loading = false
+                        }
+                        
                     }
+                }
+//                    loading = false
+//                }
+                else{
+                    
+                    emptyOrderList()
+                        .frame(height: UIScreen.main.bounds.size.height - 150 )
+                        .onAppear{
+                            print("from else")
+                        }
+                }
+                
             }
         }
         .navigationBarBackButtonHidden(true)

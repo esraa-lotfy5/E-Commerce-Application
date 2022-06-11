@@ -23,6 +23,7 @@ struct OrderRow: View {
                 //Second
                 ProductRowDetails(product: product, productPrice: $productPrice )
                 
+                
             }//VSTACK
         }
         .background(Color.white)

@@ -67,6 +67,8 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
     
     func deleteDraftOrder(draftOrderID: Int) {
         networkApi.deleteDraftOrder(draftOrder: draftOrderID)
+        self.getAllDraftOrders()
+
     }
     
     
