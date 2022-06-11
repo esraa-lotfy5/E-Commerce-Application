@@ -8,9 +8,8 @@
 import SwiftUI
 import Kingfisher
 struct OrderRow: View {
-    var product : DraftOrder
-    
-    @Binding var productPrice : Double
+    @State var product : DraftOrder
+//    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     @State var checked = false
     
     var body: some View {
@@ -21,14 +20,30 @@ struct OrderRow: View {
             ProductImage3(imageName: product.noteAttributes?.first?.value ?? "default")
             VStack{
                 //Second
-                ProductRowDetails(product: product, productPrice: $productPrice )
+                ProductRowDetails(product: product)
+//                Stepper.init("", onIncrement: {
+//                    shoppingCartViewModel.updateDraftOrder(variantId: (product.lineItems?.first?.variantId)!, quantity: ((product.lineItems?.first?.quantity)!) + 1, draftOrderID: product.id!)
+//
+//
+//                }, onDecrement: {
+//                    if((product.lineItems?.first?.quantity)! - 1) == 0{
+//                        //TODO: delete
+//                        shoppingCartViewModel.deleteDraftOrder(draftOrderID: product.id!)
+//                    }
+//                    else{
+//                        //TODO: update
+//
+//                    shoppingCartViewModel.updateDraftOrder(variantId: (product.lineItems?.first?.variantId)!, quantity: (product.lineItems?.first?.quantity)! - 1, draftOrderID: product.id!)
+//                    }
+//
+//                })
                 
                 
             }//VSTACK
         }
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+//        .background(Color.white)
+//        .cornerRadius(10)
+//        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
         
     //HSTACK
 }
@@ -45,6 +60,7 @@ struct ProductImage3: View {
             .onSuccess { r in print("done") }
             .onFailure { r in print("failure") }
             .loadImmediately()
+            .border(Color.gray)
             .cornerRadius(15)
             .frame(width: 100, height: 150)
                     .padding()

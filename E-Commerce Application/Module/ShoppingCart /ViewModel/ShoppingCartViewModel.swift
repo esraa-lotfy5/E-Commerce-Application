@@ -14,8 +14,8 @@ protocol ShoppingCartProtocol {
 }
 
 
-class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
-  
+class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
+
   
     var networkApi : NetworkAPI = NetworkAPI()
     @Published var shoppingCartProducts = [DraftOrder]()
@@ -27,10 +27,8 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
     
     
     func getAllDraftOrders(){
-        self.shoppingCartProducts = []
 
         networkApi.getAllDraftOrders { result in
-            print("request \(String(describing: try? result.get()?.draftOrders))")
             try? result.get()?.draftOrders.filter({ DraftOrder in
 
                 if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
@@ -67,8 +65,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
     
     func deleteDraftOrder(draftOrderID: Int) {
         networkApi.deleteDraftOrder(draftOrder: draftOrderID)
-        self.getAllDraftOrders()
-
+        refreshPage()
     }
     
     
@@ -83,9 +80,58 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol{
                 ]]
             ]
         ]
+        print(shoppingCartProducts)
         networkApi.updateDraftOrder(draftOrderID:draftOrderID ,parameter: parameters)
-        self.getAllDraftOrders()
-    
+        refreshPage()
+        print(shoppingCartProducts)
     }
-    
+    func refreshPage(){
+        var updateProducts = [DraftOrder]()
+        var updateTotalPrice :Double = 0.0
+        var updateSubTotalPrice :Double = 0.0
+        var updateTotalTax :Double = 0.0
+
+        networkApi.getAllDraftOrders { result in
+            try? result.get()?.draftOrders.filter({ DraftOrder in
+
+                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                {
+                    
+                    if (DraftOrder.note == "cart"){
+                        
+                        updateProducts.append(DraftOrder)
+                        print(updateProducts)
+                    }
+                    updateTotalPrice = updateProducts.reduce(0.0) {
+
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.totalPrice)!
+                        
+                      }
+                    
+                    updateSubTotalPrice =  updateProducts.reduce(0.0) {
+                        
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.subtotalPrice)!
+                        
+                      }
+                    updateTotalTax =  updateProducts.reduce(0.0) {
+                        
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.totalTax)!
+                        
+                      }
+                }
+                print("from refresh after network \(updateProducts)")
+                self.shoppingCartProducts = updateProducts
+                self.totalTax = updateTotalTax
+                self.totalPrice = updateTotalPrice
+                self.subTotalPrice = updateSubTotalPrice
+                return true
+            })
+            
+            
+        }
+
+    }
 }

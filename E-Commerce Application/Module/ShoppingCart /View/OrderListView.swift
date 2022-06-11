@@ -19,19 +19,14 @@ struct Product2 : Hashable , Identifiable {
 
 struct OrderListView: View {
     @State var shoppingCartCount : Int = 0
-    @State var shoppingCartProducts : [DraftOrder] = []
-    @State var cartCount : Int = 0
+//    @State var shoppingCartProducts : [DraftOrder] = []
     @State var counter : Int = 0
-    @State var productPrice  : Double = 0.0
-    @State var totalPrice : Double = 0.0
-    @State var loading =  false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     
     
     init(){
         shoppingCartViewModel.getAllDraftOrders()
-        
     }
     var body: some View {
         VStack {
@@ -60,36 +55,63 @@ struct OrderListView: View {
             
             
             if shoppingCartViewModel.shoppingCartProducts.count > 0 {
-                HeaderView(header: "", cartNum: "\(self.$cartCount.wrappedValue)", image: "cart")
                 List {
                     ForEach(shoppingCartViewModel.shoppingCartProducts) { item in
                         VStack{
-                            OrderRow(product: item, productPrice: self.$productPrice).opacity(0.9)
-                        Section{
-                            Stepper.init("", onIncrement: {
-                                loading = true
-
-                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
-
+                            OrderRow(product: item).opacity(0.9)
+                            
+                            Text("          quantity: \(item.lineItems?.first?.quantity ?? 0)")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .padding(5)
+                            HStack{
+                                Spacer()
                                 
-                            }, onDecrement: {
-                                if((item.lineItems?.first?.quantity)! - 1) == 0{
+                                //TODO: deleteProduct
+                                Button(action: {
+                                    
                                     //TODO: delete
                                     shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-                                    loading = true
-                                }
-                                else{
-                                    //TODO: update
-                                    
-                                shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
-                                    loading = true
+                                }) {
+                                    Image(systemName: "trash")
+                                        .resizable()
+                                        .foregroundColor(.gray)
+                                        .frame(width: 25, height: 25)
                                 }
                                 
-                            })
+                                
+                                Section{
+                                    Stepper.init("", onIncrement: {
+                                        shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
+                                        
+                                        
+                                    }, onDecrement: {
+                                        if((item.lineItems?.first?.quantity)! - 1) == 0{
+                                            //TODO: delete
+                                            shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                        }
+                                        else{
+                                            //TODO: update
+                                            
+                                            shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
+                                        }
+                                        
+                                    })
+                                }
                             }
-                        }.background(Color.white)
-                    }.onDelete(perform: delete)
-                }.background(Color.black)
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        } .background(Color.white).opacity(10)
+                            .cornerRadius(10)
+                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                    } //.onDelete(perform: delete)
+                }
 
                 //MARK: TOTAL PRICE
                 Section{
@@ -125,25 +147,12 @@ struct OrderListView: View {
             }
             
             else {
-                if ( loading == true ){
-                    
-                    if #available(iOS 14.0, *) {
-                        ProgressView().onAppear{
-                            loading = false
-                        }
-                        
-                    }
-                }
-//                    loading = false
-//                }
-                else{
-                    
                     emptyOrderList()
                         .frame(height: UIScreen.main.bounds.size.height - 150 )
                         .onAppear{
                             print("from else")
                         }
-                }
+                
                 
             }
         }
@@ -151,14 +160,14 @@ struct OrderListView: View {
         
     }
     
-    private func delete(with indexSet: IndexSet) {
-       
-        indexSet.forEach {
-            shoppingCartProducts.remove(at: $0)
-        }
-//        self.$cartCount.wrappedValue = self.product.count
-//        print($cartCount.wrappedValue)
-    }
+//    private func delete(with indexSet: IndexSet) {
+//
+//        indexSet.forEach {
+//            shoppingCartProducts.remove(at: $0)
+//        }
+////        self.$cartCount.wrappedValue = self.product.count
+////        print($cartCount.wrappedValue)
+//    }
     
 }
 
