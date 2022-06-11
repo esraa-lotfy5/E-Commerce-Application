@@ -101,7 +101,7 @@ struct ProductDetails: View {
                     
                     //#TODO: quanitity AND status
                     HStack{
-                        Text(productQuantity.description + " ")
+                        Text("\(productDetailsViewModel.productInventoryQuantity?.count ?? 0 )")
                             .foregroundColor(Color.blue)
                             .font(Font.headline)
                   
