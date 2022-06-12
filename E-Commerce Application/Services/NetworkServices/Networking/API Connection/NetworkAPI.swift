@@ -21,9 +21,18 @@ protocol NetworkAPIProtocol {
     func postDraftOrder(parameter: Parameters)
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void)
     func getProductInventoryQuantity(id:String , completion : @escaping (Result <ProductInventoryQuantity? , NSError>) -> Void)
+    func getSmartCollections (completion : @escaping (Result<SmartCollections? , NSError>)-> Void)
+    //trial
+    func getPriceRule(completion : @escaping (Result<PriceRules? , NSError>)-> Void)
+    func postPriceRule(priceRule : Parameters ,completion : @escaping (Result<PriceRule? , NSError>)-> Void)
+    
+    func postDiscountCode (discountCode : Parameters, discountId : String ,completion : @escaping (Result<DiscountCode? , NSError>)-> Void)
+    
+    func getDiscountCode (discountId : String , completion : @escaping (Result<DiscountCodes? , NSError>) -> Void)
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
+
     func getProductDetails(id: String, completion: @escaping (Result<ProductsResults?, NSError>) -> Void) {
         self.fetchData(target: .getProductDetials(productID: id), responseClass:
         ProductsResults.self) { (result) in
@@ -84,6 +93,42 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
             
         }
     }
+    
+    
+    func getSmartCollections (completion : @escaping (Result<SmartCollections? , NSError>)-> Void){
+        self.fetchData(target: .getSmartCollections, responseClass: SmartCollections.self) { (result) in
+            completion(result)
+        }
+    }
+    
+    //trial
+    
+    func getPriceRule(completion: @escaping (Result<PriceRules?, NSError>) -> Void) {
+        self.fetchData(target: .getPriceRule, responseClass: PriceRules.self) { (result) in
+            completion(result)
+        }
+    }
+    
+    func postPriceRule(priceRule: Parameters, completion: @escaping (Result<PriceRule?, NSError>) -> Void) {
+        self.writeData(target: .postPriceRule(priceRule: priceRule), responseClass: PriceRule.self) { (result) in
+            completion(result)
+        }
+    }
+    
+    func postDiscountCode (discountCode : Parameters, discountId : String ,completion : @escaping (Result<DiscountCode? , NSError>)-> Void){
+        self.writeData(target: .postDiscountCode(dicountCode: discountCode, discountId: discountId), responseClass: DiscountCode.self) { (result) in
+            completion(result)
+        }
+    }
+    
+    
+    
+    func getDiscountCode(discountId: String, completion: @escaping (Result<DiscountCodes?, NSError>) -> Void) {
+        self.fetchData(target: .getDiscountCode(discountId: discountId), responseClass: DiscountCodes.self) { (result) in
+            completion(result)
+        }
+    }
+    
     
 //    func deleteDraftOrder(draftOrder: Int) {
 //        self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass:

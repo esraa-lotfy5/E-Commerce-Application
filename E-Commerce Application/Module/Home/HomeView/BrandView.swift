@@ -9,22 +9,24 @@
 import Foundation
 import SwiftUI
 import QGrid
+import Kingfisher
 
 struct BrandsView: View {
+    @ObservedObject  var viewModel = HomeViewModel()
 
   var body: some View {
-    QGrid(productsArr, columns: 2) { GridCell(product: $0)}
+      QGrid(viewModel.brandsArr, columns: 2) { GridCell(brands: $0)}
   }
 }
 
 struct GridCell: View {
-    var product : ProductBrand
+    var brands : Brand
     @State private var isActive = false
 
     var body: some View {
 
         VStack(){
-            Image(product.vendor)
+            KFImage(URL(string: brands.brandImage))
             .resizable()
             .frame(width: 170, height: 150)
             .scaledToFit()
@@ -32,8 +34,9 @@ struct GridCell: View {
             .padding([.horizontal, .top], 7)
           
             
-            Text(product.vendor).lineLimit(2)
-                .font(.headline)
+           
+            Text(brands.brandTitle).lineLimit(2)
+            .font(.headline)
             .padding()
         }.border(Color.gray,width: 4)
             .cornerRadius(10)
@@ -41,10 +44,10 @@ struct GridCell: View {
                 self.isActive.toggle() } // activate link on image tap
             .background(NavigationLink(destination:  // link in background
             CategoryScreen(), isActive: $isActive) { EmptyView() })
-    }
+ 
  
 }
-
+}
 
 struct BrandView_Previews: PreviewProvider {
     static var previews: some View {
