@@ -15,7 +15,9 @@ struct SplachScreenView: View{
     @State private var size = 0.8
     @State private var opacity = 0.5
     @State private var degree = 90.0
-
+    @State private var movement = -155
+//    @State private var toPoint = CGPoint(x: 0.0, y: 1.0)
+//    @State private var fromPoint = CGPoint(x: 0.0, y: 0.0)
     var body : some View {
         if isActive{
             LoginScreen()
@@ -27,15 +29,20 @@ struct SplachScreenView: View{
                     .font(.system(size: 100))
                     .foregroundColor(.blue)
                     .onAppear{
-                        withAnimation(.easeIn(duration:1.2)){
-                            self.size
-                            = 0.9
-                            self.opacity = 1.0
-                            self.degree = 1
+                        withAnimation(.easeIn(duration:0.8)){
+//                            self.size
+//                            = 0.9
+//                            self.opacity = 1.0
+//                            self.degree = 1
+                            self.movement += 150
+
                         }
                         
+                      
                     }
-                    .rotationEffect(.degrees(degree))
+                    .offset(x: CGFloat(movement), y: 10)
+                    
+//                    .rotationEffect(.degrees(degree))
                 
               
                 Text("Shoppingoo")
@@ -46,7 +53,7 @@ struct SplachScreenView: View{
             .scaleEffect(size)
             .opacity(opacity)
             .onAppear{
-                withAnimation(.easeIn(duration:1.2)){
+                withAnimation(.easeIn(duration:0.2)){
                     self.size
                     = 1.9
                     self.opacity = 1.0
