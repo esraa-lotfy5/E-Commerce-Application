@@ -10,8 +10,8 @@ import Foundation
 import Alamofire
 
 enum NetworkRequest{
-    case getCategoryID
-    case getCategoryProduct (categoryID : String)
+    case getCategoryProductsWithBrandName(parameters : Parameters)
+//    case getCategoryProduct (categoryID : String)
     case getProductDetials(productID : String)
     
     case loginCustomer
@@ -31,17 +31,14 @@ enum NetworkRequest{
 extension NetworkRequest : TargetType {
     var baseURL: String {
         switch self {
-        default: return Constants.baseUrl
+        default : return Constants.baseUrl
         }
     }
     
     var path: String {
         switch self {
-        case .getCategoryID:
-            return "custom_collections.json"
-            
-        case .getCategoryProduct(let categoryID):
-            return "collections/\(categoryID)/products.json"
+        case .getCategoryProductsWithBrandName(let parameters):
+            return "products.json"
             
         case .getProductDetials(let productID):
             print(productID)
@@ -84,11 +81,11 @@ extension NetworkRequest : TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .getCategoryID:
+        case .getCategoryProductsWithBrandName:
             return .get
             
-        case .getCategoryProduct:
-            return .get
+//        case .getCategoryProduct:
+//            return .get
             
         case .getProductDetials:
             return .get
@@ -129,11 +126,11 @@ extension NetworkRequest : TargetType {
     var task: Task {
         switch self {
             
-        case .getCategoryID:
-            return .requestPlain
+        case .getCategoryProductsWithBrandName(let parameters):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
             
-        case .getCategoryProduct:
-            return .requestPlain
+//        case .getCategoryProduct:
+//            return .requestPlain
             
         case .getProductDetials:
             return .requestPlain
