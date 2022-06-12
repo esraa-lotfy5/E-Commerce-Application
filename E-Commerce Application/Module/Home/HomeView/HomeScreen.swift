@@ -15,7 +15,7 @@ var body: some View {
                 NavigationHome()
                 BannerView()
                 BrandsView()
-             //   TabBarHome()
+//                TabBarHome()
              Spacer()
             }
     .navigationBarBackButtonHidden(true)

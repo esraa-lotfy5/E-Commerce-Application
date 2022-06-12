@@ -21,6 +21,7 @@ struct SplachScreenView: View{
     var body : some View {
         if isActive{
             LoginScreen()
+//            HomeScreen()
         }
         else{
         VStack{

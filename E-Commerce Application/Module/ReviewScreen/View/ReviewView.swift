@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct ReviewView: View {
-    var rate : Int = 2
-      @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var rate : Int = 4
+    var reviews = GenerateReview().generateReview()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
             VStack{
                 HStack{
@@ -39,9 +40,9 @@ struct ReviewView: View {
                     HeaderView(header: "", cartNum: "", image: "star").padding()
                     Spacer()
                 }
-                Spacer()
-                Spacer()
-                
+//                Spacer()
+//                Spacer()
+//
                 //MARK:- user do not post his rate yet
                 HStack{
                     ForEach(0 ..< self.rate) { item in
@@ -53,17 +54,16 @@ struct ReviewView: View {
                             .foregroundColor(.yellow)
                         
                     }
-                    
-                }.padding()
+                }.padding(.bottom)
 
                 List{
-                    ForEach(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
+                    ForEach(reviews , id: \.self) { item in
                         VStack{
                             HStack{
                                 VStack {
-                                    Text("USER NAME").padding(.leading)
-                                    Text("20/1/2022").font(.caption)
-                                    //.padding(.leading)
+                                    Text(item.userName!).padding(.leading)
+                                    Text("\( Int.random(in: 1...30))/\( Int.random(in: 1...12))/2022").font(.caption)
+                                    .padding(.leading)
                                 }
                                
 
@@ -71,21 +71,19 @@ struct ReviewView: View {
                                 
                                 HStack{
                                     Image(systemName: "star.fill")
-                                        .foregroundColor(.yellow).padding(.leading)
-                                    Text("5").padding()
+                                        .foregroundColor(.yellow)
+                                    Text(item.reviewRate!)
                                 }
-                                .padding(.trailing)
-
-                                .background(Color.white.opacity(0.90))
-                                .cornerRadius(13)
+                                .padding()
+                                .background(Color.gray.opacity(0.19))
+                                .cornerRadius(10)
                             }
-                            Text("his review: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ").padding()
-                        }.background(Color.gray.opacity(0.29))
+                            Text(item.reviewBody!)
+                                .lineLimit(4)
+                                .padding()
+                        }.background(Color.white.opacity(0.29))
                         .cornerRadius(15)
                     }
-                }.onAppear{
-                    UITableView.appearance().separatorStyle = .none
-
                 }
         }.navigationBarBackButtonHidden(true)
         
