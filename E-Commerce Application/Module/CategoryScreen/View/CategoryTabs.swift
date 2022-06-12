@@ -14,37 +14,21 @@ struct CategoryTabs: View {
         case Men ,Women ,Kids ,Sale
         var id: Self { self }
     }
-//    @Binding var x : String
-    @Binding var x : CategoryTabs.Category
-    @State var categoryViewModel : CategoryViewModel
-    @State  private var selectedCategory: Category = .Men
+    @Binding var selectedCategory : Category
     
     var body: some View {
         HStack{
             Spacer().frame(width:24)
             VStack{
-             Picker("Category", selection: $selectedCategory) {
+                Picker("Category", selection: $selectedCategory) {
                    ForEach(Category.allCases) { cat in
-                       Text(cat.rawValue.capitalized)
-                       //getSelectedSegment(category: selectedCategory)
-                       
+                           Text(cat.rawValue.capitalized)
                    }
-               }
-            }.pickerStyle(SegmentedPickerStyle())
-            
-            
+                 }.pickerStyle(SegmentedPickerStyle())
+            }
+               
             Spacer().frame(width:24)
         }.padding(.bottom, 16)
-    }
-    
-    func getSelectedSegment(category : CategoryTabs.Category){
-        if(category == .Men){ self.x = .Men} else{
-            if(category == .Women){self.x = .Women}else{
-                if(category == .Kids){self.x = .Kids}else{
-                    if(category == .Sale){self.x = .Sale}
-                }
-            }
-        }
     }
 }
 

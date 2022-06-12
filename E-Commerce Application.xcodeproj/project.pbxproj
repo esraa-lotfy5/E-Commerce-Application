@@ -17,6 +17,7 @@
 		0988273C284648C3005564D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0988273A284648C3005564D0 /* LaunchScreen.storyboard */; };
 		09882747284648C4005564D0 /* E_Commerce_ApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09882746284648C4005564D0 /* E_Commerce_ApplicationTests.swift */; };
 		0988275328464AAF005564D0 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 0988275228464AAF005564D0 /* QGrid */; };
+		09CFFE542856479D0060FE58 /* SubCategoriesTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CFFE532856479D0060FE58 /* SubCategoriesTabs.swift */; };
 		3FDB8EAE2851523C009CC9F0 /* AddressScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDB8EAD2851523C009CC9F0 /* AddressScreen.swift */; };
 		3FDB8EB2285152B1009CC9F0 /* PlaceOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDB8EB1285152B1009CC9F0 /* PlaceOrders.swift */; };
 		3FDB8EB4285152C8009CC9F0 /* PaymentOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDB8EB3285152C8009CC9F0 /* PaymentOptions.swift */; };
@@ -111,6 +112,7 @@
 		09882742284648C4005564D0 /* E-Commerce ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "E-Commerce ApplicationTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09882746284648C4005564D0 /* E_Commerce_ApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E_Commerce_ApplicationTests.swift; sourceTree = "<group>"; };
 		09882748284648C4005564D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09CFFE532856479D0060FE58 /* SubCategoriesTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesTabs.swift; sourceTree = "<group>"; };
 		31A74C2A1EE38A1EAC025EF8 /* Pods_E_Commerce_ApplicationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E_Commerce_ApplicationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FDB8EAD2851523C009CC9F0 /* AddressScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressScreen.swift; sourceTree = "<group>"; };
 		3FDB8EB1285152B1009CC9F0 /* PlaceOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOrders.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				9BE7251C2848AD070093388A /* CategoryTabs.swift */,
 				9BE7251D2848AD070093388A /* CategoryNavigationBar.swift */,
 				9BE7251E2848AD070093388A /* CategoryScreen.swift */,
+				09CFFE532856479D0060FE58 /* SubCategoriesTabs.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -917,6 +920,7 @@
 				9BE725502848AD0A0093388A /* FeatureCard.swift in Sources */,
 				9BE725752848AD0A0093388A /* PaymentScreens.swift in Sources */,
 				9BE7256A2848AD0A0093388A /* ProductDetailsWishList.swift in Sources */,
+				09CFFE542856479D0060FE58 /* SubCategoriesTabs.swift in Sources */,
 				9BE7256F2848AD0A0093388A /* BannerView.swift in Sources */,
 				BC553379285230BF0047D13A /* ProductDetailsViewModel.swift in Sources */,
 				BC4B1C83284F7F78003A6138 /* TabBarHome.swift in Sources */,

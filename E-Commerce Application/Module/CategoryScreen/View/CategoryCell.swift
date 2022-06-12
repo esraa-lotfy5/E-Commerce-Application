@@ -27,7 +27,7 @@ struct CategoryCell: View {
         VStack(alignment: .leading){
             KFImage(URL (string: product.images[0].src))
             .resizable()
-                .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height-50)/3)
+            .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height)/3.6)
                 .cornerRadius(15)
             HStack{
                 VStack(alignment: .leading){

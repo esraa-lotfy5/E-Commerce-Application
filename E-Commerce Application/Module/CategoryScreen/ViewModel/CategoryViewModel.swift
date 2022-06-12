@@ -10,37 +10,18 @@ import Foundation
 import SwiftUI
 
 class CategoryViewModel : ObservableObject{
+    @Published var selectedCategory : CategoryTabs.Category = .Men
     @Published  var products :[CategoryProduct] = []
     @Published var param : [String: String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
+    @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
     
     init() {
-        if((param["vendor"]?.isEmpty) != nil){param.removeValue(forKey: "vendor")}
-        if((param["product_type"]?.isEmpty) != nil){param.removeValue(forKey: "product_type")}else{
-            switch(param["product_type"]){
-            case "Men":
-                param.updateValue("273053679755", forKey: "product_type")
-                break
-            case "Women":
-                param.updateValue("273053712523", forKey: "product_type")
-                break
-            case "Kids":
-                param.updateValue("273053745291", forKey: "product_type")
-                break
-            case "Sale":
-                param.updateValue("273053778059", forKey: "product_type")
-                break
-            default:
-                break
-            }
-        }
-        print("-------------------------param -----------------")
-        print(param)
         getProducts()
     }
-    
     func getProducts(){
-        api.getCategoryProducts(parameters: self.param){(result) in
+        let newParameters = updateParameters()
+        api.getCategoryProducts(parameters: newParameters){(result) in
             switch result {
             case .success(let response):
                 let productsResponse = response
@@ -57,5 +38,34 @@ class CategoryViewModel : ObservableObject{
             }
             
         }
+    }
+    
+    func updateParameters() -> [String:String]{
+        print("before updating params: \(param)")
+        var newParam = param
+        if(param["vendor"] == ""){newParam.removeValue(forKey: "vendor")}
+        if(param["collection_id"] == ""){newParam.removeValue(forKey: "collection_id")}else{
+            switch(newParam["collection_id"]){
+            case "Men", "273053679755":
+                newParam.updateValue("273053679755", forKey: "collection_id")
+                break
+            case "Women", "273053712523":
+                newParam.updateValue("273053712523", forKey: "collection_id")
+                break
+            case "Kids", "273053745291":
+                newParam.updateValue("273053745291", forKey: "collection_id")
+                break
+            case "Sale", "273053778059":
+                newParam.updateValue("273053778059", forKey: "collection_id")
+                break
+            default:
+                break
+            }
+        }
+        if(param["product_type"] == ""){newParam.removeValue(forKey: "product_type")}
+        
+        print("-------------------------new param -----------------")
+        print("after updating param: \(newParam)")
+        return newParam
     }
 }

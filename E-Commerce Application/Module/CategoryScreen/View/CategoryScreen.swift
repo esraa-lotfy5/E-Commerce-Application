@@ -22,22 +22,40 @@ struct CategoryScreen: View {
     var body: some View {
         
         VStack{
-            
-            
             CategoryNavigationBar()
             Spacer()
             
             //MARK:- Tabs
-            CategoryTabs()
+            if #available(iOS 14.0, *) {
+                CategoryTabs(selectedCategory: $categoryViewModel.selectedCategory)
+                    .onChange(of: categoryViewModel.selectedCategory) { newValue in
+                        categoryViewModel.param.updateValue(newValue.rawValue, forKey: "collection_id")
+                        categoryViewModel.getProducts()
+                        print("new value -> \(newValue)")
+                    }
+            } else {
+                // Fallback on earlier versions
+            }
+            if #available(iOS 14.0, *) {
+                SubCategoriesTabs(categoryViewModel: categoryViewModel)
+                    .onChange(of: categoryViewModel.isProductTypeChanged) { newValue in
+                        categoryViewModel.getProducts()
+                    }
+            } else {
+                // Fallback on earlier versions
+            }
             Spacer()
             
-            QGrid((categoryViewModel.products), columns: 2, hPadding: 15) {
+            QGrid((categoryViewModel.products), columns: 2,vPadding: 0, hPadding: 8) {
                 CategoryCell(product: $0)
                 
             }
             
+            
         }.navigationBarBackButtonHidden(true)
+            
         //.navigationBarTitle("category")
+        
 
         
     }
