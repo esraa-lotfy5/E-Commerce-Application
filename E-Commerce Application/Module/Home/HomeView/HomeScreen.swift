@@ -9,15 +9,47 @@
 import Foundation
 import SwiftUI
 struct HomeScreen: View {
+    @ObservedObject  var viewModel = HomeViewModel()
+    //trial
+    @State var presentAlert = false
+    
+    let timer = Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()
 
+   // @AppStorage("count") var count : Int = 1
+    @State private var count = UserDefaults.standard.integer(forKey: "count")
+    
+    
 var body: some View {
     VStack{
                 NavigationHome()
                 BannerView()
                 BrandsView()
-//                TabBarHome()
+             /////   TabBarHome()
+    //    Text("\(viewModel.str.count)")
+
              Spacer()
+            }.blur(radius: presentAlert ? 30 : 0)
+    
+        .onReceive(timer, perform: { _ in
+
+            
+            if count >= 5 {
+                presentAlert.toggle()
+                count = 1
+                
             }
-    .navigationBarBackButtonHidden(true)
+            else{
+                count += 1
+            }
+            
+            
+            
+        })
+
+        if  presentAlert {
+            AlertViewHome(show: $presentAlert)
+        }
+    //.navigationBarBackButtonHidden(true)
+    
     }
 }

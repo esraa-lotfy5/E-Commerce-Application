@@ -26,6 +26,13 @@ enum NetworkRequest{
     case deleteDraftOrder(darftOrderID:Int)
         case postDraftOrder( parameters :  Parameters )
         case updateDraftOrder (draftOrderID: Int , parameters : Parameters )
+    case getSmartCollections
+    //trial coupon
+    case getPriceRule
+    case postPriceRule(priceRule : Parameters)
+    case postDiscountCode (dicountCode: Parameters,discountId: String)
+    
+    case getDiscountCode (discountId : String)
 }
 
 extension NetworkRequest : TargetType {
@@ -77,7 +84,23 @@ extension NetworkRequest : TargetType {
             return "users/current.json"
         case .deleteDraftOrder(darftOrderID: let draftOrderID):
             return "draft_orders/\(draftOrderID).json"
-        
+            
+        case .getSmartCollections:
+            return "smart_collections.json"
+            
+            //trial
+        case .getPriceRule:
+            return "price_rules.json"
+            
+        case .postPriceRule (let priceRule):
+            return "price_rules.json"
+
+        case .postDiscountCode (_ , let discountId):
+            return "price_rules/\(discountId)/discount_codes.json"
+            
+        case .getDiscountCode(discountId: let discountCode):
+            return "price_rules/\(discountCode)/discount_codes.json"
+            
         }
     }
     
@@ -121,7 +144,21 @@ extension NetworkRequest : TargetType {
 
         case .deleteDraftOrder(darftOrderID: let darftOrderID):
             return .delete
+            
+        case .getSmartCollections:
+            return .get
 
+            //trial
+        case .getPriceRule:
+            return .get
+        case .postPriceRule:
+            return .post
+
+        case .postDiscountCode:
+            return .post
+            
+        case .getDiscountCode(discountId: _):
+            return .get
         }
     }
     
@@ -167,12 +204,25 @@ extension NetworkRequest : TargetType {
         case .deleteDraftOrder(darftOrderID: let darftOrderID):
             return .requestPlain
             
+        case .getSmartCollections :
+            return .requestPlain
+            //trial
+        case .getPriceRule:
+            return .requestPlain
+        case .postPriceRule (let priceRule):
+            return .requestParameters(parameters: priceRule, encoding: URLEncoding.default)
+            
+
+        case .postDiscountCode(let parameters , _):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+            
+        case .getDiscountCode(discountId: _):
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
-    
         default:
 
             return [

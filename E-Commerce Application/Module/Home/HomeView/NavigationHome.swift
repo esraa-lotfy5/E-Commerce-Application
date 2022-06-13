@@ -11,6 +11,10 @@ import SwiftUI
 struct NavigationHome : View {
     @State private var searchHomeTapped = false
     @State private var isActive = false
+    //trial
+    @ObservedObject  var viewModel = HomeViewModel()
+    
+    
     var body : some View {
 //
 //        ZStack{
@@ -65,7 +69,51 @@ struct NavigationHome : View {
                                    .foregroundColor(.black)
                            }
                            .onTapGesture {
-                            self.isActive.toggle() } // activate link on image tap
+                               //trial post price rule 
+//                               let priceRuleObj = [
+//                                   "price_rule": [
+//                                                "title": "OPENING45OFF",
+//                                                "target_type": "line_item",
+//                                                "target_selection": "all",
+//                                                "allocation_method": "across",
+//                                                "value_type": "fixed_amount",
+//                                                "value": "-45.0",
+//                                                "customer_selection": "all",
+//                                                "starts_at": "2021-11-10T13:00:10Z"
+//                                   ]
+//                               ]
+//                               let priceRuleObjTwo = [
+//                                   "price_rule": [
+//                                                "title": "SALE15OFF",
+//                                                "target_type": "line_item",
+//                                                "target_selection": "all",
+//                                                "allocation_method": "across",
+//                                                "value_type": "fixed_amount",
+//                                                "value": "-15.0",
+//                                                "customer_selection": "all",
+//                                                "starts_at": "2021-11-10T13:00:10Z"
+//                                   ]
+//                               ]
+//                               viewModel.postPriceRule(priceRule: priceRuleObjTwo)
+                               
+                               //post discount code
+//                               let discountCodeObj = [
+//                                   "discount_code": [
+//                                       "code": "SALE15OFF"
+//                                   ]
+//                               ]
+//
+//                               let discountCodeObjTwo = [
+//                                   "discount_code": [
+//                                       "code": "OPENING45OFF"
+//                                   ]
+//                               ]
+//
+//                               viewModel.postDiscountCode(discountCode: discountCodeObjTwo)
+                               
+
+                            self.isActive.toggle()
+                           } // activate link on image tap
                             .background(NavigationLink(destination:  SettingsView(), isActive: $isActive)
                             { EmptyView() }                    .navigationBarBackButtonHidden(true)
 )
