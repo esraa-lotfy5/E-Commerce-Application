@@ -33,6 +33,9 @@ enum NetworkRequest{
     case postDiscountCode (dicountCode: Parameters,discountId: String)
     
     case getDiscountCode (discountId : String)
+    
+    case createOrder(order: Parameters)
+    case getUserOrders
 }
 
 extension NetworkRequest : TargetType {
@@ -98,6 +101,12 @@ extension NetworkRequest : TargetType {
         case .getDiscountCode(discountId: let discountCode):
             return "price_rules/\(discountCode)/discount_codes.json"
             
+        case .createOrder:
+            return Constants.endPointOrders
+            
+        case .getUserOrders:
+            return Constants.endPointOrders
+            
         }
     }
     
@@ -156,6 +165,13 @@ extension NetworkRequest : TargetType {
             
         case .getDiscountCode(discountId: _):
             return .get
+            
+        case .createOrder:
+            return .post
+            
+        case .getUserOrders:
+            return .get
+            
         }
     }
     
@@ -214,6 +230,12 @@ extension NetworkRequest : TargetType {
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
             
         case .getDiscountCode(discountId: _):
+            return .requestPlain
+            
+        case .createOrder(let order):
+            return .requestParameters(parameters: order, encoding: URLEncoding.default)
+            
+        case .getUserOrders:
             return .requestPlain
         }
     }

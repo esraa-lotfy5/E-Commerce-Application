@@ -33,6 +33,9 @@ protocol NetworkAPIProtocol {
     func getDiscountCode (discountId : String , completion : @escaping (Result<DiscountCodes? , NSError>) -> Void)
     
     func getCategoryProducts(parameters : [String:String], completion: @escaping(Result<CategoryProducts?, NSError>) -> Void)
+    
+    func createOrder(order: Parameters, completion: @escaping(Result<[String: Any]?, NSError>) -> Void)
+    func getUserOrders(completion: @escaping(Result<OrdersResponse?, NSError>) -> Void)
 
 }
 
@@ -139,6 +142,18 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     
     func getCategoryProducts(parameters :[String:String], completion: @escaping(Result<CategoryProducts?, NSError>) -> Void){
         self.fetchData(target: .getCategoryProductsWithBrandName(parameters: parameters), responseClass: CategoryProducts.self){(result) in
+            completion(result)
+        }
+    }
+    
+    func createOrder(order: Parameters, completion: @escaping (Result<[String : Any]?, NSError>) -> Void) {
+        self.writeData(target: .createOrder(order: order), responseClass: [String: Any].self) { (result) in
+            completion(result)
+        }
+    }
+    
+    func getUserOrders(completion: @escaping (Result<OrdersResponse?, NSError>) -> Void) {
+        self.fetchData(target: .getUserOrders, responseClass: OrdersResponse.self) { (result) in
             completion(result)
         }
     }

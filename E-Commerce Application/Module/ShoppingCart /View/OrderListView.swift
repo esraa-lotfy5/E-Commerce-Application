@@ -171,7 +171,7 @@ struct OrderListView: View {
                     .padding(.bottom)
                     }
                     
-                    NavigationLink("CheckOut",destination: AddressScreen())
+                    NavigationLink("CheckOut",destination: AddressScreen(addressess: []))
 
                 }
             }

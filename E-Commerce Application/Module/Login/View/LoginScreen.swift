@@ -118,7 +118,7 @@ struct LoginScreen: View {
 //                        .padding()
 //                }
                 
-                NavigationLink(destination: OrderList().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
                     EmptyView()
                 }
                 
