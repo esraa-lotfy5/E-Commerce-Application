@@ -13,7 +13,7 @@ class LoginViewModel: ObservableObject {
     
     private let networkAPI: NetworkAPI = NetworkAPI()
     
-    func loginCustomer(email: String, password: String, completion: @escaping(Result<CustomersResponse?, NSError>) -> Void) {
+    func loginCustomer(completion: @escaping(Result<CustomersResponse?, NSError>) -> Void) {
 
         networkAPI.loginCustomer { result in
             

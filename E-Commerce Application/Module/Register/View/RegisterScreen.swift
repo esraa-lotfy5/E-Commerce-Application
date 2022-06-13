@@ -296,6 +296,11 @@ struct RegisterScreen: View {
             
             case .success(let customer):
                 print("customer id in register screen: \(customer?.id)")
+                
+                UserDefaults.standard.set(self.email, forKey: "email")
+                UserDefaults.standard.set(customer?.first_name, forKey: "first_name")
+                UserDefaults.standard.set(customer?.last_name, forKey: "last_name")
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 proceedWithRegister = true
                 showProgressView = false
                 
