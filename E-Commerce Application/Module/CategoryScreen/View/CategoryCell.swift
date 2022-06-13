@@ -7,35 +7,38 @@
 //
 
 import SwiftUI
+import Kingfisher
+
+let categoryDummyProducts = [CategoryProduct(id: 12564, title: "", vendor: "", productType: "", publishedScope: "", status: "", tags: "", variants: [], images: [])]
 
 struct CategoryCell: View {
     
     @State private var isActive = false
 
-    let firstItem : ProductItem
+    let product : CategoryProduct
     var viewWidth : CGFloat = CGFloat(0.0)
     @State private var fav : Bool = false // by default is un fav
-    init(firstItem: ProductItem){
+    init(product: CategoryProduct){
         self.viewWidth = (UIScreen.main.bounds.size.width-50)/2
-        self.firstItem = firstItem
+        self.product = product
     }
 
     var body: some View {
         VStack(alignment: .leading){
-            Image(firstItem.image)
+            KFImage(URL (string: product.images[0].src))
             .resizable()
-                .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height-50)/3)
+            .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height)/3.6)
                 .cornerRadius(15)
             HStack{
                 VStack(alignment: .leading){
                     VStack(alignment: .leading){
-                        Text(firstItem.name)
+                        Text(product.title.split(separator: "|")[0])
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    Text("$ \(firstItem.price)")
+                    Text("$ \(product.variants[0].price)")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)
@@ -52,7 +55,6 @@ struct CategoryCell: View {
                         HStack {
                             if(self.fav){
                                 Image(systemName:"heart.fill")
-//                                        .foregroundColor(.black)
                                         .scaledToFit()
                                         .foregroundColor(.red)
                             }
@@ -60,7 +62,6 @@ struct CategoryCell: View {
                                 Image(systemName:"heart")
                                 .foregroundColor(.black)
                                 .scaledToFit()
-//                                .foregroundColor(.black)
                             }
                         }.frame(width: 25, height: 20)
                             .background(Color.white)
@@ -79,6 +80,6 @@ struct CategoryCell: View {
 
 struct CategoryCell_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryCell(firstItem: dummyProducts[0])
+        CategoryCell(product: categoryDummyProducts[0])
     }
 }

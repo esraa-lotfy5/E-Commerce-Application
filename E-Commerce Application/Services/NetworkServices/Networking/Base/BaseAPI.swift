@@ -30,6 +30,8 @@ class BaseAPI<T: TargetType> {
                 
                 if statusCode == 200 {
                     // successful request
+                    print("---------url --------------")
+                    print("\(target.baseURL)+\(target.path)\(params.0)")
                     guard let response = try? response.result.get() else {
                         // Add custom error
                         print("Error while getting response")

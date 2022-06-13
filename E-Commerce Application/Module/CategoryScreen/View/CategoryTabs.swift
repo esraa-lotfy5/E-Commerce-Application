@@ -11,29 +11,31 @@ import SwiftUI
 struct CategoryTabs: View {
     
     enum Category: String, CaseIterable, Identifiable {
-        case All, Men, Women, Kids
+        case Men ,Women ,Kids ,Sale
         var id: Self { self }
     }
-
-    @State private var selectedCategory: Category = .All
+    @Binding var selectedCategory : Category
     
     var body: some View {
         HStack{
             Spacer().frame(width:24)
             VStack{
-             Picker("Category", selection: $selectedCategory) {
+                Picker("Category", selection: $selectedCategory) {
                    ForEach(Category.allCases) { cat in
-                       Text(cat.rawValue.capitalized)
+                           Text(cat.rawValue.capitalized)
                    }
-               }
-            }.pickerStyle(SegmentedPickerStyle())
+                 }.pickerStyle(SegmentedPickerStyle())
+            }
+               
             Spacer().frame(width:24)
         }.padding(.bottom, 16)
     }
 }
 
-struct CategoryTabs_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryTabs()
-    }
-}
+//struct CategoryTabs_Previews: PreviewProvider {
+//    @State var viewModel = CategoryViewModel()
+//    static var previews: some View {
+//        CategoryTabs( categoryViewModel: $viewModel)
+////    categoryViewModel: CategoryViewModel()
+//    }
+//}
