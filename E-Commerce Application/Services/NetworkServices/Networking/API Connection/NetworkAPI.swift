@@ -31,6 +31,9 @@ protocol NetworkAPIProtocol {
     func postDiscountCode (discountCode : Parameters, discountId : String ,completion : @escaping (Result<DiscountCode? , NSError>)-> Void)
        
     func getDiscountCode (discountId : String , completion : @escaping (Result<DiscountCodes? , NSError>) -> Void)
+    
+    func getCategoryProducts(parameters : [String:String], completion: @escaping(Result<CategoryProducts?, NSError>) -> Void)
+
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
@@ -130,6 +133,12 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     
     func getDiscountCode(discountId: String, completion: @escaping (Result<DiscountCodes?, NSError>) -> Void) {
         self.fetchData(target: .getDiscountCode(discountId: discountId), responseClass: DiscountCodes.self) { (result) in
+            completion(result)
+        }
+    }
+    
+    func getCategoryProducts(parameters :[String:String], completion: @escaping(Result<CategoryProducts?, NSError>) -> Void){
+        self.fetchData(target: .getCategoryProductsWithBrandName(parameters: parameters), responseClass: CategoryProducts.self){(result) in
             completion(result)
         }
     }
