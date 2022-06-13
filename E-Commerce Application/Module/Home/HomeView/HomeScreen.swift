@@ -28,27 +28,29 @@ var body: some View {
     //    Text("\(viewModel.str.count)")
 
              Spacer()
-            }.blur(radius: presentAlert ? 30 : 0)
+            }
     
-        .onReceive(timer, perform: { _ in
-
-            
-            if count >= 5 {
-                presentAlert.toggle()
-                count = 1
-                
-            }
-            else{
-                count += 1
-            }
-            
-            
-            
-        })
-
-        if  presentAlert {
-            AlertViewHome(show: $presentAlert)
-        }
+//    .blur(radius: presentAlert ? 30 : 0)
+//    
+//        .onReceive(timer, perform: { _ in
+//
+//            
+//            if count >= 5 {
+//                presentAlert.toggle()
+//                count = 1
+//                
+//            }
+//            else{
+//                count += 1
+//            }
+//            
+//            
+//            
+//        })
+//
+//        if  presentAlert {
+//            AlertViewHome(show: $presentAlert)
+//        }
     //.navigationBarBackButtonHidden(true)
     
     }
