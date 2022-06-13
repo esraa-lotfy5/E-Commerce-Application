@@ -27,7 +27,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     
     
     func getAllDraftOrders(){
-        DispatchQueue.global(qos: .background).async {
+//        DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
 
@@ -36,6 +36,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
                     {
                         
+                        print(DraftOrder)
                         if (DraftOrder.note == "cart"){
                             
                             self?.shoppingCartProducts.append(DraftOrder)
@@ -62,8 +63,9 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     }
                     return true
                 })
-            }
+//            }
         }
+    print(shoppingCartProducts)
     }
     
     func deleteDraftOrder(draftOrderID: Int) {
