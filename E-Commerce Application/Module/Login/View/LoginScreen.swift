@@ -18,6 +18,7 @@ struct LoginScreen: View {
     @ObservedObject private var loginViewModel = LoginViewModel()
     @State private var proceedWithLogin: Bool = false
     @State private var showProgressView: Bool = false
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     
     init(){
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -31,7 +32,10 @@ struct LoginScreen: View {
             VStack {
                 
                 Spacer()
-                Text("Login").bold().foregroundColor(.blue)
+                Text("Login")
+                    .bold()
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
                 
                 
                 TextField("Email", text: self.$email)
@@ -112,11 +116,9 @@ struct LoginScreen: View {
 //                        .background(Color.blue)
 //                        .cornerRadius(10)
 //                        .padding()
-//
-//
 //                }
                 
-                NavigationLink(destination: TempOrderView().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                NavigationLink(destination: OrderList().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
                     EmptyView()
                 }
                 
@@ -149,7 +151,7 @@ struct LoginScreen: View {
                     .cornerRadius(10)
                     .padding()
                 
-                //MARK:- REGESTER BUTTON
+                
                 NavigationLink(destination: RegisterScreen()
                     .navigationBarBackButtonHidden(true)
                                //                    .navigationViewStyle(StackNavigationViewStyle())

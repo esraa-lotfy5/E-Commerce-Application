@@ -20,10 +20,9 @@ struct TempOrderView: View {
         
         VStack {
             
-            
             Button(action: {
 
-                getUserOrders()
+//                getUserOrders()
 
             }) {
 
@@ -104,42 +103,42 @@ struct TempOrderView: View {
         }
     }
     
-    func getUserOrders() {
-    
-        ordersViewModel.getUserOrders { result in
-            
-            switch result {
-            
-            case .success(let response):
-                print("login screen customer: \(response)")
-                
-                let filteredOrders = response?.orders.filter {
-                    $0.email?.lowercased() == currEmail?.lowercased()
-                }
-                
-                guard let orders = filteredOrders else {
-                    
-                    print("there is no orders for this user")
-                    return
-                    
-                }
-                
-                if orders.count > 0 {
-                    print("there are \(orders.count) orders for this user")
-                    // append to your list
-                    
-                } else {
-                    print("there is no orders for this user")
-                }
-                
-                
-            case .failure(let error):
-                print("orders screen error: \(error.localizedDescription)")
-            }
-            
-        }
-        
-    }
+//    func getUserOrders() {
+//    
+//        ordersViewModel.getUserOrders { result in
+//            
+//            switch result {
+//            
+//            case .success(let response):
+//                print("login screen customer: \(response)")
+//                
+//                let filteredOrders = response?.orders.filter {
+//                    $0.email?.lowercased() == currEmail?.lowercased()
+//                }
+//                
+//                guard let orders = filteredOrders else {
+//                    
+//                    print("there is no orders for this user")
+//                    return
+//                    
+//                }
+//                
+//                if orders.count > 0 {
+//                    print("there are \(orders.count) orders for this user")
+//                    // append to your list
+//                    
+//                } else {
+//                    print("there is no orders for this user")
+//                }
+//                
+//                
+//            case .failure(let error):
+//                print("orders screen error: \(error.localizedDescription)")
+//            }
+//            
+//        }
+//        
+//    }
     
 }
 

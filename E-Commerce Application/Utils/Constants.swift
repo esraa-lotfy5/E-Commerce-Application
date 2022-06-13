@@ -21,6 +21,6 @@ struct Constants {
 
 struct ErrorMessages {
     static let genericError = "Something went wrong!"
-    static let statusCode422 = "Status code is 422"
+    static let statusCode422 = "Error while creating request!"
     static let emailAndPhoneError = "You need to provide untaken email and phone!"
 }
