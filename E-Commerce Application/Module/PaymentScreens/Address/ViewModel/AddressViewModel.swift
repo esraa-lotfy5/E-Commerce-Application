@@ -15,6 +15,7 @@ class AddressViewModel:ObservableObject{
     
     var api :NetworkAPIProtocol = NetworkAPI()
     @Published  var comingAddressess :[Addresss] = []
+    @Published var defultAddress :Addresss = Addresss(id: 1, address1: "", city: "", country: "")
     
     init() {
         getAddress()

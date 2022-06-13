@@ -24,7 +24,7 @@ struct AddressScreen: View {
         StepperIndicationType.custom(Image(systemName:"3.circle").font(.largeTitle).eraseToAnyView())
     ]
     
-//    var addressess : [FakeAddress]
+    var addressess : [FakeAddress]
     @State var  name : String = ""
     @State var address :String = ""
     @State var city :String = ""
@@ -60,7 +60,6 @@ struct AddressScreen: View {
                 }.padding()
             }
             VStack {
-                
                 
                 TextField("Name", text: self.$name)
                     .padding()
@@ -162,11 +161,26 @@ struct AddressScreen: View {
                     }.frame(height:200)
                 }
                 
-            }.navigationBarBackButtonHidden(true).onAppear {
+            }.navigationBarBackButtonHidden(true)
+            
+            
+            
+            
+            
+            
                 
-                vm.getAddress()
-                
-            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
         }
     }
