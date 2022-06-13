@@ -10,7 +10,7 @@ import Foundation
 
 struct Constants {
     
-    static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-01/"
+    static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-04/"
     
     // endpoints
     static let endPointLogin = "customers.json"

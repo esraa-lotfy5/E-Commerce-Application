@@ -92,7 +92,7 @@ struct LineItems: Decodable {
     var quantity: Int?
     var name: String?
     var sku: String?
-    var vendor: String
+    var vendor: String?
     var price: String?
     var adminGraphqlApiId: String?
     private enum CodingKeys: String, CodingKey {
