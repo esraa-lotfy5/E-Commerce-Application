@@ -202,38 +202,7 @@ struct PlaceOrders: View {
                                 $0.email?.lowercased() == currEmail?.lowercased()
                             }
                             
-//                            let orders = draftOrdersResponse.filter({ draftOrder in
-//
-//                                print("draft order on address vm: in result \(draftOrder)")
-//
-//                                if(draftOrder.email == currEmail ?? "") //TODO: get the current users email
-//                                {
-//
-//                                    if (draftOrder.note == "cart"){
-//
-//                                        itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
-//                                        itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
-//
-//                                        lineItems.append(itemParameter)
-//
-////                                        draftOrders.append(DraftOrder)
-//                                    }
-//
-//                                }
-//                                return true
-//                            })
-                            
-//                            for i in 0..<draftOrdersResponse.count {
-//
-//                            }
-//
                             for draftOrder in orders {
-
-        //                        lineItems.append(draftOrder.lineItems[0].variantId)
-        //                        lineItems["variant_id"] = draftOrder.lineItems?[0].variantId
-        //                        lineItems["quantity"] = draftOrder.lineItems?[0].quantity
-
-        //                        lineItems.append("variant_id": draftOrder.lineItems?[0].variantId)
 
                                 itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
                                 itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
@@ -245,40 +214,6 @@ struct PlaceOrders: View {
                             placeOrder(lineItems: lineItems)
                             
                             
-//                            let authenticatedCustomer = customersResponse?.customers.filter {
-//                                $0.email?.lowercased() == email.lowercased() && $0.tags == password
-//                            }
-//
-//                            print("login customer: \(authenticatedCustomer)")
-//
-//                            guard let customer = authenticatedCustomer else {
-//
-//                                showErrorMessage("Authentication Failed!")
-//                                showProgressView = false
-//                                return
-//
-//                            }
-//
-//                            if customer.count > 0 {
-//                                print("logged in successfully \(customer)")
-//
-//                                UserDefaults.standard.set(customer[0].id, forKey: "id")
-//                                UserDefaults.standard.set(self.email, forKey: "email")
-//                                UserDefaults.standard.set(customer[0].first_name, forKey: "first_name")
-//                                UserDefaults.standard.set(customer[0].last_name, forKey: "last_name")
-//                                UserDefaults.standard.set(true, forKey: "isLoggedIn")
-//
-//                                showProgressView = false
-//                                proceedWithLogin = true
-//
-//
-//
-//                            } else {
-//                                showErrorMessage("Authentication Failed!")
-//                                showProgressView = false
-//                            }
-                            
-                            
                         case .failure(let error):
                             print("error while placing order: \(error)")
                             
@@ -286,26 +221,6 @@ struct PlaceOrders: View {
                         }
                         
                     }
-//                    var lineItems = [Parameters]()
-//                    var itemParameter: Parameters = [:]
-//                    for draftOrder in draftOrders {
-//
-////                        lineItems.append(draftOrder.lineItems[0].variantId)
-////                        lineItems["variant_id"] = draftOrder.lineItems?[0].variantId
-////                        lineItems["quantity"] = draftOrder.lineItems?[0].quantity
-//
-////                        lineItems.append("variant_id": draftOrder.lineItems?[0].variantId)
-//
-//                        itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
-//                        itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
-//
-//                        lineItems.append(itemParameter)
-//
-//                    }
-//
-//                    placeOrder(lineItems: lineItems)
-                    
-//                    print("")
                     
                 } else {
                     print("Ready for checkout...")
@@ -321,18 +236,7 @@ struct PlaceOrders: View {
     func placeOrder(lineItems: [Parameters]) {
         
         print("place order clicked")
-        
-//        let myItems: [Parameters] = [
-//            [
-//                "variant_id": 40335555395723,
-//                "quantity": 1
-//            ],
-//            [
-//                "variant_id": 40335554379915,
-//                "quantity": 2
-//            ]
-//        ]
-        
+
         let shippingAddress = [
             "first_name": currFirstName ?? "",
             "last_name": currLastName ?? "",
@@ -369,9 +273,6 @@ struct PlaceOrders: View {
     }
     
 }
-
-
-
 
 struct BTDropInRepresentable: UIViewControllerRepresentable {
     var authorization: String

@@ -11,19 +11,47 @@ import SwiftUI
 struct OrderList: View {
     
     @ObservedObject var ordersViewModel = OrdersViewModel()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 //    @State private var currEmail = UserDefaults.standard.string(forKey: "email")
     
     var body: some View {
-    
-        List {
+        
+        VStack {
             
-            ForEach(ordersViewModel.orders) { order in
+            HStack {
                 
-                OrderListItem(order: order)
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.black)
+                    .frame(width: 50, height: 40)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                    .padding(.leading, 20)
+                    .onTapGesture {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                
+                Spacer()
+                
+                Text("Orders").bold().font(.largeTitle)
+                Spacer()
+                Spacer()
                 
             }
+        
+            List {
+                
+                ForEach(ordersViewModel.orders) { order in
+                    
+                    OrderListItem(order: order)
+                    
+                }
+                
+            }.listStyle(.plain)
             
-        }.listStyle(.plain)
+        }
+        
+        
         
     }
     

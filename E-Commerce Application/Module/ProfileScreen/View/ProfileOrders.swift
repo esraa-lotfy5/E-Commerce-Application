@@ -12,7 +12,7 @@ import SwiftUI
 struct ProfileOrders: View {
     
     @ObservedObject var ordersViewModel = OrdersViewModel()
-    @State private var showMoreOrders: Bool = false
+//    @State private var showMoreOrders: Bool = false
     
     var body: some View {
         
@@ -22,10 +22,10 @@ struct ProfileOrders: View {
                 Spacer().frame(width: 24)
                 Text("Orders")
                     .foregroundColor(.black)
-                    .font(.headline)
+                    .font(.largeTitle)
                 Spacer()
                 
-                if showMoreOrders {
+                if showMoreOrders() {
                     
                     NavigationLink(destination: OrderList()
                         .navigationBarBackButtonHidden(true)
@@ -33,7 +33,7 @@ struct ProfileOrders: View {
                                    //                    .navigationBarHidden(true)
                     ){
                         
-                        Text("More..")
+                        Text("View More..")
                             .foregroundColor(.blue)
                         
                     }
@@ -66,11 +66,29 @@ struct ProfileOrders: View {
         if ordersViewModel.orders.count == 1 {
             returnItems = 1
         } else {
+            print("will show more...")
             returnItems = 2
-            showMoreOrders = true
+//            showMoreOrders = true
         }
         
+        print("returned items \(returnItems)")
         return returnItems
+        
+    }
+    
+    func showMoreOrders() -> Bool {
+        
+        var showMore = false
+        
+        if ordersViewModel.orders.count == 1 {
+//            returnItems = 1
+        } else {
+            print("will show more...")
+            showMore = true
+//            showMoreOrders = true
+        }
+        
+        return showMore
         
     }
     
