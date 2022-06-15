@@ -11,7 +11,7 @@ import SwiftUI
 struct OrderList: View {
     
     @ObservedObject var ordersViewModel = OrdersViewModel()
-    @State private var currEmail = UserDefaults.standard.string(forKey: "email")
+//    @State private var currEmail = UserDefaults.standard.string(forKey: "email")
     
     var body: some View {
     

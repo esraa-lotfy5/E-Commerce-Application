@@ -14,6 +14,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     @Published var productInventoryQuantity : ProductInventoryQuantity?
     var networkapi : NetworkAPI = NetworkAPI()
     var draftOrder : DraftOrder?
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
     
     var draftOrderID :Int?
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void){
@@ -37,7 +38,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
         DraftOrders.self) { (result) in
 //            print("request \(String(describing: try? result.get()?.draftOrders))")
             try? result.get()?.draftOrders.filter({ DraftOrder in
-                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                if(DraftOrder.email == self.currEmail ?? "") //TODO: get the current users email
                 {
 //                    print(DraftOrder.note ?? "nil")
                     if (DraftOrder.note == "cart"){
@@ -56,7 +57,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String){
         let parameters =     [
             "draft_order": [
-                "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
+                "email" : currEmail ?? "",  //TODO: get the current users email
                 "note" : "cart",
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"],

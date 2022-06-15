@@ -36,6 +36,7 @@ struct ContentView: View {
 //        HomeScreen()
 //        LoginScreen()
         SplachScreenView()
+//        TabBarHome()
     }
 }
 

@@ -15,7 +15,7 @@ struct TempOrderView: View {
     @State private var currEmail = UserDefaults.standard.string(forKey: "email")
     @State private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
     @State private var currLastName = UserDefaults.standard.string(forKey: "last_name")
-        
+    
     var body: some View {
         
         VStack {
