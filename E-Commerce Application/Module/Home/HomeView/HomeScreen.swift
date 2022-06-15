@@ -18,17 +18,24 @@ struct HomeScreen: View {
    // @AppStorage("count") var count : Int = 1
     @State private var count = UserDefaults.standard.integer(forKey: "count")
     
-    
+    @State var isShown:Bool = true
 var body: some View {
-    VStack{
-                NavigationHome()
-                BannerView()
-                BrandsView()
-             /////   TabBarHome()
-    //    Text("\(viewModel.str.count)")
-
-             Spacer()
-            }
+    if #available(iOS 14.0, *) {
+        VStack{
+            NavigationHome()
+            BannerView()
+            BrandsView()
+            /////   TabBarHome()
+            //    Text("\(viewModel.str.count)")
+            
+            Spacer()
+        }    .fullScreenCover(isPresented:
+                                $isShown, content: {
+            OnBoardingView()
+        })
+    } else {
+        // Fallback on earlier versions
+    }
     
 //    .blur(radius: presentAlert ? 30 : 0)
 //    
@@ -54,4 +61,5 @@ var body: some View {
     //.navigationBarBackButtonHidden(true)
     
     }
+
 }

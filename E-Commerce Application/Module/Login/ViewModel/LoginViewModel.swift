@@ -22,7 +22,7 @@ class LoginViewModel: ObservableObject {
             case .success(let response):
                 
                 
-                print("login viewmodel response: \(response)")
+//                print("login viewmodel response: \(response)")
                 
 //                print("login viewmodel first response: \(response?[0].customers)")
                 completion(.success(response))

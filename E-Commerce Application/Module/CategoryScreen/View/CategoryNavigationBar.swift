@@ -24,7 +24,7 @@ struct CategoryNavigationBar: View {
             // --------Start back button -------------
             
                 Button(action: {
-                    print(String("magnifyingglass button tapped"))
+//                    print(String("magnifyingglass button tapped"))
                     
                     self.presentationMode.wrappedValue.dismiss()
                     
@@ -50,7 +50,7 @@ struct CategoryNavigationBar: View {
             // -------- End back button ---------
             //  --------- start of Search icon -----------------
                Button(action: {
-                    print(String("magnifyingglass button tapped"))
+//                    print(String("magnifyingglass button tapped"))
                 if(self.searchTapped){
                     self.searchTapped = false
                 }else{

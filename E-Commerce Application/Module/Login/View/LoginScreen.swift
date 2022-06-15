@@ -210,7 +210,6 @@ struct LoginScreen: View {
 
             
         }
-        
     }
     
     func validateFields() -> Bool {
