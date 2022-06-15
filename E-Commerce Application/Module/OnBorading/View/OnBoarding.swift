@@ -10,24 +10,26 @@ import Foundation
 import SwiftUI
 //@available(iOS 13.0, *)
 struct OnBoardingView : View {
+    @Binding var shouldShowOnBoarding : Bool
+    
     var body : some View{
         if #available(iOS 14.0, *) {
             TabView{
-                CustomPage(image: "welcome", title: "Welcome To Shoopingo", desc: "Start enjoying the online shopping and see your favorite brands")
+                CustomPage(image: "welcome", title: "Welcome To Shoopingo", desc: "Start enjoying the online shopping and see your favorite brands", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
                 CustomPage(image: "filter", title: "",
                            
-                           desc: "Explore and filter Brand`s Product")
+                           desc: "Explore and filter Brand`s Product", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
-                CustomPage(image: "AddProducts", title: "", desc: "Save your favorite products in your WishList and add them in your shopping cart")
+                CustomPage(image: "AddProducts", title: "", desc: "Save your favorite products in your WishList and add them in your shopping cart", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
-                CustomPage(image: "explore the products", title: "", desc: "Enjoy exploring the products ")
+                CustomPage(image: "explore the products", title: "", desc: "Enjoy exploring the products ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
-                CustomPage(image: "pay online", title: "", desc: "Pay online or cash")
+                CustomPage(image: "pay online", title: "", desc: "Pay online or cash", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
-                CustomPage(image: "pick location", title: "", desc: "Pick your addresses")
+                CustomPage(image: "pick location", title: "", desc: "Pick your addresses", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
-                CustomPage(image: "fast deliver", title: "", desc: "Fast delivery")
+                CustomPage(image: "fast deliver", title: "", desc: "Fast delivery", shownsDismissButton: true, shouldShowOnBoarding: $shouldShowOnBoarding)
                 
                 
             }.tabViewStyle(.page)
@@ -42,6 +44,9 @@ struct CustomPage : View {
     var image : String
     var title : String
     var desc  : String
+    let shownsDismissButton :Bool
+    @Binding var shouldShowOnBoarding : Bool
+
     var body : some View{
         VStack{
         Image( image)
@@ -60,6 +65,19 @@ struct CustomPage : View {
                 .foregroundColor(.blue)
 
             .padding()
+        
+        if shownsDismissButton{
+            Button {
+                shouldShowOnBoarding.toggle()
+            } label: {
+                Text("Get Started")
+                    .bold()
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 40)
+                    .background(Color.pink)
+                    .cornerRadius(6)
+            }
+        }
         }
     }
 }
