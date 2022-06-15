@@ -36,11 +36,17 @@ enum NetworkRequest{
     
     case createOrder(order: Parameters)
     case getUserOrders
+    
+    case updatedCurrency (baseLg : String)
 }
 
 extension NetworkRequest : TargetType {
     var baseURL: String {
         switch self {
+         
+        case .updatedCurrency :
+            return Constants.baseUrlCurrency
+            
         default : return Constants.baseUrl
         }
     }
@@ -106,7 +112,9 @@ extension NetworkRequest : TargetType {
             
         case .getUserOrders:
             return Constants.endPointOrders
-            
+          
+        case.updatedCurrency(let base):
+            return "latest?symbols=EGP,USD,AED,AFN&base=\(base)&apikey=SEYGO2EroCLponB3IyndgQQ04a0oN1jl"
         }
     }
     
@@ -170,6 +178,9 @@ extension NetworkRequest : TargetType {
             return .post
             
         case .getUserOrders:
+            return .get
+            
+        case.updatedCurrency:
             return .get
             
         }
@@ -236,6 +247,9 @@ extension NetworkRequest : TargetType {
             return .requestParameters(parameters: order, encoding: URLEncoding.default)
             
         case .getUserOrders:
+            return .requestPlain
+            
+        case .updatedCurrency:
             return .requestPlain
         }
     }

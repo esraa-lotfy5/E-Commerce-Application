@@ -32,7 +32,10 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var productid :String =  "6870135275659" //"6870133932171"// 
+    var productid :String =  "6870135275659" //"6870133932171"//
+    
+    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     
     var body: some View {
         

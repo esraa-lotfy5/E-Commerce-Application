@@ -36,10 +36,20 @@ protocol NetworkAPIProtocol {
     
     func createOrder(order: Parameters, completion: @escaping(Result<[String: Any]?, NSError>) -> Void)
     func getUserOrders(completion: @escaping(Result<OrdersResponse?, NSError>) -> Void)
+     
+    func getUpdatedCurrency(baselan :String, completion: @escaping(Result<Currency?, NSError>) -> Void)
 
+    
+    
 }
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
+    func getUpdatedCurrency(baselan: String, completion: @escaping (Result<Currency?, NSError>) -> Void) {
+        self.fetchData(target:.updatedCurrency(baseLg: baselan), responseClass: Currency.self){ (result) in
+            completion(result)
+        }
+    }
+    
     func getProductDetails(id: String, completion: @escaping (Result<ProductsResults?, NSError>) -> Void) {
         self.fetchData(target: .getProductDetials(productID: id), responseClass:
         ProductsResults.self) { (result) in

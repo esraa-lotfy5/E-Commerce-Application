@@ -35,7 +35,12 @@ struct ContentView: View {
 //        CategoryScreen()
 //        HomeScreen()
 //        LoginScreen()
+       
+        
         SplachScreenView()
+        
+        //SettingsView()
+        
     }
 }
 

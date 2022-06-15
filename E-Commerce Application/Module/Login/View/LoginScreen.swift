@@ -210,7 +210,7 @@ struct LoginScreen: View {
 
             
         }
-        
+        .navigationBarHidden(true)
     }
     
     func validateFields() -> Bool {

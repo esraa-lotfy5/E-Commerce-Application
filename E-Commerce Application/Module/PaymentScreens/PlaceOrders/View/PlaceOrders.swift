@@ -35,6 +35,9 @@ struct PlaceOrders: View {
     @State var total : Double = 1006.0
     
     
+    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValye")
+
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
@@ -64,7 +67,7 @@ struct PlaceOrders: View {
                         HStack{
                             Text("Sub Total")
                             Spacer()
-                            Text("\(subTotal) USD")
+                            Text("\(currencyValue) USD")
                             
                         }}.padding()
                     Section{
