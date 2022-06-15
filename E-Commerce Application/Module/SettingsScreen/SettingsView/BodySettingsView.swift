@@ -19,11 +19,12 @@ enum CurrencyType: String, CaseIterable {
 
 
 struct BodySettingsView : View{
+
 @State var currencyArr :[CurrencyType] = [.EGP , .USD]
 @State var currencyIndex = 1
-   // @ObservedObject var settingsStore: SettingsStore = SettingsStore()
-    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
-    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+
+@State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+@State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     
     @State private var selectedIndex = 0
     

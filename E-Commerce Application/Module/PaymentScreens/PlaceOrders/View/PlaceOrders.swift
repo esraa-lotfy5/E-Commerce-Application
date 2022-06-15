@@ -37,7 +37,11 @@ struct PlaceOrders: View {
     
     @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
     @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValye")
-
+      
+    @State private var PaymentOptions = UserDefaults.standard.string(forKey: "PaymentOptions")
+    @State private var isPayPal = UserDefaults.standard.bool(forKey: "isPayPal")
+    
+   // @EnvironmentObject var  vm :AddressViewModel
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
@@ -167,7 +171,7 @@ struct PlaceOrders: View {
         //////////
         
         
-        
+        if self.isPayPal {
         if self.showDropIn {
             BTDropInRepresentable(authorization: tokenizationKey, amount: resultD,handler: { controller, result, error in
                 if let error = error {
@@ -183,6 +187,7 @@ struct PlaceOrders: View {
                     print("\(String(describing: type))🎲")
                     print("\(String(describing: paymentMethod))🎲")
                     print("\(String(describing: description))🎲")
+                //    print ("addressinPlaceOrder :\(vm.defultAddress.city)")
                     
                 } else {
                     print("Ready for checkout...")
@@ -192,12 +197,14 @@ struct PlaceOrders: View {
         }
         
         
-    }
+        
+        }
     
     
     
 }
 
+//func pay
 
 
 
@@ -235,4 +242,5 @@ struct BTDropInRepresentable: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: BTDropInController, context: UIViewControllerRepresentableContext<BTDropInRepresentable>) {
     }
+}
 }

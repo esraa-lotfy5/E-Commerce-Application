@@ -165,24 +165,10 @@ struct AddressScreen: View {
             
             
             
-            
-            
-            
-                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+        
             
         }
+        
     }
     
 }

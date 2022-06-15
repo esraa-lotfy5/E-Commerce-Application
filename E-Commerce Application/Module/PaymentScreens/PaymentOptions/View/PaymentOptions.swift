@@ -10,7 +10,20 @@ import SwiftUI
 import StepperView
 
 
+enum PaymentType: String, CaseIterable {
+    case PayPal = "PayPal"
+    case CashOnDeleviry = "Cash"
+    
+}
+
+
+
 struct PaymentOptions: View {
+  //  @State private var currencyString = UserDefaults.standard.string(forKey: "PaymentOptions")
+    @State var optionsArr :[PaymentType] = [.CashOnDeleviry,.PayPal]
+    @State var optionsIndex = 1
+    @ObservedObject  var vm = PaymentOptionViewModel()
+    
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -51,13 +64,47 @@ struct PaymentOptions: View {
             
             
             
-            
-            Picker(selection:$paymentIndex, label: Text("Payments")) {
-                ForEach (0 ..< paymentsOptions.count){
-                    Text(self.paymentsOptions[$0]).tag($0)
+            Form {
+                Section {
+                    
+                  
+                    
+                    
+                    //start of element currency
+                    VStack{
+                        
+                        Toggle(isOn: $vm.PaymentOptionsActivate) {
+                                        Text("Active")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(Color("TextDark"))
+                           // print("value :\()")
+                                    }
+                                    .padding(.top, 6)
+                        
+                    HStack{
+                        Image(systemName: "creditcard")
+                        .frame(width: 25, height: 25)
+                            .foregroundColor(Color.white)
+                            .background(Color.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        
+                        Picker("chooseCurrency", selection: $vm.setUserDefault) {
+                            ForEach(self.optionsArr, id: \.self) { value in
+                                Text(value.rawValue).tag(value)
+                                       }
+                                   }
+                                   .pickerStyle(SegmentedPickerStyle())
+                        
+                      //end of picker
+                    }
                 }
-            }
-            .padding(.leading, 10)
+                    
+                    
+                    //end of element
+
+                    
+                    
+                }}
             Spacer()
             
             

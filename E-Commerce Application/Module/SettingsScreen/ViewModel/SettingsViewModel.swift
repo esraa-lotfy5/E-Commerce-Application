@@ -24,11 +24,7 @@ class SettingsViewModel:ObservableObject{
         CurrencyActivate = true
         
     }
-    
 
-    
-    
-    
     func updatedCurrencyFunc() {
         api.getUpdatedCurrency(baselan: "USD") {(result) in
             switch result {
