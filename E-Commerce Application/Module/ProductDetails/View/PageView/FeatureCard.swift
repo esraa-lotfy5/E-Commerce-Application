@@ -10,11 +10,20 @@ import SwiftUI
 import Kingfisher
 
 struct FeatureCard: View {
-    var image: KFImage
+    var image: String
 
     var body: some View {
-        image.resizable()
-            .scaledToFit()
+//        KFImage(URL (string: image))
+//        .resizable()
+        
+        KFImage(URL(string:   image))
+            .placeholder { Image("default") }
+            .resizable()
+            .onSuccess { r in print("done") }
+            .onFailure { r in print("failure") }
+            .loadImmediately()
+//        image.resizable()
+//            .scaledToFit()
 //            .aspectRatio(3 / 2, contentMode: .fit)
     }
 }

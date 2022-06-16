@@ -70,28 +70,13 @@ struct ProductDetails: View {
              
                 PageView(pages: [
                     
-                    FeatureCard(image:
-                                    KFImage.url(URL(string:
-                                                        productDetailsViewModel.Products?.images?[0].src ?? " "))
-                                        .placeholder { Image("default") }
-                        .resizable()
-                        .onSuccess { r in print("done") }
-                        .onFailure { r in print("failure") }
-                        .loadImmediately()),
+                    FeatureCard(image:    productDetailsViewModel.Products?.images?[0].src! ?? " "),
+
                     
-                    FeatureCard(image:  KFImage.url(URL(string:    productDetailsViewModel.Products?.images?[1].src! ?? " "))
-                        .placeholder { Image("default") }
-                        .resizable()
-                        .onSuccess { r in print("done") }
-                        .onFailure { r in print("failure") }
-                        .loadImmediately()),
+                    FeatureCard(image:    productDetailsViewModel.Products?.images?[1].src! ?? " ")
+                        ,
                     
-                    FeatureCard(image: KFImage.url(URL(string:    productDetailsViewModel.Products?.images?[2].src! ?? " "))
-                        .placeholder { Image("default") }
-                        .resizable()
-                        .onSuccess { r in print("done") }
-                        .onFailure { r in print("failure") }
-                        .loadImmediately())
+                    FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? " ")
                 ]).frame( height: 300)
                 
                 VStack(alignment: .leading) {

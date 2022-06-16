@@ -60,7 +60,7 @@ struct ProductImage3: View {
             .onSuccess { r in print("done") }
             .onFailure { r in print("failure") }
             .loadImmediately()
-            .border(Color.gray)
+            .border(Color.blue)
             .cornerRadius(15)
             .frame(width: 100, height: 150)
                     .padding()

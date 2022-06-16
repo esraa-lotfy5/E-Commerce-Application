@@ -37,7 +37,7 @@ struct SplachScreenView: View{
                     .onAppear{
                         withAnimation(.easeIn(duration:0.8)){
       
-                            self.XXXmovement += 430
+                            self.XXXmovement += 420
 
                         }
                     }
@@ -49,26 +49,26 @@ struct SplachScreenView: View{
                     .onAppear{
                         withAnimation(.easeIn(duration:0.8)){
       
-                            self.XXmovement += 370
+                            self.XXmovement += 360
 
                         }
                     }
-                    .offset(x: 20 , y: CGFloat(XXmovement))
+                    .offset(x: 27 , y: CGFloat(XXmovement))
                 
                 Image(systemName: "bag.fill")
                     .font(.system(size: 50))
-                    .foregroundColor(.black)
+                    .foregroundColor(.yellow)
                     .onAppear{
                         withAnimation(.easeIn(duration:0.8)){
       
-                            self.Xmovement += 310
+                            self.Xmovement += 300
 
                         }
                     }
                     .offset(x: 10 , y: CGFloat(Xmovement))
-                Image(systemName: "cart")
+                Image(systemName: "cart.fill")
                     .font(.system(size: 100))
-                    .foregroundColor(.blue)
+                    .foregroundColor(.black)
                     .onAppear{
                         withAnimation(.easeIn(duration:0.8)){
 //                            self.size
@@ -89,7 +89,6 @@ struct SplachScreenView: View{
                 Text("Shoppingoo")
                     .font(Font.custom("Baskerville-Bold", size: 26))
                     .foregroundColor(.black.opacity(0.80))
-                
             }
             .scaleEffect(size)
             .opacity(opacity)

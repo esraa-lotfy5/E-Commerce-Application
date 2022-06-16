@@ -17,7 +17,7 @@ struct OrderListView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 //    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
-    
+    @State var isActive : Bool = false
     init(){
         shoppingCartViewModel.getAllDraftOrders()
     }
@@ -59,18 +59,17 @@ struct OrderListView: View {
                                 .padding(5)
                             HStack{
                                 Spacer()
-                                
-                                //TODO: deleteProduct
-                                Button(action: {
-                                    
-                                    //TODO: delete
-                                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-                                }) {
-                                    Image(systemName: "trash")
-                                        .resizable()
-                                        .foregroundColor(.gray)
-                                        .frame(width: 25, height: 25)
-                                }
+                                    //TODO: deleteProduct
+                                    Button(action: {
+                                        
+                                        //TODO: delete
+                                        shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .resizable()
+                                            .foregroundColor(.blue)
+                                            .frame(width: 25, height: 25)
+                                    } .buttonStyle(BorderlessButtonStyle())
                                 
                                 
                                 Spacer()
@@ -129,8 +128,28 @@ struct OrderListView: View {
                     .padding(.bottom)
                     }
                     
-                    NavigationLink("CheckOut",destination: AddressScreen(addressess: []).environmentObject(self.shoppingCartViewModel)
-                    )
+                    
+                    
+                    Button(action: {
+                        self.isActive = true
+                    }) {
+                        HStack {
+                            Spacer()
+                            Text("Check Out")
+                                .fontWeight(.bold)
+                                .font(.body)
+                            Spacer()
+                        }
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .background(Color.accentColor)
+                        .cornerRadius(15)
+                        .padding()
+                    }
+                   
+                    NavigationLink( destination: AddressScreen(addressess: []).environmentObject(self.shoppingCartViewModel),isActive: $isActive) {
+                        EmptyView()
+                    }.edgesIgnoringSafeArea(.vertical)
 
                 }
             }
