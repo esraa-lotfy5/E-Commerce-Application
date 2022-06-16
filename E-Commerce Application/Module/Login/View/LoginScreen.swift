@@ -141,7 +141,7 @@ struct LoginScreen: View {
                     } else {
                         Text("Login")
                             .bold()
-                            
+                            .frame(maxWidth: .infinity)
                     }
                     
                 }.padding()
@@ -210,6 +210,7 @@ struct LoginScreen: View {
 
             
         }
+        .navigationBarHidden(true)
     }
     
     func validateFields() -> Bool {
@@ -255,6 +256,7 @@ struct LoginScreen: View {
                 if customer.count > 0 {
                     print("logged in successfully \(customer)")
                     
+                    UserDefaults.standard.set(customer[0].id, forKey: "id")
                     UserDefaults.standard.set(self.email, forKey: "email")
                     UserDefaults.standard.set(customer[0].first_name, forKey: "first_name")
                     UserDefaults.standard.set(customer[0].last_name, forKey: "last_name")

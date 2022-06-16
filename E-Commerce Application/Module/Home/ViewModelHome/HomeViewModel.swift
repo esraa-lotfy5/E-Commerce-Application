@@ -47,7 +47,7 @@ class HomeViewModel : ObservableObject {
                 let responseBrand = response
                 
                 self.brands = responseBrand?.smart_collections ?? []
-                print(self.brands)
+//                print(self.brands)
                 for brand in responseBrand?.smart_collections ?? [] {
                     
                     //print("BRAND TITLE  : \(brand.title)")
@@ -70,23 +70,23 @@ class HomeViewModel : ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
+//                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
                 //i stopped here array part 
                 for item in responsePriceRule?.price_rules ?? [] {
                     var name = item.title
                     switch name {
                     case "OPENING45OFF":
-                        print ("eshta")
+//                        print ("eshta")
                         self.priceArr.append(item)
                     case "SALE15OFF":
-                        print ("eshta")
+//                        print ("eshta")
                         self.priceArr.append(item)
                     default:
                         print("mesh naf3a")
                     }
                 }
-                print("\n ARRAYYYY OF PRICE RANGE \n")
-                print(priceArr)
+//                print("\n ARRAYYYY OF PRICE RANGE \n")
+//                print(priceArr)
                 
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
@@ -100,7 +100,7 @@ class HomeViewModel : ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
+//                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
             }

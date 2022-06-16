@@ -189,7 +189,7 @@ struct RegisterScreen: View {
                     
                 }
                 
-                NavigationLink(destination: HomeScreen(), isActive: $proceedWithRegister) {
+                NavigationLink(destination: TabBarHome(), isActive: $proceedWithRegister) {
                     EmptyView()
                 }
                 
@@ -295,8 +295,9 @@ struct RegisterScreen: View {
             switch result {
             
             case .success(let customer):
-                print("customer id in register screen: \(customer?.id)")
+//                print("customer id in register screen: \(customer?.id)")
                 
+                UserDefaults.standard.set(customer?.id, forKey: "id")
                 UserDefaults.standard.set(self.email, forKey: "email")
                 UserDefaults.standard.set(customer?.first_name, forKey: "first_name")
                 UserDefaults.standard.set(customer?.last_name, forKey: "last_name")

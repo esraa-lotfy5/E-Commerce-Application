@@ -29,11 +29,11 @@ class OrdersViewModel: ObservableObject {
             
             case .success(let response):
                 
-                print("orders viewmodel response: \(response ?? [:])")
+//                print("orders viewmodel response: \(response ?? [:])")
                 completion(.success(response))
                 
             case .failure(let error):
-                print("error: \(error.localizedDescription)")
+//                print("error: \(error.localizedDescription)")
                 completion(.failure(error))
                 
             }
@@ -50,7 +50,7 @@ class OrdersViewModel: ObservableObject {
                 
             case .success(let response):
                 
-                print("orders viewmodel response: \(response?.orders ?? [])")
+//                print("orders viewmodel response: \(response?.orders ?? [])")
                 
                 guard let ordersResponse = response else {
                     print("there is no orders for this user")

@@ -9,54 +9,74 @@
 import Foundation
 import SwiftUI
 
-struct BodySettingsView : View{
-private var currencyArr = ["EGP", "USD"]
-@State private var selectedIndex = 0
 
+
+enum CurrencyType: String, CaseIterable {
+    case EGP = "EGP"
+    case USD = "USD"
+    
+}
+
+
+struct BodySettingsView : View{
+
+@State var currencyArr :[CurrencyType] = [.EGP , .USD]
+@State var currencyIndex = 1
+
+@State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+@State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+    
+    @State private var selectedIndex = 0
+    
+
+
+    
+@ObservedObject  var vm = SettingsViewModel()
+@State var active :Bool = false
 
 var body: some View{
-        NavigationView {
+    
+      
+            
+            
             Form {
                 Section {
                     
-                    //start of element location
-                    HStack{
-                        Image(systemName: "location.fill")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        Button(action: {
-                            print("location is clicked")
-                        }, label: {
-                            Text("Choose Location")
-                        })
-                            .foregroundColor(Color.black)
-                        
-                    }
-                    //end of element
-
+                  
                     
                     
                     //start of element currency
+                    VStack{
+                        
+                        Toggle(isOn: $vm.CurrencyActivate) {
+                                        Text("Active")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(Color("TextDark"))
+                           // print("value :\()")
+                                    }
+                                    .padding(.top, 6)
+                        
                     HStack{
                         Image(systemName: "creditcard")
                         .frame(width: 25, height: 25)
                             .foregroundColor(Color.white)
                             .background(Color.gray)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
-                          Picker(selection: $selectedIndex, label:
-                              Text("choose currency")
-                          ) {
-                              ForEach(0 ..< currencyArr.count) {
-                                  Text(self.currencyArr[$0])
-                              }
-                        }
-                          //end of picker
+                        
+                        Picker("chooseCurrency", selection: $vm.setUsetDefault) {
+                            ForEach(self.currencyArr, id: \.self) { value in
+                                           Text(value.rawValue).tag(value)
+                                       }
+                                   }
+                                   .pickerStyle(SegmentedPickerStyle())
+                        
+                      //end of picker
                     }
+                }
+                    
+                    
                     //end of element
 
-                    
                     
                     
              }
@@ -107,8 +127,15 @@ var body: some View{
                             .foregroundColor(Color.white)
                             .background(Color.gray)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
+                        
+                        NavigationLink(destination: LoginScreen(),isActive: $active) {
+                         EmptyView()
+                        }
                         Button(action: {
                             print("logout is clicked")
+                            isloggedOut()
+                            self.active = true
+                                
                         }, label: {
                             Text("Logout")
                         })
@@ -120,13 +147,17 @@ var body: some View{
             
                 
         }
-    }
+    
     
 
     }
-    
+    func isloggedOut (){
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        
+    }
     
     
 }
+
 
 

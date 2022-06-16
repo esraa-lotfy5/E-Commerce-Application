@@ -10,13 +10,17 @@ import Foundation
 import SwiftUI
 
 class CategoryViewModel : ObservableObject{
+    var brandName : String?
     @Published var selectedCategory : CategoryTabs.Category = .Men
     @Published  var products :[CategoryProduct] = []
+    @Published var searchEnbled = false
+    @Published var productsCopy : [CategoryProduct] = []
     @Published var param : [String: String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
     @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
     
-    init() {
+    init(brandName: String) {
+        param.updateValue(brandName, forKey: "vendor")
         getProducts()
     }
     func getProducts(){
@@ -27,6 +31,7 @@ class CategoryViewModel : ObservableObject{
                 let productsResponse = response
                 //print("-----------------------------------")
                 self.products = productsResponse?.products ?? []
+                //self.productsCopy = self.products
                 //print("----------------------------------for: \(self.products.isEmpty)----------")
                 for product in self.products{
                     //print("----------------------------------product----------")
@@ -41,7 +46,7 @@ class CategoryViewModel : ObservableObject{
     }
     
     func updateParameters() -> [String:String]{
-//        print("before updating params: \(param)")
+        print("before updating params: \(param)")
         var newParam = param
         if(param["vendor"] == ""){newParam.removeValue(forKey: "vendor")}
         if(param["collection_id"] == ""){newParam.removeValue(forKey: "collection_id")}else{
@@ -63,7 +68,7 @@ class CategoryViewModel : ObservableObject{
             }
         }
         if(param["product_type"] == ""){newParam.removeValue(forKey: "product_type")}
-//        
+//
 //        print("-------------------------new param -----------------")
 //        print("after updating param: \(newParam)")
         return newParam

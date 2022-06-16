@@ -24,15 +24,15 @@ class RegisterViewModel: ObservableObject {
                 if let response = response {
 
                     let customerDict = response["customer"] as! [String: Any]
-                    print("Customer dict: \(customerDict)")
+//                    print("Customer dict: \(customerDict)")
 
                     let customer = Customer(id: customerDict["id"] as? Int64,first_name: customerDict["first_name"] as? String, last_name: customerDict["last_name"] as? String, email: customerDict["email"] as? String)
 
-                    print("view model response: \(response)")
-                    print("view model response: \(response)")
-                    print("view model customer: \(customer)")
-                    print("view model customer id: \(customer.id ?? 0)")
-                    print("view model customer email: \(customer.email ?? "")")
+//                    print("view model response: \(response)")
+//                    print("view model response: \(response)")
+//                    print("view model customer: \(customer)")
+//                    print("view model customer id: \(customer.id ?? 0)")
+//                    print("view model customer email: \(customer.email ?? "")")
                     completion(.success(customer))
                 }
                 

@@ -10,7 +10,7 @@ import SwiftUI
 
 import StepperView
 import BraintreeDropIn
-
+import Alamofire
 
 struct PlaceOrders: View {
     
@@ -34,13 +34,16 @@ struct PlaceOrders: View {
     @State var discound : Double = 0.0
     @State var total : Double = 1006.0
     
-    
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
+    private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
+    private var currLastName = UserDefaults.standard.string(forKey: "last_name")
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
     var amount : NSDecimalNumber = 1000000
     
     @State var showDropIn = false
+    @ObservedObject var addressViewModel = AddressViewModel()
     
     var body: some View {
         let size = Decimal(amountInt)
@@ -181,6 +184,44 @@ struct PlaceOrders: View {
                     print("\(String(describing: paymentMethod))🎲")
                     print("\(String(describing: description))🎲")
                     
+                    addressViewModel.getAllDraftOrders { result in
+                        
+                        switch result {
+                        
+                        case .success(let draftOrders):
+                            print("place order screen draft orders: \(draftOrders)")
+                            
+                            var lineItems = [Parameters]()
+                            var itemParameter: Parameters = [:]
+                            
+                            guard let draftOrdersResponse = draftOrders?.draftOrders else {
+                                return
+                            }
+                            
+                            let orders = draftOrdersResponse.filter {
+                                $0.email?.lowercased() == currEmail?.lowercased()
+                            }
+                            
+                            for draftOrder in orders {
+
+                                itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
+                                itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
+
+                                lineItems.append(itemParameter)
+
+                            }
+//
+                            placeOrder(lineItems: lineItems)
+                            
+                            
+                        case .failure(let error):
+                            print("error while placing order: \(error)")
+                            
+                            
+                        }
+                        
+                    }
+                    
                 } else {
                     print("Ready for checkout...")
                 }
@@ -192,11 +233,46 @@ struct PlaceOrders: View {
     }
     
     
+    func placeOrder(lineItems: [Parameters]) {
+        
+        print("place order clicked")
+
+        let shippingAddress = [
+            "first_name": currFirstName ?? "",
+            "last_name": currLastName ?? "",
+            "address1": addressViewModel.defultAddress.address1,
+            "city": addressViewModel.defultAddress.city,
+            "country": addressViewModel.defultAddress.country
+        ]
+        
+        let order: Parameters = [ "order": [
+            "email": currEmail ?? "",
+            "line_items": lineItems,
+            "shipping_address": shippingAddress
+        ]
+        ]
+        
+        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+        print("order with address: \(addressViewModel.defultAddress.address1), city: \(addressViewModel.defultAddress.city) and country: \(addressViewModel.defultAddress.country)")
+        print("order items: \(lineItems)")
+        
+        addressViewModel.createOrder(order: order) { result in
+            
+            switch result {
+                
+            case .success(let order):
+                print("order in view: \(order)")
+                
+            case .failure(let error):
+                // handle error
+                print("error occurred")
+                print("error: \(error.localizedDescription)")
+            }
+            
+        }
+    }
     
 }
-
-
-
 
 struct BTDropInRepresentable: UIViewControllerRepresentable {
     var authorization: String

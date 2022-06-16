@@ -15,7 +15,7 @@ struct TempOrderView: View {
     @State private var currEmail = UserDefaults.standard.string(forKey: "email")
     @State private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
     @State private var currLastName = UserDefaults.standard.string(forKey: "last_name")
-        
+    
     var body: some View {
         
         VStack {
@@ -57,7 +57,7 @@ struct TempOrderView: View {
         
 //        showProgressView = true
         
-        print("place order clicked")
+//        print("place order clicked")
         
         let myItems: [Parameters] = [
             [
@@ -85,7 +85,7 @@ struct TempOrderView: View {
         ]
         ]
         
-        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+//        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
         
         ordersViewModel.createOrder(order: order) { result in
             
@@ -96,7 +96,7 @@ struct TempOrderView: View {
                 
             case .failure(let error):
                 // handle error
-                print("error occurred")
+//                print("error occurred")
                 print("error: \(error.localizedDescription)")
             }
             

@@ -6,6 +6,7 @@
 //  Copyright © 2022 iti. All rights reserved.
 //
 import Foundation
+import UIKit
 
 protocol ShoppingCartProtocol {
     func getAllDraftOrders()
@@ -22,21 +23,30 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     @Published var totalPrice = 0.0
     @Published var subTotalPrice = 0.0
     @Published var totalTax = 0.0
+    
 
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
+//    
+//    func getTotalPrice() -> Double{
+//        
+//        self.getAllDraftOrders()
+//        
+//        return totalPrice
+//        
+//    }
     
-    
-    
-    func getAllDraftOrders(){
-//        DispatchQueue.global(qos: .background).async {
+    func getAllDraftOrders() {
+        print(self.currEmail)
+
+        DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
-
                 try? result.get()?.draftOrders.filter({ DraftOrder in
-
-                    if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                    print(DraftOrder.email)
+                    print(self?.currEmail )
+                    if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
                     {
                         
-                        print(DraftOrder)
                         if (DraftOrder.note == "cart"){
                             
                             self?.shoppingCartProducts.append(DraftOrder)
@@ -63,9 +73,8 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     }
                     return true
                 })
-//            }
+            }
         }
-    print(shoppingCartProducts)
     }
     
     func deleteDraftOrder(draftOrderID: Int) {
@@ -79,12 +88,22 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
             
         }
     }
-    
+    func deleteAllDraftOrder() {
+        
+        for i in shoppingCartProducts{
+            DispatchQueue.global(qos: .background).async {
+
+                self.networkApi.deleteDraftOrder(draftOrder: i.id ?? 0)
+               
+            }
+        }
+       
+    }
     
     func updateDraftOrder(variantId: Int , quantity : Int, draftOrderID:Int){
         let parameters =     [
             "draft_order": [
-                "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
+                "email" : currEmail ?? "",  //TODO: get the current users email
                 "note" : "cart",
                 "line_items": [[
                     "variant_id": variantId,
@@ -111,7 +130,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
             self.networkApi.getAllDraftOrders { [weak self] result in
             try? result.get()?.draftOrders.filter({ DraftOrder in
 
-                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                 {
                     
                     if (DraftOrder.note == "cart"){

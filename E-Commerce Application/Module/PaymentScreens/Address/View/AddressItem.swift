@@ -12,9 +12,15 @@ import SwiftUI
 struct AddressItem: View {
     var address : Addresss
     @ObservedObject  var vm = AddressViewModel()
+    
+    @State var active :Bool = false
     var body: some View {
         
         
+        NavigationLink(destination: PaymentOptions(),isActive: $active) {
+            
+            EmptyView()
+        }
         
         ZStack{
             
@@ -40,6 +46,7 @@ struct AddressItem: View {
                 print(" address defultObject : \(vm.defultAddress.address1)")
                 print(" country defultObject : \(vm.defultAddress.country)")
                 print(" city defultObject : \(vm.defultAddress.city)")
+                self.active = false
             }
         }
         .frame(width: 300 , height: 150)
@@ -48,9 +55,12 @@ struct AddressItem: View {
             print(" address defultObject : \(vm.defultAddress.address1)")
             print(" country defultObject : \(vm.defultAddress.country)")
             print(" city defultObject : \(vm.defultAddress.city)")
+            self.active = false
         }
         
-    }}
+    }
+    
+}
 
 struct AddressItem_Previews: PreviewProvider {
     static var previews: some View {
