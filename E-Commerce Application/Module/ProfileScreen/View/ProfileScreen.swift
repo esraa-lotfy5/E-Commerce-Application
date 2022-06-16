@@ -21,13 +21,15 @@ struct ProfileScreen: View {
                     //  --------- start of user name row -----------------
                     HStack{
                         Spacer()
-                        Text("Hello \(userName),")
+                        Text("Hello, \(userName)")
                             .font(.system(size: 20.0))
                         Spacer()
                     }.padding(.bottom, 16)
                     //  --------- end of user name row -------------------
                     //  --------- start of user orders -------------------
+                    
                     ProfileOrders()
+                    
                     //  --------- end of user orders ---------------------
                     //  --------- start of user wishlist -----------------
                     ProfileWishlist()
@@ -39,6 +41,7 @@ struct ProfileScreen: View {
                         .font(.system(size: 24))
                         .padding(.bottom, 10)
                     HStack{
+                        
                         Spacer()
                         Text("Login")
                             .font(.system(size: 24))
@@ -69,6 +72,6 @@ struct ProfileScreen: View {
 
 struct ProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileScreen(userloggedIn: false)
+        ProfileScreen(userloggedIn: true)
     }
 }

@@ -22,25 +22,21 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     @Published var totalPrice = 0.0
     @Published var subTotalPrice = 0.0
     @Published var totalTax = 0.0
-    var customer : Customer?
+
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
     
-//
-//    func getCurrentCustomer(){
-//        self.networkApi.getCurrentCustomer { result in
-//            self.customer = try? result.get()
-//        }
-//    }
-    func getAllDraftOrders(){
-//        DispatchQueue.global(qos: .background).async {
-//        self.getCurrentCustomer()
+    
+    func getAllDraftOrders() {
+        
+        DispatchQueue.global(qos: .background).async {
+
             self.networkApi.getAllDraftOrders { [weak self] result in
 
                 try? result.get()?.draftOrders.filter({ DraftOrder in
 
-                    if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                    if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                     {
                         
-                        print(DraftOrder)
                         if (DraftOrder.note == "cart"){
                             
                             self?.shoppingCartProducts.append(DraftOrder)
@@ -67,9 +63,8 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     }
                     return true
                 })
-//            }
+            }
         }
-    print(shoppingCartProducts)
     }
     
     func deleteDraftOrder(draftOrderID: Int) {
@@ -88,7 +83,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     func updateDraftOrder(variantId: Int , quantity : Int, draftOrderID:Int){
         let parameters =     [
             "draft_order": [
-                "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
+                "email" : currEmail ?? "",  //TODO: get the current users email
                 "note" : "cart",
                 "line_items": [[
                     "variant_id": variantId,
@@ -115,7 +110,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
             self.networkApi.getAllDraftOrders { [weak self] result in
             try? result.get()?.draftOrders.filter({ DraftOrder in
 
-                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                 {
                     
                     if (DraftOrder.note == "cart"){
