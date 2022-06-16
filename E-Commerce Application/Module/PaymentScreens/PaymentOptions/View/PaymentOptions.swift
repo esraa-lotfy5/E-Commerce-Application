@@ -20,7 +20,7 @@ enum PaymentType: String, CaseIterable {
 
 struct PaymentOptions: View {
   //  @State private var currencyString = UserDefaults.standard.string(forKey: "PaymentOptions")
-    @State var optionsArr :[PaymentType] = [.CashOnDeleviry,.PayPal]
+    @State var optionsArr :[PaymentType] = [.PayPal,.CashOnDeleviry]
     @State var optionsIndex = 1
     @ObservedObject  var vm = PaymentOptionViewModel()
     
