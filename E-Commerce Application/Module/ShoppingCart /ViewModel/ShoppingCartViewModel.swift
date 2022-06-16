@@ -22,13 +22,17 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     @Published var totalPrice = 0.0
     @Published var subTotalPrice = 0.0
     @Published var totalTax = 0.0
-
+    var customer : Customer?
     
-    
-    
+//
+//    func getCurrentCustomer(){
+//        self.networkApi.getCurrentCustomer { result in
+//            self.customer = try? result.get()
+//        }
+//    }
     func getAllDraftOrders(){
 //        DispatchQueue.global(qos: .background).async {
-
+//        self.getCurrentCustomer()
             self.networkApi.getAllDraftOrders { [weak self] result in
 
                 try? result.get()?.draftOrders.filter({ DraftOrder in

@@ -50,6 +50,13 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
         }
     }
     
+    
+    func getCurrentCustomer( completion: @escaping (Result<Customer?, NSError>) -> Void ){
+        self.fetchData(target: .getCurrentUser , responseClass: Customer.self){ (result) in
+            completion(result)
+        }
+    }
+    
     func getProductDetails(id: String, completion: @escaping (Result<ProductsResults?, NSError>) -> Void) {
         self.fetchData(target: .getProductDetials(productID: id), responseClass:
         ProductsResults.self) { (result) in

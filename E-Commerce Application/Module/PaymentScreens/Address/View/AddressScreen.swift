@@ -163,12 +163,14 @@ struct AddressScreen: View {
                 
             }.navigationBarBackButtonHidden(true)
             
-            
+                
             
         
             
+        }.onAppear{
+            vm.getAddress()
         }
         
+        
     }
-    
 }

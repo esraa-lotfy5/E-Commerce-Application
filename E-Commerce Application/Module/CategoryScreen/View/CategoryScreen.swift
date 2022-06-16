@@ -31,7 +31,7 @@ struct CategoryScreen: View {
                     .onChange(of: categoryViewModel.selectedCategory) { newValue in
                         categoryViewModel.param.updateValue(newValue.rawValue, forKey: "collection_id")
                         categoryViewModel.getProducts()
-                        print("new value -> \(newValue)")
+//                        print("new value -> \(newValue)")
                     }
             } else {
                 // Fallback on earlier versions

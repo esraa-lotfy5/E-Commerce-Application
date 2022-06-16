@@ -57,7 +57,7 @@ struct TempOrderView: View {
         
 //        showProgressView = true
         
-        print("place order clicked")
+//        print("place order clicked")
         
         let myItems: [Parameters] = [
             [
@@ -85,7 +85,7 @@ struct TempOrderView: View {
         ]
         ]
         
-        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+//        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
         
         ordersViewModel.createOrder(order: order) { result in
             
@@ -96,7 +96,7 @@ struct TempOrderView: View {
                 
             case .failure(let error):
                 // handle error
-                print("error occurred")
+//                print("error occurred")
                 print("error: \(error.localizedDescription)")
             }
             

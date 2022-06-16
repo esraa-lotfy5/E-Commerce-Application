@@ -49,7 +49,7 @@ struct CategoryCell: View {
                         }else{
                             self.fav = true
                         }
-                        print(String("heart button tapped"))
+//                        print(String("heart button tapped"))
                     })
                     {
                         HStack {

@@ -30,7 +30,7 @@ class CategoryViewModel : ObservableObject{
                 //print("----------------------------------for: \(self.products.isEmpty)----------")
                 for product in self.products{
                     //print("----------------------------------product----------")
-                    print("product name -> \(product.title)")
+//                    print("product name -> \(product.title)")
                 }
             case .failure(let error):
                 // Show UI Error
@@ -63,9 +63,9 @@ class CategoryViewModel : ObservableObject{
             }
         }
         if(param["product_type"] == ""){newParam.removeValue(forKey: "product_type")}
-        
-        print("-------------------------new param -----------------")
-        print("after updating param: \(newParam)")
+//
+//        print("-------------------------new param -----------------")
+//        print("after updating param: \(newParam)")
         return newParam
     }
 }
