@@ -11,14 +11,16 @@ import QGrid
 
 
 struct CategoryScreen: View {
-    
-    
     var searchProducts : [CategoryProduct] = []
     @State var selectedCat = ""
     // by deafult user untapp search button
     @State private var searchTapped = false
+    var brandName : String?
     //  Category View Model
-    @ObservedObject var categoryViewModel : CategoryViewModel = CategoryViewModel()
+    @ObservedObject var categoryViewModel : CategoryViewModel
+    init(brandName : String){
+        categoryViewModel = CategoryViewModel(brandName: brandName)
+    }
     var body: some View {
         
         VStack{
@@ -56,18 +58,13 @@ struct CategoryScreen: View {
                 CategoryCell(product: $0)
             }
             }
-            
-            
         }.navigationBarBackButtonHidden(true)
-        
-
-        
     }
 }
 
 
 struct CategoryScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryScreen()
+        CategoryScreen(brandName: "")
     }
 }

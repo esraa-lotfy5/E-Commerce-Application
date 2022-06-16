@@ -133,7 +133,7 @@ struct CategoryNavigationBar: View {
     
 struct CategoryNavigationBar_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryNavigationBar(categoryViewModel: CategoryViewModel())
+        CategoryNavigationBar(categoryViewModel: CategoryViewModel(brandName: ""))
     }
 }
 

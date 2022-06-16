@@ -43,7 +43,7 @@ struct GridCell: View {
             .onTapGesture {
                 self.isActive.toggle() } // activate link on image tap
             .background(NavigationLink(destination:  // link in background
-            CategoryScreen(), isActive: $isActive) { EmptyView() })
+                                       CategoryScreen(brandName: brands.brandTitle), isActive: $isActive) { EmptyView() })
  
  
 }

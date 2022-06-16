@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 class CategoryViewModel : ObservableObject{
+    var brandName : String?
     @Published var selectedCategory : CategoryTabs.Category = .Men
     @Published  var products :[CategoryProduct] = []
     @Published var searchEnbled = false
@@ -18,7 +19,8 @@ class CategoryViewModel : ObservableObject{
     @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
     
-    init() {
+    init(brandName: String) {
+        param.updateValue(brandName, forKey: "vendor")
         getProducts()
     }
     func getProducts(){

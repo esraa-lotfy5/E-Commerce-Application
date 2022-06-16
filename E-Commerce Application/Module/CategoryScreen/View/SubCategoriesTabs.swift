@@ -113,6 +113,6 @@ struct SubCategoriesTabs: View {
 
 struct SubCategoriesTabs_Previews: PreviewProvider {
     static var previews: some View {
-        SubCategoriesTabs(categoryViewModel: CategoryViewModel())
+        SubCategoriesTabs(categoryViewModel: CategoryViewModel(brandName: ""))
     }
 }
