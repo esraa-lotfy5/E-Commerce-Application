@@ -6,6 +6,7 @@
 //  Copyright © 2022 iti. All rights reserved.
 //
 import Foundation
+import UIKit
 
 protocol ShoppingCartProtocol {
     func getAllDraftOrders()
@@ -27,14 +28,15 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     
     
     func getAllDraftOrders() {
-        
+        print(self.currEmail)
+
         DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
-
                 try? result.get()?.draftOrders.filter({ DraftOrder in
-
-                    if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
+                    print(DraftOrder.email)
+                    print(self?.currEmail )
+                    if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
                     {
                         
                         if (DraftOrder.note == "cart"){

@@ -81,7 +81,7 @@ extension NetworkRequest : TargetType {
             return "draft_orders.json"
             
         case .getDraftOrders:
-            return "draft_orders.json"
+            return "draft_orders.json?limit=250"
 
         case .updateDraftOrder( draftOrderID: let draftOrderID ,parameters : let Parameters ):
             return "draft_orders/\(draftOrderID).json"
