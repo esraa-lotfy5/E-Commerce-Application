@@ -32,11 +32,12 @@ struct ProductDetails: View {
     let colorWhite = Color(red: 1, green: 1, blue: 1)
     var productSizes = "OS"
     var productColors = "black"
-    var productid :String =  "6870135275659" //"6870133932171"//
-    
-    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
-    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
-    
+    var productid :String? //  "6870135275659" //"6870133932171"//
+
+    init(productId: String){
+        print(productId)
+        self.productid = productId
+    }
     var body: some View {
         
         ScrollView {
@@ -251,7 +252,7 @@ struct ProductDetails: View {
                 
             }.onAppear{
                 
-                self.productDetailsViewModel.getProductDetails(id: self.productid) { (result) in
+                self.productDetailsViewModel.getProductDetails(id: self.productid ?? "0") { (result) in
                     
                     self.varients = self.productDetailsViewModel.Products?.options?.first?.values! ?? ["nil"]
                     
@@ -267,7 +268,7 @@ struct ProductDetails: View {
                 }
                 
                 //TODO: - product inventory_quantity
-                self.productDetailsViewModel.getProductInventoryQuantity(id: self.productid) { (result) in
+                self.productDetailsViewModel.getProductInventoryQuantity(id: self.productid ?? "0") { (result) in
                     productQuantity = try! result.get()?.count ?? 0
 
                 }

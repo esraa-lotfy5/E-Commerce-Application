@@ -11,18 +11,20 @@ import QGrid
 
 
 struct CategoryScreen: View {
+    var searchProducts : [CategoryProduct] = []
     @State var selectedCat = ""
     // by deafult user untapp search button
     @State private var searchTapped = false
-    // request parameters
-//    var parameters : [String:String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
+    var brandName : String?
     //  Category View Model
-    @ObservedObject var categoryViewModel : CategoryViewModel = CategoryViewModel()
-//ADIDAS,"collection_id":"273053712523","product_type":"SHOES"
+    @ObservedObject var categoryViewModel : CategoryViewModel
+    init(brandName : String){
+        categoryViewModel = CategoryViewModel(brandName: brandName)
+    }
     var body: some View {
         
         VStack{
-            CategoryNavigationBar()
+            CategoryNavigationBar(categoryViewModel: categoryViewModel)
             Spacer()
             
             //MARK:- Tabs
@@ -46,24 +48,23 @@ struct CategoryScreen: View {
             }
             Spacer()
             
-            QGrid((categoryViewModel.products), columns: 2,vPadding: 0, hPadding: 8) {
+            
+            if(categoryViewModel.searchEnbled){
+                QGrid((categoryViewModel.productsCopy), columns: 2,vPadding: 0, hPadding: 8) {
                 CategoryCell(product: $0)
-                
             }
-            
-            
+            }else{
+                QGrid((categoryViewModel.products), columns: 2,vPadding: 0, hPadding: 8) {
+                CategoryCell(product: $0)
+            }
+            }
         }.navigationBarBackButtonHidden(true)
-            
-        //.navigationBarTitle("category")
-        
-
-        
     }
 }
 
 
 struct CategoryScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryScreen()
+        CategoryScreen(brandName: "")
     }
 }

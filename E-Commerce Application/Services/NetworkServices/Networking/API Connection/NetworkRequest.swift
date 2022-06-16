@@ -123,9 +123,6 @@ extension NetworkRequest : TargetType {
         case .getCategoryProductsWithBrandName:
             return .get
             
-//        case .getCategoryProduct:
-//            return .get
-            
         case .getProductDetials:
             return .get
             
