@@ -41,6 +41,8 @@ struct PlaceOrders: View {
     @State private var PaymentOptions = UserDefaults.standard.string(forKey: "PaymentOptions")
     @State private var isPayPal = UserDefaults.standard.bool(forKey: "isPayPal")
     
+    var address :Addresss
+    
    // @EnvironmentObject var  vm :AddressViewModel
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
@@ -187,7 +189,7 @@ struct PlaceOrders: View {
                     print("\(String(describing: type))🎲")
                     print("\(String(describing: paymentMethod))🎲")
                     print("\(String(describing: description))🎲")
-                //    print ("addressinPlaceOrder :\(vm.defultAddress.city)")
+                    print ("addressinPlaceOrder :\(address.city)")
                     
                 } else {
                     print("Ready for checkout...")

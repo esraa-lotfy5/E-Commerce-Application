@@ -61,12 +61,7 @@ struct AddressScreen: View {
             }
             VStack {
                 
-                TextField("Name", text: self.$name)
-                    .padding()
-                    .padding(.bottom, -25)
-                    .foregroundColor(Color.blue)
-                
-                Divider().padding()
+               
                 
                 TextField("Address", text: self.$address)
                     .padding()
@@ -115,10 +110,10 @@ struct AddressScreen: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PaymentOptions(),isActive: $active) {
+                   //     NavigationLink(destination: PaymentOptions(),isActive: $active) {
                             
-                            EmptyView()
-                        }.edgesIgnoringSafeArea(.vertical)
+                     //       EmptyView()
+                       // }.edgesIgnoringSafeArea(.vertical)
                         
                         Button(action: {
                             let addressPar  = [
@@ -141,7 +136,7 @@ struct AddressScreen: View {
                         }) {
                             HStack {
                                 Spacer()
-                                Text("Next")
+                                Text("Add New Address")
                                     .fontWeight(.bold)
                                     .font(.body)
                                 Spacer()

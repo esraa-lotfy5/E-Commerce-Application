@@ -17,7 +17,7 @@ struct AddressItem: View {
     var body: some View {
         
         
-        NavigationLink(destination: PaymentOptions(),isActive: $active) {
+        NavigationLink(destination: PaymentOptions(address: address),isActive: $active) {
             
             EmptyView()
         }
@@ -46,7 +46,7 @@ struct AddressItem: View {
                 print(" address defultObject : \(vm.defultAddress.address1)")
                 print(" country defultObject : \(vm.defultAddress.country)")
                 print(" city defultObject : \(vm.defultAddress.city)")
-                self.active = false
+                active.toggle()
             }
         }
         .frame(width: 300 , height: 150)
@@ -55,7 +55,7 @@ struct AddressItem: View {
             print(" address defultObject : \(vm.defultAddress.address1)")
             print(" country defultObject : \(vm.defultAddress.country)")
             print(" city defultObject : \(vm.defultAddress.city)")
-            self.active = false
+            self.active.toggle()
         }
         
     }
