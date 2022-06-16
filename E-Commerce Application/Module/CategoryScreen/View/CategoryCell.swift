@@ -32,7 +32,7 @@ struct CategoryCell: View {
             HStack{
                 VStack(alignment: .leading){
                     VStack(alignment: .leading){
-                        Text(product.title.split(separator: "|")[0])
+                        Text(product.title.split(separator: "|")[1])
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
@@ -74,7 +74,7 @@ struct CategoryCell: View {
         
         .onTapGesture { self.isActive.toggle() } // activate link on image tap
                    .background(NavigationLink(destination:  // link in background
-                   ProductDetails(), isActive: $isActive) { EmptyView() })
+                                              ProductDetails(productId: String(self.product.id)), isActive: $isActive) { EmptyView() })
     }
 }
 

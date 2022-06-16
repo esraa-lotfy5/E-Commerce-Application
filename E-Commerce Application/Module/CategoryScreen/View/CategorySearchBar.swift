@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CategorySearchBar: View {
     
-    @State private var searchWord : String = ""
+    @Binding var searchWord : String 
     
     var body: some View {
         HStack{
@@ -40,8 +40,8 @@ struct CategorySearchBar: View {
     }
 }
 
-struct CategorySearchBar_Previews: PreviewProvider {
-    static var previews: some View {
-        CategorySearchBar()
-    }
-}
+//struct CategorySearchBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategorySearchBar(searchWord: "")
+//    }
+//}

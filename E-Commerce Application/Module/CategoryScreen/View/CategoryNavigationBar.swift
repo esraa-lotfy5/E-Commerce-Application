@@ -14,6 +14,8 @@ struct CategoryNavigationBar: View {
     @State private var searchTapped = false
     @State private var isActive = false
     @State private var isActivef = false
+    @State var searchWord : String = ""
+    let categoryViewModel : CategoryViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
@@ -24,17 +26,7 @@ struct CategoryNavigationBar: View {
             // --------Start back button -------------
             
                 Button(action: {
-                    print(String("magnifyingglass button tapped"))
-                    
                     self.presentationMode.wrappedValue.dismiss()
-                    
-                    
-                    
-                    if(self.searchTapped){
-                        self.searchTapped = false
-                    }else{
-                        self.searchTapped = true
-                    }
                 })
                 {
                     HStack {
@@ -115,16 +107,33 @@ struct CategoryNavigationBar: View {
                 HStack{
             if(self.searchTapped){
     //            // Search Struct
-                CategorySearchBar()
+                if #available(iOS 14.0, *) {
+                    CategorySearchBar(searchWord: $searchWord)
+                        .onChange(of: searchWord) { word in
+                            print(searchWord.uppercased())
+                            if(searchWord == ""){
+                                print("search word is empty")
+                                categoryViewModel.searchEnbled = false
+                            }else{
+                                categoryViewModel.searchEnbled = true
+                                for product in categoryViewModel.products {
+                                    if(product.title.split(separator: "|")[1].contains(searchWord.uppercased())){
+//                                        print("title: \(product.title)")
+                                    }
+                                }
+                                categoryViewModel.productsCopy = categoryViewModel.products.filter {$0.title.contains(searchWord.uppercased()) }
+                            }
+                        }}
+                }
             }
-        }
+        
         }
     }
 }
     
 struct CategoryNavigationBar_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryNavigationBar()
+        CategoryNavigationBar(categoryViewModel: CategoryViewModel())
     }
 }
 

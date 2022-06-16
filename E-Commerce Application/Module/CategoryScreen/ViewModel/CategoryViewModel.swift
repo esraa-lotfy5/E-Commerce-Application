@@ -12,6 +12,8 @@ import SwiftUI
 class CategoryViewModel : ObservableObject{
     @Published var selectedCategory : CategoryTabs.Category = .Men
     @Published  var products :[CategoryProduct] = []
+    @Published var searchEnbled = false
+    @Published var productsCopy : [CategoryProduct] = []
     @Published var param : [String: String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
     @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
@@ -27,6 +29,7 @@ class CategoryViewModel : ObservableObject{
                 let productsResponse = response
                 //print("-----------------------------------")
                 self.products = productsResponse?.products ?? []
+                //self.productsCopy = self.products
                 //print("----------------------------------for: \(self.products.isEmpty)----------")
                 for product in self.products{
                     //print("----------------------------------product----------")
