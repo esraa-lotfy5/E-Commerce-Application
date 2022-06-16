@@ -31,7 +31,7 @@ struct SplachScreenView: View{
         else{
         VStack{
             VStack{
-                Image(systemName: "cube.box.fill")
+                Image(systemName: "bag.fill")
                     .font(.system(size: 50))
                     .foregroundColor(.blue)
                     .onAppear{
@@ -43,7 +43,7 @@ struct SplachScreenView: View{
                     }
                     .offset(x: -15, y: CGFloat(XXXmovement))
                 
-                Image(systemName: "cube.box.fill")
+                Image(systemName: "bag.fill")
                     .font(.system(size: 50))
                     .foregroundColor(.red)
                     .onAppear{
@@ -55,13 +55,13 @@ struct SplachScreenView: View{
                     }
                     .offset(x: 20 , y: CGFloat(XXmovement))
                 
-                Image(systemName: "cube.box.fill")
+                Image(systemName: "bag.fill")
                     .font(.system(size: 50))
                     .foregroundColor(.black)
                     .onAppear{
                         withAnimation(.easeIn(duration:0.8)){
       
-                            self.Xmovement += 330
+                            self.Xmovement += 310
 
                         }
                     }

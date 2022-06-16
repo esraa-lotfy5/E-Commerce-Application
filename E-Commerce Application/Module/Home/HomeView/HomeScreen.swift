@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 struct HomeScreen: View {
     @ObservedObject  var viewModel = HomeViewModel()
+    
     //trial
     @State var presentAlert = false
     @State var shouldShownOnBoarding : Bool = true
@@ -18,7 +19,7 @@ struct HomeScreen: View {
    // @AppStorage("count") var count : Int = 1
     @State private var count = UserDefaults.standard.integer(forKey: "count")
     
-    @State var isShown:Bool = true
+    @State var skipBtn :Bool = true
 var body: some View {
     if #available(iOS 14.0, *) {
         VStack{

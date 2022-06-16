@@ -11,7 +11,7 @@ import StepperView
 import BraintreeDropIn
 
 struct AddressScreen: View {
-    
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -115,7 +115,7 @@ struct AddressScreen: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PaymentOptions(),isActive: $active) {
+                        NavigationLink(destination: PaymentOptions().environmentObject(self.shoppingCartViewModel),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
@@ -169,6 +169,9 @@ struct AddressScreen: View {
             
         }.onAppear{
             vm.getAddress()
+                    print("______PAYMENT________")
+                    print(self.shoppingCartViewModel.totalPrice)
+                
         }
         
         

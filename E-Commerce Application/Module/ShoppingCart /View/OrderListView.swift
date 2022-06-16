@@ -15,8 +15,8 @@ struct OrderListView: View {
 //    @State var shoppingCartProducts : [DraftOrder] = []
     @State var counter : Int = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
-    
+//    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
+    @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
     
     init(){
         shoppingCartViewModel.getAllDraftOrders()
@@ -71,41 +71,6 @@ struct OrderListView: View {
                                         .foregroundColor(.gray)
                                         .frame(width: 25, height: 25)
                                 }
-                                
-                                
-                                
-                                
-//                                //TODO: decrement
-//                                Button(action: {
-//                                    print("\(item.lineItems?.first?.quantity)!)")
-//
-//                                    if((item.lineItems?.first?.quantity)! - 1) == 0{
-//                                        //TODO: delete
-//                                        shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-//                                    }
-//                                    else{
-//                                        //TODO: update
-//                                        shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
-//                                    }
-//
-//                                }) {
-//                                    Image(systemName: "minus.square.fill")
-//                                        .resizable()
-//                                        .foregroundColor(.blue)
-//                                        .frame(width: 25, height: 25)
-//                                }
-//
-//
-//                                Text(" \(item.lineItems?.first?.quantity ?? 0)").bold()
-//
-//                                //TODO: increment
-//                                Button(action: {
-//                                    shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)                                }) {
-//                                    Image(systemName: "plus.square.fill")
-//                                        .resizable()
-//                                        .foregroundColor(.blue)
-//                                        .frame(width: 25, height: 25)
-//                                }
                                 
                                 
                                 Spacer()
@@ -164,7 +129,8 @@ struct OrderListView: View {
                     .padding(.bottom)
                     }
                     
-                    NavigationLink("CheckOut",destination: AddressScreen(addressess: []))
+                    NavigationLink("CheckOut",destination: AddressScreen(addressess: []).environmentObject(self.shoppingCartViewModel)
+                    )
 
                 }
             }
@@ -180,7 +146,6 @@ struct OrderListView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        
     }
     
 //    private func delete(with indexSet: IndexSet) {

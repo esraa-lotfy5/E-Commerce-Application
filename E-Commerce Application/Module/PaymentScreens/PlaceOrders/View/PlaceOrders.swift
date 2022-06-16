@@ -27,6 +27,9 @@ struct PlaceOrders: View {
     ]
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+
+    
     @State private var cobon = ""
     @State var subTotal : Double = 976.0
     @State var shippingFees : Double = 30.0
@@ -45,6 +48,7 @@ struct PlaceOrders: View {
     @State var showDropIn = false
     @ObservedObject var addressViewModel = AddressViewModel()
     
+  
     var body: some View {
         let size = Decimal(amountInt)
         let test = pow(size, 2) - 1
@@ -67,14 +71,14 @@ struct PlaceOrders: View {
                         HStack{
                             Text("Sub Total")
                             Spacer()
-                            Text("\(subTotal) USD")
+                            Text("\(subTotal,  specifier: "%.2f") USD")
                             
                         }}.padding()
                     Section{
                         HStack{
                             Text("Shipping Fees")
                             Spacer()
-                            Text("\(shippingFees) USD")
+                            Text("\(shippingFees,  specifier: "%.2f") USD")
                         }
                     }.padding()
                     Section{
@@ -88,7 +92,7 @@ struct PlaceOrders: View {
                         HStack{
                             Text("Discount")
                             Spacer()
-                            Text("\(discound)USD")
+                            Text("\(discound,  specifier: "%.2f")USD")
                         }
                     }.padding()
                     
@@ -96,7 +100,7 @@ struct PlaceOrders: View {
                         HStack{
                             Text("Grand Total")
                             Spacer()
-                            Text("\(total) USD")
+                            Text("\(total,  specifier: "%.2f") USD" )
                             //                        Text(String(format: "%.2f", total))
                         }
                     }
@@ -163,7 +167,12 @@ struct PlaceOrders: View {
             
             
         }.navigationBarBackButtonHidden(true)
-        
+            .onAppear{
+                print("______PAYMENT________")
+                total = self.shoppingCartViewModel.totalPrice
+                subTotal = self.shoppingCartViewModel.subTotalPrice
+                print(self.total)
+            }
         //////////
         
         
