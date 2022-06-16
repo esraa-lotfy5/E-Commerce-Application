@@ -170,8 +170,8 @@ struct PaymentOptions: View {
             
             
         }.onAppear{
-            print("Total")
-            print(vm.getTotal())
+//            print("Total")
+//            print(vm.getTotal())
         }
         
         
