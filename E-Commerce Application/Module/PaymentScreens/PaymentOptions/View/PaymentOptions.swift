@@ -169,6 +169,9 @@ struct PaymentOptions: View {
             }.navigationBarBackButtonHidden(true)
             
             
+        }.onAppear{
+            print("Total")
+            print(vm.getTotal())
         }
         
         

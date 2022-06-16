@@ -8,14 +8,7 @@
 
 import SwiftUI
 
-struct Product2 : Hashable , Identifiable {
-    var id  = UUID()
-    var name : String?
-    var price : Double?
-    var size: String?
-    var desc: String?
-    
-}
+
 
 struct OrderListView: View {
     @State var shoppingCartCount : Int = 0
