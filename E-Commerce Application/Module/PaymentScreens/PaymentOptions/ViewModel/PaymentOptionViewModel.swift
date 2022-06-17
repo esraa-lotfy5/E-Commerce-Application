@@ -11,8 +11,7 @@ import Foundation
 
 
 class PaymentOptionViewModel:ObservableObject{
-   
-   
+    
     
     init() {
         

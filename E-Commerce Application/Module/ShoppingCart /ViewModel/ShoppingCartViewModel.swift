@@ -23,9 +23,17 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     @Published var totalPrice = 0.0
     @Published var subTotalPrice = 0.0
     @Published var totalTax = 0.0
+    
 
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-    
+//    
+//    func getTotalPrice() -> Double{
+//        
+//        self.getAllDraftOrders()
+//        
+//        return totalPrice
+//        
+//    }
     
     func getAllDraftOrders() {
         print(self.currEmail)
@@ -80,7 +88,17 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
             
         }
     }
-    
+    func deleteAllDraftOrder() {
+        
+        for i in shoppingCartProducts{
+            DispatchQueue.global(qos: .background).async {
+
+                self.networkApi.deleteDraftOrder(draftOrder: i.id ?? 0)
+               
+            }
+        }
+       
+    }
     
     func updateDraftOrder(variantId: Int , quantity : Int, draftOrderID:Int){
         let parameters =     [
