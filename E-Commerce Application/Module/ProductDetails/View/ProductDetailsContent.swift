@@ -37,21 +37,19 @@ struct ProductDetailsContentWithOptions: View {
         
         HStack {
             Text(title)
-            Spacer(minLength: 100)
+//            Spacer(minLength: 100)
 
                 HStack {
                     ForEach(details , id: \.self){ item  in
-
-                        
-                        
                         Button(action: {
                             _text.wrappedValue = item
-                            print("item \(item) tapped")
                         }, label: {
                             Text(item)
+                                .scaledToFit()
+                                .font(.system(size: 16))
                                 .foregroundColor( _text.wrappedValue == item ? .black: .white)  // <-- Here
-                                .fontWeight(.semibold)
-                                .padding(3)
+//                                .fontWeight(.semibold)
+                                .padding(6)
                                 .background(Color.blue)
                                 .cornerRadius(5)
                         })

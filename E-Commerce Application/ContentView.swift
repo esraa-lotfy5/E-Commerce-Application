@@ -13,11 +13,15 @@ struct ContentView: View {
     var body: some View {
 
 //        CategoryScreen()
-//        HomeScreen()
+        if #available(iOS 14.0, *) {
+            HomeScreen()
+        } else {
+            // Fallback on earlier versions
+        }
 //        LoginScreen()
        
         
-        SplachScreenView()
+//        SplachScreenView()
         
         //SettingsView()
    

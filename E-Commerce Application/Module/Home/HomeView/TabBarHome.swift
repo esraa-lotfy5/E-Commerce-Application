@@ -14,10 +14,14 @@ struct TabBarHome: View {
     var body: some View {
 
         TabView{
-            HomeScreen()
-                .tabItem{
-                    Image(systemName: "house")
-                    Text("Home")
+            if #available(iOS 14.0, *) {
+                HomeScreen()
+                    .tabItem{
+                        Image(systemName: "house")
+                        Text("Home")
+                    }
+            } else {
+                // Fallback on earlier versions
             }
             
             

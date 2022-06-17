@@ -8,12 +8,13 @@
 
 import Foundation
 import SwiftUI
+@available(iOS 14.0, *)
 struct HomeScreen: View {
     @ObservedObject  var viewModel = HomeViewModel()
     
     //trial
     @State var presentAlert = false
-    @State var shouldShownOnBoarding : Bool = true
+    @AppStorage("shouldShownOnBoarding") var shouldShownOnBoarding : Bool = true
     let timer = Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()
 
    // @AppStorage("count") var count : Int = 1
@@ -30,10 +31,11 @@ var body: some View {
             //    Text("\(viewModel.str.count)")
             
             Spacer()
-        }    .fullScreenCover(isPresented:
+        }.fullScreenCover(isPresented:
                                 $shouldShownOnBoarding, content: {
             OnBoardingView(shouldShowOnBoarding: $shouldShownOnBoarding)
         })
+        
     } else {
         // Fallback on earlier versions
     }

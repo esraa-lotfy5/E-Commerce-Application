@@ -12,41 +12,25 @@ struct OnBoardingView : View {
     @Binding var shouldShowOnBoarding : Bool
     var body : some View{
         if #available(iOS 14.0, *) {
+           
             TabView{
-              
-                CustomPage(image: "welcome",
-                       
-                           desc: "Start enjoying the online shopping and see your favorite brands",
-                           shownsDismissButton: false,
-                           shouldShowOnBoarding: $shouldShowOnBoarding,
-                           skipBtn: true, alignment: .bottom)
-
-//                CustomPage(image: "TabHome",
 //
-//                           desc: "You Can swip to Home to see your Brands",
+//                CustomPage(image: "welcome",
+//                           desc: "Start enjoying the online shopping and see your favorite brands",
 //                           shownsDismissButton: false,
 //                           shouldShowOnBoarding: $shouldShowOnBoarding,
-//                           skipBtn: false)
+//                           skipBtn: true, alignment: .bottom)
+
 
                 CustomPage(image: "BrandsOnHome", desc: "See Your Favorite Brands ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
-//
-//                CustomPage(image: "AdsInHome",  desc: "See Our new ADs", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false)
 
-                CustomPage(image: "SettingsOnHome", desc: "You Can Edit your Settings", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .center)
-//
-//                //TODO: settings
-//
-
-//                CustomPage(image: "CategoryTab",  desc: "Swipe to Category to see most recent Products ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false)
+                CustomPage(image: "SettingsOnHome", desc: "You Can Edit your Settings", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
+                
+                CustomPage(image: "settings", desc: "Change your currency ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
 
                 CustomPage(image: "filterYourProducts", desc: "Filter the product", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
 
-
-//                CustomPage(image: "filterbygender",  desc: "Categories Your Product", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false)
-
-
                 CustomPage(image: "gotoCart",desc: "Tap here to see Your Shopping Cart", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
-
 
                 CustomPage(image: "gotoWishlist",desc: "Tap here to see Your WishList", shownsDismissButton: false , shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
 
@@ -57,7 +41,21 @@ struct OnBoardingView : View {
                 CustomPage(image: "AddToCartBtn",  desc: "And add the Product on your shopping cart", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
                 
                 CustomPage(image: "explore the products",  desc: "Lets enjoy the shopping ", shownsDismissButton: true, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
+                
             }.tabViewStyle(.page)
+                .alert(isPresented: self.$shouldShowOnBoarding, content: {
+                    Alert(
+                        title: Text("Welcome"), // $alerttitle
+                        message: Text("Would You like to know how to use the app?"),
+                        primaryButton: .destructive(Text("Skip")) {
+                            self.shouldShowOnBoarding = false
+                        }, secondaryButton: .default(Text("Ok"), action: {
+                            self.shouldShowOnBoarding = true
+                        })
+                    )
+                    
+                })
+
         } else {
             // Fallback on earlier versions
         }
@@ -76,14 +74,10 @@ struct CustomPage : View {
         VStack{
         Image( image)
             .resizable()
-            .frame(width: UIScreen.main.bounds.width, height: 700)
+            .frame(width: UIScreen.main.bounds.width, height: 600)
             .padding()
             .overlay(ImageOverlay(desc: desc), alignment: alignment )
-//        Text (desc)
-//                .font(.system(size: 30))
-//                .foregroundColor(.blue)
-//
-//            .padding()
+
         
         if shownsDismissButton{
             Button {
