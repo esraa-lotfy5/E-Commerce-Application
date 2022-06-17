@@ -33,7 +33,7 @@ struct ProfileOrders: View {
                                    //                    .navigationBarHidden(true)
                     ){
                         
-                        Text("View More..")
+                        Text("View More...")
                             .foregroundColor(.blue)
                         
                     }

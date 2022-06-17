@@ -42,31 +42,31 @@ struct CategoryCell: View {
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)
-                VStack(alignment: .trailing){
-                    Button(action: {
-                        if(self.fav){
-                            self.fav = false
-                        }else{
-                            self.fav = true
-                        }
+//                VStack(alignment: .trailing){
+//                    Button(action: {
+//                        if(self.fav){
+//                            self.fav = false
+//                        }else{
+//                            self.fav = true
+//                        }
 //                        print(String("heart button tapped"))
-                    })
-                    {
-                        HStack {
-                            if(self.fav){
-                                Image(systemName:"heart.fill")
-                                        .scaledToFit()
-                                        .foregroundColor(.red)
-                            }
-                            else{
-                                Image(systemName:"heart")
-                                .foregroundColor(.black)
-                                .scaledToFit()
-                            }
-                        }.frame(width: 25, height: 20)
-                            .background(Color.white)
-                    }
-                }
+//                    })
+//                    {
+//                        HStack {
+//                            if(self.fav){
+//                                Image(systemName:"heart.fill")
+//                                        .scaledToFit()
+//                                        .foregroundColor(.red)
+//                            }
+//                            else{
+//                                Image(systemName:"heart")
+//                                .foregroundColor(.black)
+//                                .scaledToFit()
+//                            }
+//                        }.frame(width: 25, height: 20)
+//                            .background(Color.white)
+//                    }
+//                }
             }
         }.cornerRadius(15)
         .frame(width: self.viewWidth)

@@ -96,7 +96,7 @@ extension UserDefaults {
     static var setData: CurrencyType {
         get {
             if let value = UserDefaults.standard.object(forKey: Keys.setData) as? String {
-                return CurrencyType(rawValue: value)!
+                return CurrencyType(rawValue: value) ?? .EGP
             }
             else {
                 return .USD
