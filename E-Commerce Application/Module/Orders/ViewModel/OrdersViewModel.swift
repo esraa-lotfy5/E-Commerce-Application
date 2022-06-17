@@ -14,8 +14,6 @@ class OrdersViewModel: ObservableObject {
     private let networkAPI: NetworkAPI = NetworkAPI()
     @Published var orders: [Order] = []
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-    private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
-    private var currLastName = UserDefaults.standard.string(forKey: "last_name")
     
     init() {
         getUserOrders()
