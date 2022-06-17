@@ -10,7 +10,9 @@ import SwiftUI
 
 struct ProfileScreen: View {
     var userloggedIn : Bool
-    var userName : String = "Esraa"
+//    var userName : String = "Esraa"
+//    @State var userName : String = "Esraa"
+    @State private var userName = UserDefaults.standard.string(forKey: "first_name")
       @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
 //        NavigationView{
@@ -21,7 +23,7 @@ struct ProfileScreen: View {
                     //  --------- start of user name row -----------------
                     HStack{
                         Spacer()
-                        Text("Hello, \(userName)")
+                        Text("Hello, \(userName ?? "")")
                             .font(.system(size: 20.0))
                         Spacer()
                     }.padding(.bottom, 16)

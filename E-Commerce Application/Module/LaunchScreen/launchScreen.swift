@@ -20,13 +20,23 @@ struct SplachScreenView: View{
     @State private var Xmovement = -250
     @State private var XXmovement = -250
     @State private var XXXmovement = -250
+    
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
 
     //    @State private var toPoint = CGPoint(x: 0.0, y: 1.0)
 //    @State private var fromPoint = CGPoint(x: 0.0, y: 0.0)
     var body : some View {
+        
         if isActive{
+            
+//            if isLoggedIn {
+//                HomeScreen()
+//            } else {
+//                LoginScreen()
+//            }
+            
             LoginScreen()
-//            HomeScreen()
+////            HomeScreen()
         }
         else{
         VStack{
