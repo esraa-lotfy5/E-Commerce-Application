@@ -14,8 +14,8 @@ class HomeViewModel : ObservableObject {
     var api :NetworkAPIProtocol = NetworkAPI()
     @Published var brands : [SmartCollection] = []
     @Published var brandsArr : [Brand] = []
-    @Published var discountArr : [DiscountCode] = []
-    @Published var priceArr : [PriceRule] = []
+//    @Published var discountArr : [DiscountCode] = []
+//    @Published var priceArr : [PriceRule] = []
     //trial
    // price rule id = 1095463338123 -- use when posting discount code
 //    let priceRuleObj = [
@@ -35,8 +35,8 @@ class HomeViewModel : ObservableObject {
          getSmartCollections()
         
         //trial
-        getPriceRule ()
-         getDiscountCodes()
+//        getPriceRule ()
+//         getDiscountCodes()
     }
 
     
@@ -63,86 +63,86 @@ class HomeViewModel : ObservableObject {
         }
     }
     
-    //trial
-
-    func getPriceRule (){
-        api.getPriceRule { [self] (result) in
-            switch result {
-            case .success(let response):
-                let responsePriceRule = response
-                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
-                //i stopped here array part 
-                for item in responsePriceRule?.price_rules ?? [] {
-                    var name = item.title
-                    switch name {
-                    case "OPENING45OFF":
-                        print ("eshta")
-                        self.priceArr.append(item)
-                    case "SALE15OFF":
-                        print ("eshta")
-                        self.priceArr.append(item)
-                    default:
-                        print("mesh naf3a")
-                    }
-                }
-                print("\n ARRAYYYY OF PRICE RANGE \n")
-                print(priceArr)
-                
-            case .failure(let error):
-                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
-            }
-        }
-        
-    }
-    
-    func postPriceRule (priceRule : Parameters){
-        api.postPriceRule(priceRule: priceRule) { (result) in
-            switch result {
-            case .success(let response):
-                let responsePriceRule = response
-                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
-            case .failure(let error):
-                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
-            }
-        }
-    }
-    
-
-    
-    func postDiscountCode (discountCode : Parameters){
-
-        api.postDiscountCode(discountCode: discountCode, discountId: "1095463338123") { (result) in
-            switch result {
-            case .success(let response):
-                let responseDiscountRule = response
-                print("DISCOUNT CODE POSTTTTTTT\(String(describing: responseDiscountRule))")
-            case .failure(let error):
-                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
-            }
-        }
-    }
-
-    
-    func getDiscountCodes (){
-        api.getDiscountCode(discountId: "1095463338123") { (result) in
-            switch result {
-            case .success(let response):
-                let responseDiscount = response
-                print("RESPONSE DISCOUNT CODE === \(responseDiscount)")
-                self.discountArr = responseDiscount?.discountCodes ?? []
-                for discount in self.discountArr {
-                    print("DISCOUNT CODE == \(discount.code)\n")
-                    
-                }
-                
-                
-            case .failure(let error):
-                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
-                
-            }
-        }
-    }
-    
+//    //trial
+//
+//    func getPriceRule (){
+//        api.getPriceRule { [self] (result) in
+//            switch result {
+//            case .success(let response):
+//                let responsePriceRule = response
+//                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
+//                //i stopped here array part 
+//                for item in responsePriceRule?.price_rules ?? [] {
+//                    var name = item.title
+//                    switch name {
+//                    case "OPENING45OFF":
+//                        print ("eshta")
+//                        self.priceArr.append(item)
+//                    case "SALE15OFF":
+//                        print ("eshta")
+//                        self.priceArr.append(item)
+//                    default:
+//                        print("mesh naf3a")
+//                    }
+//                }
+//                print("\n ARRAYYYY OF PRICE RANGE \n")
+//                print(priceArr)
+//                
+//            case .failure(let error):
+//                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+//            }
+//        }
+//        
+//    }
+//    
+//    func postPriceRule (priceRule : Parameters){
+//        api.postPriceRule(priceRule: priceRule) { (result) in
+//            switch result {
+//            case .success(let response):
+//                let responsePriceRule = response
+//                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
+//            case .failure(let error):
+//                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+//            }
+//        }
+//    }
+//    
+//
+//    
+//    func postDiscountCode (discountCode : Parameters){
+//
+//        api.postDiscountCode(discountCode: discountCode, discountId: "1095463338123") { (result) in
+//            switch result {
+//            case .success(let response):
+//                let responseDiscountRule = response
+//                print("DISCOUNT CODE POSTTTTTTT\(String(describing: responseDiscountRule))")
+//            case .failure(let error):
+//                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+//            }
+//        }
+//    }
+//
+//    
+//    func getDiscountCodes (){
+//        api.getDiscountCode(discountId: "1095463338123") { (result) in
+//            switch result {
+//            case .success(let response):
+//                let responseDiscount = response
+//                print("RESPONSE DISCOUNT CODE === \(responseDiscount)")
+//                self.discountArr = responseDiscount?.discountCodes ?? []
+//                for discount in self.discountArr {
+//                    print("DISCOUNT CODE == \(discount.code)\n")
+//                    
+//                }
+//                
+//                
+//            case .failure(let error):
+//                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+//                
+//            }
+//        }
+//    }
+//    
 
     
     

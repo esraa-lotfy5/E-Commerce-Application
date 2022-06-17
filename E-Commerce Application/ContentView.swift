@@ -36,7 +36,7 @@ struct ContentView: View {
 //        HomeScreen()
        // LoginScreen()
       SplachScreenView()
-      //FavoriteView()
+      //DiscountCodeView()
     }
 }
 
