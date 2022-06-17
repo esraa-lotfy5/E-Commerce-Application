@@ -24,6 +24,12 @@ struct ProductDetails: View {
     @State var alert_Title = ""
     @State var varientID:Int?
 
+    //trial favorite
+    @State var varientIDFav:Int?
+    
+    @State var heartChecked : Bool = false
+    let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
+
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
@@ -60,7 +66,47 @@ struct ProductDetails: View {
                         Text("Details").bold().padding(15)
                         Spacer()
                         Spacer()
-                    }
+                        
+                        //trial to set icon for favorite
+                        HStack{
+                            Image(systemName: productDetailsViewModel.getFavorites(variantIDFav: productDetailsViewModel.Products?.variants?[0].id ?? -100) ? "heart.fill" : "heart")
+                                .foregroundColor(.red)
+                                .onAppear()
+                                .onReceive(timer) { _ in
+                                    
+                                }
+                        }
+                        .onTapGesture {
+                            print("\n  favorite button is clicked  \n")
+                            print(" \n variant id == \( productDetailsViewModel.Products?.variants?[0].id) \n")
+                            if productDetailsViewModel.getFavorites(variantIDFav: productDetailsViewModel.Products?.variants?[0].id ?? 0) {  // item is liked -- > turn to unlike DELETE
+                                DispatchQueue.main.async {
+                                    let productIdFav = productDetailsViewModel.favoriteItem?.id
+                                    print("PRODUCTID === \(String(describing: productIdFav))")
+                                    productDetailsViewModel.deleteFavorite(draftFavoriteID: productIdFav ?? 0)
+                                    productDetailsViewModel.favoriteHere = false
+                                }
+
+                            }else{ //item is unliked ---> turn to like POST
+                                DispatchQueue.main.async {
+                                let variantIdFav = productDetailsViewModel.Products?.variants?[0].id ?? 0
+                                productDetailsViewModel.postFavorite(variantIDFav: variantIdFav )
+                                productDetailsViewModel.favoriteHere = true
+                                    print("\n posted \n")
+                                }
+                            }
+
+                        }.frame(width: 50, height: 40)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                            .onAppear()
+
+
+                    
+                                    
+                                    
+                                    }
                     Spacer()
                 }
              

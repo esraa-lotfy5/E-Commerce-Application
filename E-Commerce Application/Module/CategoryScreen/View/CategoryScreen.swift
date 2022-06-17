@@ -14,10 +14,14 @@ struct CategoryScreen: View {
     @State var selectedCat = ""
     // by deafult user untapp search button
     @State private var searchTapped = false
+    var brandName : String?
     // request parameters
 //    var parameters : [String:String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
     //  Category View Model
-    @ObservedObject var categoryViewModel : CategoryViewModel = CategoryViewModel()
+    @ObservedObject var categoryViewModel : CategoryViewModel
+    init(brandName : String){
+        self.categoryViewModel = CategoryViewModel(brandName: brandName)
+    }
 //ADIDAS,"collection_id":"273053712523","product_type":"SHOES"
     var body: some View {
         
@@ -64,6 +68,6 @@ struct CategoryScreen: View {
 
 struct CategoryScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryScreen()
+        CategoryScreen(brandName: "")
     }
 }

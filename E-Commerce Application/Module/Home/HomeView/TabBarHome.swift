@@ -21,7 +21,7 @@ struct TabBarHome: View {
             }
             
             
-            CategoryScreen()
+            CategoryScreen(brandName: "")
                 .tabItem{
                     Image(systemName: "rectangle.grid.3x2.fill")
                     Text("Category")

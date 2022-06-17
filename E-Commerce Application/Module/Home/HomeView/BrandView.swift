@@ -22,7 +22,8 @@ struct BrandsView: View {
 struct GridCell: View {
     var brands : Brand
     @State private var isActive = false
-
+    @State var brandName : String?
+    @ObservedObject  var viewModelCategory = CategoryViewModel(brandName: "")
     var body: some View {
 
         VStack(){
@@ -41,9 +42,13 @@ struct GridCell: View {
         }.border(Color.gray,width: 4)
             .cornerRadius(10)
             .onTapGesture {
-                self.isActive.toggle() } // activate link on image tap
+                self.isActive.toggle()
+                brandName = brands.brandTitle
+                print("BRAND NAME == \(brandName)")
+               // viewModelCategory.param.updateValue(brandName ?? "noBrand", forKey: "vendor")
+            } // activate link on image tap"
             .background(NavigationLink(destination:  // link in background
-            CategoryScreen(), isActive: $isActive) { EmptyView() })
+                                       CategoryScreen( brandName: brandName ?? ""), isActive: $isActive) { EmptyView() })
  
  
 }

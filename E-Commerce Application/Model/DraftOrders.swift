@@ -16,8 +16,17 @@ struct DraftOrders : Decodable {
     }
 
 }
-struct DraftOrder : Decodable , Identifiable {
+struct DraftOrder : Decodable , Identifiable , Hashable{
+    
 
+    static func == (lhs: DraftOrder, rhs: DraftOrder) -> Bool {
+        return lhs.adminGraphqlApiId == rhs.adminGraphqlApiId && lhs.adminGraphqlApiId == rhs.adminGraphqlApiId
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(adminGraphqlApiId)
+        hasher.combine(adminGraphqlApiId)
+    }
 
 
         let id: Int?
@@ -92,7 +101,7 @@ struct LineItems: Decodable {
     var quantity: Int?
     var name: String?
     var sku: String?
-    var vendor: String
+    var vendor: String?
     var price: String?
     var adminGraphqlApiId: String?
     private enum CodingKeys: String, CodingKey {
@@ -185,9 +194,8 @@ struct NoteAttributes: Decodable {
 //        case acceptsMarketingUpdatedAt = "accepts_marketing_updated_at"
 //        case adminGraphqlApiId = "admin_graphql_api_id"
 //    }
-//    
+//
 //}
-
 
 //
 //struct DefaultAddress: Codable {
