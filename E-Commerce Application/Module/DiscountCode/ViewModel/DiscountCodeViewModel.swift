@@ -56,7 +56,7 @@ class DiscountCodeViewModel: ObservableObject {
         
     }
     
-    func getDiscountValue (promo : String){
+    func getDiscountValue (promo : String) -> String{
         //var returnedValue : String?
         api.getPriceRule { [self] (result) in
             switch result {
@@ -81,7 +81,7 @@ class DiscountCodeViewModel: ObservableObject {
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
             }
         }
-       // return returnedValue ?? "0"
+        return returnedValue ?? "0"
     }
     
     
@@ -132,6 +132,22 @@ class DiscountCodeViewModel: ObservableObject {
             }
         }
     }
+    
+    
+//    //call the function to get the value -- start
+//        viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
+//    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//        if viewModelDiscount.returnedValue != "0"{
+//            print("GET FUNCTION VALUE DISCOUNT == \(viewModelDiscount.returnedValue)")
+//
+//        }else{
+//            viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
+//
+//        }
+//
+//    }
+//    //call the function to get the value -- end
+    
     
     
 }

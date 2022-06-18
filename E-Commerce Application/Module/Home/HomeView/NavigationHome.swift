@@ -155,10 +155,7 @@ struct NavigationHome : View {
                                 .foregroundColor(.black)
                         }
                         .onTapGesture {
-                         self.isActive.toggle()                            
-                                viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
-                                                    
-                            
+                         self.isActive.toggle()
                         } // activate link on image tap
                          .background(NavigationLink(destination:  DiscountCodeView(), isActive: $isActive)
                          { EmptyView() }                    .navigationBarBackButtonHidden(true)
