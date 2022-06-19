@@ -34,7 +34,7 @@ struct ProductDetails: View {
     var productColors = "black"
     var productid :String? //  "6870135275659" //"6870133932171"//
     @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.string(forKey: "currencyValue")
+    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     init(productId: String){
         print(productId)
         self.productid = productId
@@ -85,7 +85,7 @@ struct ProductDetails: View {
                     HStack {
                         Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                         Spacer()
-                        Text("\(productDetailsViewModel.Products?.variants?[0].price ?? "") \(currency ?? " ")").foregroundColor(.blue)
+                        Text("\((Double(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  * Double(currencyValue) , specifier: "%.2f")  \(currency ?? " ")").foregroundColor(.blue)
                     }
                     
                     
@@ -237,7 +237,8 @@ struct ProductDetails: View {
                 }.padding()
                 
             }.onAppear{
-                
+                print("VALUE")
+                print(currencyValue)
                 self.productDetailsViewModel.getProductDetails(id: self.productid ?? "0") { (result) in
                     
                     self.varients = self.productDetailsViewModel.Products?.options?.first?.values! ?? ["nil"]

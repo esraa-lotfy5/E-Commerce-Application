@@ -18,6 +18,8 @@ struct OrderListView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 //    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
+    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     @State var isActive : Bool = false
     @State var refresh = false
     init(){
@@ -107,7 +109,7 @@ struct OrderListView: View {
                     } //.onDelete(perform: delete)
                 }.refreshable {
                     
-                    if refresh {
+                    while refresh {
                         print("refresh")
                         print(refresh)
 
@@ -122,14 +124,14 @@ struct OrderListView: View {
                 Section{
                     HStack{
                         VStack(alignment: .leading){
-                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice , specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )   " )
+                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice * Double(currencyValue) , specifier: "%.2f") \(currency ?? "nil" )   " )
                             
                                 .foregroundColor(.blue)
                                 .font(.headline)
-                            Text("  Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" ) ")
+                            Text("  Total Tax : \(shoppingCartViewModel.totalTax * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "nil" )")
                                 .foregroundColor(.blue)
                                 .font(.headline)
-                            Text("  Total Price: \(shoppingCartViewModel.totalPrice,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )")
+                            Text("  Total Price: \(shoppingCartViewModel.totalPrice * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "nil" )")
                             
                                 .foregroundColor(.blue)
                                 .font(.headline)
