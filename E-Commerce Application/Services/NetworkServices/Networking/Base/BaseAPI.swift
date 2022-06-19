@@ -88,7 +88,7 @@ class BaseAPI<T: TargetType> {
                     }
                     
                     // return the result
-                    print("\(responseClass) result returned successfully: \(response)")
+                    print("\(responseClass) result returned successfully: \(response) tested")
                     completion(.success(response as? M))
                     
                 } else {

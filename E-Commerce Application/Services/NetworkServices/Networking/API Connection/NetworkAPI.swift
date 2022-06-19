@@ -112,9 +112,10 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     }
 
     func postDraftOrder(parameter: Parameters) {
+        print("from postdraftorder func \(parameter) ")
         self.writeData(target: .
             postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in
-            
+            print("from complition handler \(result)")
         }
     }
     

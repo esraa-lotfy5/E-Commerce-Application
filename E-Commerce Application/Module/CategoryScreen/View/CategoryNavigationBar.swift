@@ -18,6 +18,10 @@ struct CategoryNavigationBar: View {
     let categoryViewModel : CategoryViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    @ObservedObject  var viewModelWishList = WishListViewModel()
+    
+    
+    
     var body: some View {
         VStack{
             HStack {
@@ -97,7 +101,9 @@ struct CategoryNavigationBar: View {
                 }
                 .onTapGesture {self.isActive.toggle() }
                     
-                .background(NavigationLink(destination: WishList(product: [Product3(name: "test", price: 90.0, size: "S", desc: "desc")]), isActive: $isActive) { EmptyView() })
+            //    .background(NavigationLink(destination: WishList(product: [Product3(name: "test", price: 90.0, size: "S", desc: "desc")]), isActive: $isActive) { EmptyView() })
+             //   .background(NavigationLink(destination: WishList(), isActive: $isActive) { EmptyView() })
+                .background(NavigationLink(destination: FavoriteView(), isActive: $isActive) { EmptyView() })
                 .padding(15)
                 .frame(width: 50, height: 40)
                 .background(Color.white)

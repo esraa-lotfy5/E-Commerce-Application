@@ -15,22 +15,15 @@ struct BrandsView: View {
     @ObservedObject  var viewModel = HomeViewModel()
 
   var body: some View {
-      if #available(iOS 15.0, *) {
-          QGrid(viewModel.brandsArr, columns: 2) {
-              GridCell(brands: $0)
-          }
-          
-      } else {
-          // Fallback on earlier versions
-      }
+      QGrid(viewModel.brandsArr, columns: 2) { GridCell(brands: $0)}
   }
 }
-@available(iOS 15.0, *)
 
 struct GridCell: View {
     var brands : Brand
     @State private var isActive = false
-
+    @State var brandName : String?
+    @ObservedObject  var viewModelCategory = CategoryViewModel(brandName: "")
     var body: some View {
 
         VStack(){
@@ -49,9 +42,13 @@ struct GridCell: View {
         }.border(Color.gray,width: 4)
             .cornerRadius(10)
             .onTapGesture {
-                self.isActive.toggle() } // activate link on image tap
+                self.isActive.toggle()
+                brandName = brands.brandTitle
+                print("BRAND NAME == \(brandName)")
+               // viewModelCategory.param.updateValue(brandName ?? "noBrand", forKey: "vendor")
+            } // activate link on image tap"
             .background(NavigationLink(destination:  // link in background
-                                       CategoryScreen(brandName: brands.brandTitle), isActive: $isActive) { EmptyView() })
+                                       CategoryScreen( brandName: brandName ?? ""), isActive: $isActive) { EmptyView() })
  
  
 }

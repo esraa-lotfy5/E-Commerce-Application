@@ -13,6 +13,7 @@ struct NavigationHome : View {
     @State private var isActive = false
     //trial
     @ObservedObject  var viewModel = HomeViewModel()
+    @ObservedObject  var viewModelDiscount = DiscountCodeViewModel()
     
     
     var body : some View {
@@ -147,37 +148,64 @@ struct NavigationHome : View {
 //                           .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
 //                       }
 //                    //  --------- end of cart icon -----------------
-//                    Spacer().frame(width:8)
+                    Spacer().frame(width:8)
                     //  --------- start of fav icon -----------------
-                    Button(action: {
-                        print(String("serch is clicked"))
-                        if(self.searchHomeTapped){
-                                           self.searchHomeTapped = false
-                                       }else{
-                                           self.searchHomeTapped = true
-                                       }
-                    })
-                    {
                         HStack {
-                            Image(systemName: "magnifyingglass")
-                            .foregroundColor(.black)
+                            Image(systemName: "tag")
+                                .foregroundColor(.black)
                         }
-                        .padding(15)
+                        .onTapGesture {
+                         self.isActive.toggle()
+                        } // activate link on image tap
+                         .background(NavigationLink(destination:  DiscountCodeView(), isActive: $isActive)
+                         { EmptyView() }                    .navigationBarBackButtonHidden(true)
+)
+                        
+                        .padding(25)
                         .frame(width: 50, height: 40)
                         .background(Color.white)
                         .cornerRadius(10)
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                    }
-                    //  --------- end of fav icon -----------------
+                        //Spacer()
+                        
+                        
+                        
+                        
+//                    //
+//                    Button(action: {
+//                        print(String("discountcode is clicked"))
+////                        if(self.searchHomeTapped){
+////                                           self.searchHomeTapped = false
+////                                       }else{
+////                                           self.searchHomeTapped = true
+////                                       }
+//
+//                        self.isActive.toggle()
+//
+//                    }
+//
+//                    )
+//                    {
+//                        HStack {
+//                            Image(systemName: "tag")
+//                            .foregroundColor(.black)
+//                        }
+//                        .padding(15)
+//                        .frame(width: 50, height: 40)
+//                        .background(Color.white)
+//                        .cornerRadius(10)
+//                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+//                    }
+//                    //  --------- end of fav icon -----------------
                        Spacer().frame(width: 24.0)
-                }.padding(.bottom, 16)
-                   .padding(.top, 16)
-                    HStack{
-                if(self.searchHomeTapped){
-
-                    SearchBarIcon()
-                }
-                    }
+//                }.padding(.bottom, 16)
+//                   .padding(.top, 16)
+//                    HStack{
+////                if(self.searchHomeTapped){
+////
+////                    SearchBarIcon()
+////                }
+//                    }
                 }
         
         
@@ -190,3 +218,4 @@ struct NavigationHome : View {
     }
 }
 
+}

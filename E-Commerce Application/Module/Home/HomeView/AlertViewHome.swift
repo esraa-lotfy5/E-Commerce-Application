@@ -26,27 +26,27 @@ struct AlertViewHome: View {
                 .padding(.top,12)
             
             
-            ForEach(viewModel.priceArr, id: \.self) { item in
-                Text(item.title)
-                    .font(.body)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.orange)
-                    .padding(.top,15)
-                    .padding(.bottom,5)
-                    .frame( alignment: .leading)
-
-            }
-            Spacer()
-            Button("Close") {
-              show.toggle()
-            }
-            .foregroundColor(.blue)
-            .font(.body)
-            .frame(width: UIScreen.main.bounds.width/2, height: 35)
-            .background(Color.white)
-            .cornerRadius(15)
-            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-            .padding(.bottom,5)
+//            ForEach(viewModel.priceArr, id: \.self) { item in
+//                Text(item.title)
+//                    .font(.body)
+//                    .fontWeight(.semibold)
+//                    .foregroundColor(Color.orange)
+//                    .padding(.top,15)
+//                    .padding(.bottom,5)
+//                    .frame( alignment: .leading)
+//
+//            }
+//            Spacer()
+//            Button("Close") {
+//              show.toggle()
+//            }
+//            .foregroundColor(.blue)
+//            .font(.body)
+//            .frame(width: UIScreen.main.bounds.width/2, height: 35)
+//            .background(Color.white)
+//            .cornerRadius(15)
+//            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+//            .padding(.bottom,5)
 
         }   .frame(width: UIScreen.main.bounds.width-50, height:300 , alignment: .center)
             .cornerRadius(12)
