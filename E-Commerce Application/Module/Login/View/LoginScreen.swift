@@ -118,8 +118,12 @@ struct LoginScreen: View {
 //                        .padding()
 //                }
                 
-                NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
-                    EmptyView()
+                if #available(iOS 15.0, *) {
+                    NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                        EmptyView()
+                    }
+                } else {
+                    // Fallback on earlier versions
                 }
                 
                 

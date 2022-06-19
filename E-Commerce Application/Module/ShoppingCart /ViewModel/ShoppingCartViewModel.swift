@@ -36,17 +36,14 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 //    }
     
     func getAllDraftOrders() {
-        print(self.currEmail)
-
         DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
-                try? result.get()?.draftOrders.filter({ DraftOrder in
-                    print(DraftOrder.email)
-                    print(self?.currEmail )
+               try? result.get()?.draftOrders.filter({ DraftOrder in
+
                     if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
                     {
-                        
+                    
                         if (DraftOrder.note == "cart"){
                             
                             self?.shoppingCartProducts.append(DraftOrder)
@@ -111,13 +108,14 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                 ]]
             ]
         ]
-        DispatchQueue.global(qos: .background).async { 
+        DispatchQueue.global(qos: .background).sync {
 
             self.networkApi.updateDraftOrder(draftOrderID:draftOrderID ,parameter: parameters)
-            DispatchQueue.main.async {
+            
+//            DispatchQueue.main.async {
                 self.refreshPage()
 
-            }
+//            }
         }
     }
     func refreshPage(){
@@ -125,6 +123,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
         var updateTotalPrice :Double = 0.0
         var updateSubTotalPrice :Double = 0.0
         var updateTotalTax :Double = 0.0
+//        self.getAllDraftOrders()
         DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
@@ -132,43 +131,86 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 
                 if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                 {
-                    
+
                     if (DraftOrder.note == "cart"){
-                        
+                        print(DraftOrder.lineItems?.first?.quantity)
                         updateProducts.append(DraftOrder)
-                        print(updateProducts)
                     }
                     updateTotalPrice = updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
                         partialResult + Double(draftorder.totalPrice)!
-                        
+
                       }
-                    
+
                     updateSubTotalPrice =  updateProducts.reduce(0.0) {
-                        
+
                         partialResult, draftorder in
                         partialResult + Double(draftorder.subtotalPrice)!
-                        
+
                       }
                     updateTotalTax =  updateProducts.reduce(0.0) {
-                        
+
                         partialResult, draftorder in
                         partialResult + Double(draftorder.totalTax)!
-                        
+
                       }
                 }
-            
+
+                self?.shoppingCartProducts = updateProducts
+                self?.totalTax = updateTotalTax
+                self?.totalPrice = updateTotalPrice
+                self?.subTotalPrice = updateSubTotalPrice
+                return true
+            })}
+        }}
+    
+    
+    
+    func refreshPage2() async {
+        var updateProducts = [DraftOrder]()
+        var updateTotalPrice :Double = 0.0
+        var updateSubTotalPrice :Double = 0.0
+        var updateTotalTax :Double = 0.0
+//        self.getAllDraftOrders()
+//        DispatchQueue.global(qos: .background).async {
+
+            self.networkApi.getAllDraftOrders { [weak self] result in
+            try? result.get()?.draftOrders.filter({ DraftOrder in
+
+                if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
+                {
+
+                    if (DraftOrder.note == "cart"){
+                        print(DraftOrder.lineItems?.first?.quantity)
+                        updateProducts.append(DraftOrder)
+                    }
+                    updateTotalPrice = updateProducts.reduce(0.0) {
+
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.totalPrice)!
+
+                      }
+
+                    updateSubTotalPrice =  updateProducts.reduce(0.0) {
+
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.subtotalPrice)!
+
+                      }
+                    updateTotalTax =  updateProducts.reduce(0.0) {
+
+                        partialResult, draftorder in
+                        partialResult + Double(draftorder.totalTax)!
+
+                      }
+                }
+
                 self?.shoppingCartProducts = updateProducts
                 self?.totalTax = updateTotalTax
                 self?.totalPrice = updateTotalPrice
                 self?.subTotalPrice = updateSubTotalPrice
                 return true
             })
-            
-            
-        }
-        }
-
-    }
+        }}
 }

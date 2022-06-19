@@ -38,7 +38,7 @@ struct ProductDetailsContentWithOptions: View {
         HStack {
             Text(title)
 //            Spacer(minLength: 100)
-
+            Spacer()
                 HStack {
                     ForEach(details , id: \.self){ item  in
                         Button(action: {

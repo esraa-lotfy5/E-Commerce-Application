@@ -15,9 +15,17 @@ struct BrandsView: View {
     @ObservedObject  var viewModel = HomeViewModel()
 
   var body: some View {
-      QGrid(viewModel.brandsArr, columns: 2) { GridCell(brands: $0)}
+      if #available(iOS 15.0, *) {
+          QGrid(viewModel.brandsArr, columns: 2) {
+              GridCell(brands: $0)
+          }
+          
+      } else {
+          // Fallback on earlier versions
+      }
   }
 }
+@available(iOS 15.0, *)
 
 struct GridCell: View {
     var brands : Brand

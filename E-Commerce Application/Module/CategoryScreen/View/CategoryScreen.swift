@@ -9,7 +9,7 @@
 import SwiftUI
 import QGrid
 
-
+@available(iOS 15.0, *)
 struct CategoryScreen: View {
     var searchProducts : [CategoryProduct] = []
     @State var selectedCat = ""
@@ -65,6 +65,10 @@ struct CategoryScreen: View {
 
 struct CategoryScreen_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryScreen(brandName: "")
+        if #available(iOS 15.0, *) {
+            CategoryScreen(brandName: "")
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }

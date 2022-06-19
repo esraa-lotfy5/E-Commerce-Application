@@ -69,19 +69,23 @@ struct CategoryNavigationBar: View {
                Spacer()
             //  --------- start of cart icon -----------------
             
-                   HStack {
-                       Image(systemName: "cart")
-                       .foregroundColor(.black)
-                   }
-                   .onTapGesture {self.isActivef.toggle() }
+                if #available(iOS 15.0, *) {
+                    HStack {
+                        Image(systemName: "cart")
+                            .foregroundColor(.black)
+                    }
+                    .onTapGesture {self.isActivef.toggle() }
                     
                     .background(NavigationLink(destination: OrderListView(), isActive: $isActivef) { EmptyView() })
-                 
-                   .padding(15)
-                   .frame(width: 50, height: 40)
-                   .background(Color.white)
-                   .cornerRadius(10)
-                   .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                    
+                    .padding(15)
+                    .frame(width: 50, height: 40)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                } else {
+                    // Fallback on earlier versions
+                }
                
             //  --------- end of cart icon -----------------
             Spacer().frame(width:8)

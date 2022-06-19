@@ -33,7 +33,8 @@ struct ProductDetails: View {
     var productSizes = "OS"
     var productColors = "black"
     var productid :String? //  "6870135275659" //"6870133932171"//
-
+    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValue = UserDefaults.standard.string(forKey: "currencyValue")
     init(productId: String){
         print(productId)
         self.productid = productId
@@ -84,7 +85,7 @@ struct ProductDetails: View {
                     HStack {
                         Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                         Spacer()
-                        Text("$\(productDetailsViewModel.Products?.variants?[0].price ?? "")").foregroundColor(.blue)
+                        Text("\(productDetailsViewModel.Products?.variants?[0].price ?? "") \(currency ?? " ")").foregroundColor(.blue)
                     }
                     
                     

@@ -67,7 +67,6 @@ class BaseAPI<T: TargetType> {
         AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding: params.1, headers: headers)
             .validate()
             .responseJSON { (response) in
-                
                 guard let statusCode = response.response?.statusCode else {
                     // Add custom error
                     print("Can't get status code")

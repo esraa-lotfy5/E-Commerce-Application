@@ -103,7 +103,7 @@ struct ImageOverlay: View {
             Text(desc)
                 .font(.system(size: 30))
                 .padding(6)
-                .foregroundColor(.pink)
+                .foregroundColor(.blue)
             
     
         if shownsDismissButton{

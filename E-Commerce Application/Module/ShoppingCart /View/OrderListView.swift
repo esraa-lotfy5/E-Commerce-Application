@@ -9,6 +9,7 @@
 import SwiftUI
 
 
+@available(iOS 15.0, *)
 
 struct OrderListView: View {
     @State var shoppingCartCount : Int = 0
@@ -18,6 +19,7 @@ struct OrderListView: View {
 //    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
     @State var isActive : Bool = false
+    @State var refresh = false
     init(){
         shoppingCartViewModel.getAllDraftOrders()
     }
@@ -49,7 +51,7 @@ struct OrderListView: View {
             
             if shoppingCartViewModel.shoppingCartProducts.count > 0 {
                 List {
-                    ForEach(shoppingCartViewModel.shoppingCartProducts) { item in
+                    ForEach(shoppingCartViewModel.shoppingCartProducts ) { item in
                         VStack{
                             OrderRow(product: item).opacity(0.9)
                             
@@ -76,17 +78,22 @@ struct OrderListView: View {
                                 Section{
                                     Stepper.init("", onIncrement: {
                                         shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
+                                    
+                                        refresh = true
 
 
                                     }, onDecrement: {
                                         if((item.lineItems?.first?.quantity)! - 1) == 0{
                                             //TODO: delete
                                             shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                            refresh = true
                                         }
                                         else{
                                             //TODO: update
 
                                             shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
+                                            refresh = true
+
                                         }
 
                                     })
@@ -98,6 +105,17 @@ struct OrderListView: View {
                             .cornerRadius(10)
                             .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                     } //.onDelete(perform: delete)
+                }.refreshable {
+                    
+                    if refresh {
+                        print("refresh")
+                        print(refresh)
+
+                        await shoppingCartViewModel.refreshPage2()
+                        refresh = false
+                        print(refresh)
+                    }
+                
                 }
 
                 //MARK: TOTAL PRICE
@@ -157,16 +175,12 @@ struct OrderListView: View {
             else {
                     emptyOrderList()
                         .frame(height: UIScreen.main.bounds.size.height - 150 )
-                        .onAppear{
-                            print("from else")
-                        }
-                
-                
             }
         }
         .navigationBarBackButtonHidden(true)
     }
     
+   
 //    private func delete(with indexSet: IndexSet) {
 //
 //        indexSet.forEach {
@@ -180,7 +194,11 @@ struct OrderListView: View {
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderListView()
+        if #available(iOS 15.0, *) {
+            OrderListView()
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
 

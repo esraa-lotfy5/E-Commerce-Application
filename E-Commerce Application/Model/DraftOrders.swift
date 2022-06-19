@@ -16,6 +16,16 @@ struct DraftOrders : Decodable {
     }
 
 }
+
+struct DraftOrders2 : Decodable {
+    let draftOrder: DraftOrder
+    
+    private enum CodingKeys: String, CodingKey {
+        case draftOrder = "draft_order"
+    }
+
+}
+
 struct DraftOrder : Decodable , Identifiable {
 
 

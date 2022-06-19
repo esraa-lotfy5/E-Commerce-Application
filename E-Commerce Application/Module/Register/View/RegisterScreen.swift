@@ -189,8 +189,12 @@ struct RegisterScreen: View {
                     
                 }
                 
-                NavigationLink(destination: TabBarHome(), isActive: $proceedWithRegister) {
-                    EmptyView()
+                if #available(iOS 15.0, *) {
+                    NavigationLink(destination: TabBarHome(), isActive: $proceedWithRegister) {
+                        EmptyView()
+                    }
+                } else {
+                    // Fallback on earlier versions
                 }
                 
                 

@@ -133,7 +133,7 @@ struct AddressScreen: View {
                                 ]
                                 
                             ]
-                            print(addressPar)
+//                            print(addressPar)
                             vm.postApi(address: addressPar)
                             self.active = true
                             
@@ -169,8 +169,8 @@ struct AddressScreen: View {
             
         }.onAppear{
             vm.getAddress()
-                    print("______PAYMENT________")
-                    print(self.shoppingCartViewModel.totalPrice)
+//                    print("______PAYMENT________")
+//                    print(self.shoppingCartViewModel.totalPrice)
                 
         }
         

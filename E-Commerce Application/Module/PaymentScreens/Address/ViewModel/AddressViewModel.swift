@@ -29,7 +29,7 @@ class AddressViewModel:ObservableObject{
             case .success(let response):
                 let addressResponse = response
                 
-                print("address \(String(describing: addressResponse?.city))")
+//                print("address \(String(describing: addressResponse?.city))")
             case .failure(let error):
                 // Show UI Error
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
@@ -45,10 +45,10 @@ class AddressViewModel:ObservableObject{
                 let addressResponse = response
                 
                 self.comingAddressess = addressResponse?.addresses ?? []
-                print(self.comingAddressess)
+//                print(self.comingAddressess)
                 for address in addressResponse?.addresses ?? [] {
                     
-                    print("addresss : \(address.address1)")
+//                    print("addresss : \(address.address1)")
                 }
                 
                 //print("address \(String(describing: addressResponse?.city))")
@@ -68,11 +68,11 @@ class AddressViewModel:ObservableObject{
             
             case .success(let response):
                 
-                print("orders viewmodel response: \(response ?? [:])")
+//                print("orders viewmodel response: \(response ?? [:])")
                 completion(.success(response))
                 
             case .failure(let error):
-                print("error: \(error.localizedDescription)")
+//                print("error: \(error.localizedDescription)")
                 completion(.failure(error))
                 
             }
@@ -85,7 +85,7 @@ class AddressViewModel:ObservableObject{
         
         var draftOrders = [DraftOrder]()
         
-        print("draft order on address vm: just called")
+//        print("draft order on address vm: just called")
         
         DispatchQueue.global(qos: .background).async {
 
@@ -131,7 +131,7 @@ class AddressViewModel:ObservableObject{
             }
         }
         
-        print("draft order on address vm: \(draftOrders)")
+//        print("draft order on address vm: \(draftOrders)")
 //        return draftOrders
     }
     
