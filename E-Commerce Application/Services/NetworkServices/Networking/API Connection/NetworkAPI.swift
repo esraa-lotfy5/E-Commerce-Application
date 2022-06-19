@@ -38,10 +38,8 @@ protocol NetworkAPIProtocol {
     func getUserOrders(completion: @escaping(Result<OrdersResponse?, NSError>) -> Void)
      
     func getUpdatedCurrency(baselan :String, completion: @escaping(Result<Currency?, NSError>) -> Void)
-
-    
-    
 }
+
 
 class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     func getUpdatedCurrency(baselan: String, completion: @escaping (Result<Currency?, NSError>) -> Void) {
@@ -111,7 +109,7 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
         }
     }
 
-    func postDraftOrder(parameter: Parameters) {
+    func postDraftOrder(parameter: Parameters){
         print("from postdraftorder func \(parameter) ")
         self.writeData(target: .
             postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in

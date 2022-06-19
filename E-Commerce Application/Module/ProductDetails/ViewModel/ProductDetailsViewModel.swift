@@ -6,6 +6,8 @@
 //  Copyright © 2022 iti. All rights reserved.
 //
 import Foundation
+import Network
+
 class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     
     
@@ -17,12 +19,34 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     //trial
     @Published var favoriteHere : Bool = false
     @Published var favoriteItem : DraftOrder?
-    
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
     var draftOrderID :Int?
+    
+    //Internet
+    @Published var NetworkState : Bool = true
+
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    let monitor = NWPathMonitor()
+    
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void){
-        networkapi.getProductDetails(id: id) { (result) in
-            self.Products = try? result.get()?.product
-        }
+//        print("enetered")
+            monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
+                print( "network \(pathUpdateHandler.status)")
+                if pathUpdateHandler.status == .satisfied {
+                    DispatchQueue.main.sync {
+                        self?.NetworkState = true
+                    }
+                    self?.networkapi.getProductDetails(id: id) { (result) in
+                        self?.Products = try? result.get()?.product
+                    }
+                }else{
+                    DispatchQueue.main.sync {
+                        self?.NetworkState = false
+                    }
+                }
+            }
+        monitor.start(queue: queue)
+
     }
     
     
@@ -40,7 +64,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
         DraftOrders.self) { (result) in
 //            print("request \(String(describing: try? result.get()?.draftOrders))")
             try? result.get()?.draftOrders.filter({ DraftOrder in
-                if(DraftOrder.email == "nourallahahmed1100@gamil.com") //TODO: get the current users email
+                if(DraftOrder.email == self.currEmail) //TODO: get the current users email
                 {
                     print(DraftOrder)
                 
@@ -60,7 +84,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String){
         let parameters =     [
             "draft_order": [
-                "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
+                "email" : currEmail,  //TODO: get the current users email
                 "note" : "cart",
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"],
@@ -84,7 +108,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func postFavorite (variantIDFav : Int){
         let favoriteObjectParameters = [
             "draft_order": [
-                "email" : "iosteam@gmail.com",  //TODO: get the current users email
+                "email" : currEmail ,  //TODO: get the current users email
                 "note" : Constants.favorite,
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"]
@@ -116,7 +140,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
         self.fetchData(target: .getDraftOrders , responseClass:
         DraftOrders.self) { (result) in
         try? result.get()?.draftOrders.filter({ draftFavorite in
-                if(draftFavorite.email == "iosteam@gmail.com" && draftFavorite.note == Constants.favorite){
+            if(draftFavorite.email == self.currEmail && draftFavorite.note == Constants.favorite){
                       for index in 0 ..< (draftFavorite.lineItems?.count ?? 0) {
                            if  draftFavorite.lineItems?[index].variantId == variantIDFav {
                                self.favoriteHere = true

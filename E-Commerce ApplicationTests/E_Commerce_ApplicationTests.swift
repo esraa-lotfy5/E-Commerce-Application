@@ -10,6 +10,7 @@ import XCTest
 @testable import E_Commerce_Application
 
 class E_Commerce_ApplicationTests: XCTestCase {
+    var networkAPI = NetworkAPI()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -30,5 +31,55 @@ class E_Commerce_ApplicationTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+   
+    func testProductDetails(){
+        networkAPI.getProductDetails(id: "6870135275659") { result in
+            
+            guard let Product = (result as? ProductsResults)?.product else{
+                return
+            }
+            
+            XCTAssertEqual(Product.id , 6870135275659 )
+            XCTAssertEqual(Product.title , "ADIDAS | CLASSIC BACKPACK" )
+            XCTAssertEqual(Product.vendor , "ADIDAS" )
 
+        }
+    }
+    
+    func testPostDraftOrder(){
+        let parameters =     [
+            "draft_order": [
+                "email" : "nourallahahmed1100@gamil.com",  //TODO: get the current users email
+                "note" : "cart",
+                "note_attributes": [
+                    ["name": "image","value": "default"],
+                    ["name": "size","value" : "OS"]
+                        
+                        ]
+                
+                ,
+                "line_items": [[
+                    "variant_id": 40335555395723,
+                    "quantity":  1
+                ]]
+            ]
+        ]
+        networkAPI.postDraftOrder(parameter: parameters)
+    }
+    
+    func testGetAllDraftOrder(){
+        
+    }
+    
+    func testProductQuantity(){
+        networkAPI.getProductInventoryQuantity(id: "6870135275659") { result in
+            guard let ProductCount = (result as? ProductInventoryQuantity)?.count else{
+                return
+            }
+            
+            XCTAssertEqual(ProductCount , 1 )
+           
+        }
+    }
 }

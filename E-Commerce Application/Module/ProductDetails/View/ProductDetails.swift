@@ -46,7 +46,7 @@ struct ProductDetails: View {
         self.productid = productId
     }
     var body: some View {
-        
+        if productDetailsViewModel.NetworkState == true {
         ScrollView {
             
             VStack {
@@ -310,6 +310,10 @@ struct ProductDetails: View {
             }
             
         }.navigationBarBackButtonHidden(true)
+        }
+        else{
+            NoNetworkView()
+        }
  
         
     }

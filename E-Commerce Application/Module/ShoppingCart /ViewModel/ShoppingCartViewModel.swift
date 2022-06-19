@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import Network
 
 protocol ShoppingCartProtocol {
     func getAllDraftOrders()
@@ -24,7 +25,12 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     @Published var subTotalPrice = 0.0
     @Published var totalTax = 0.0
     
+    //Internet
+    @Published var NetworkState : Bool = true
 
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    let monitor = NWPathMonitor()
+    
     private let currEmail = UserDefaults.standard.string(forKey: "email")
 //    
 //    func getTotalPrice() -> Double{
@@ -36,6 +42,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 //    }
     
     func getAllDraftOrders() {
+        
         DispatchQueue.global(qos: .background).async {
 
             self.networkApi.getAllDraftOrders { [weak self] result in
