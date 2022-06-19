@@ -40,6 +40,7 @@ struct PlaceOrders: View {
     private let currEmail = UserDefaults.standard.string(forKey: "email")
     private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
     private var currLastName = UserDefaults.standard.string(forKey: "last_name")
+    private var currency = UserDefaults.standard.string(forKey: "currencyString")
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
@@ -256,6 +257,7 @@ struct PlaceOrders: View {
         
         let order: Parameters = [ "order": [
             "email": currEmail ?? "",
+            "currency": currency ?? "EGP",
             "line_items": lineItems,
             "shipping_address": shippingAddress
         ]
