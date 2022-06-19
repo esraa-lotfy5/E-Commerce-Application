@@ -26,7 +26,7 @@ struct CategoryScreen: View {
     var body: some View {
         
         VStack{
-            CategoryNavigationBar()
+            CategoryNavigationBar(categoryViewModel: self.categoryViewModel)
             Spacer()
             
             //MARK:- Tabs

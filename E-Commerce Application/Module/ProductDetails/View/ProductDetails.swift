@@ -25,9 +25,9 @@ struct ProductDetails: View {
     @State var varientID:Int?
 
     //trial favorite
-    @State var varientIDFav:Int?
+    @State var varientIDFav:Int = false
     
-    @State var heartChecked : Bool = false
+    @State var heartChecked : Bool?
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
     

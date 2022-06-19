@@ -10,14 +10,17 @@ import Foundation
 
 struct Constants {
     
-    static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-01/"
+    static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-04/"
+    
+    static let baseUrlCurrency = "https://api.apilayer.com/exchangerates_data/"
+    //trial favorite
+    static let favorite = "Favorite"
     
     // endpoints
     static let endPointLogin = "customers.json"
     static let endPointCreateCustomer = "customers.json"
     static let endPointOrders = "orders.json"
-    //trial favorite
-    static let favorite = "Favorite"
+    static let endpointCurrency = ""
     
 }
 
