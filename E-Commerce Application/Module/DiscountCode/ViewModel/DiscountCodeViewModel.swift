@@ -31,7 +31,7 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
+//                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
                 //i stopped here array part
                 for item in responsePriceRule?.price_rules ?? [] {
                     var name = item.title
@@ -46,8 +46,8 @@ class DiscountCodeViewModel: ObservableObject {
                         print("NOT OUR PROMO CODE")
                     }
                 }
-                print("\n ARRAYYYY OF PRICE RANGE \n")
-                print(priceArr)
+//                print("\n ARRAYYYY OF PRICE RANGE \n")
+//                print(priceArr)
                 
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
@@ -62,19 +62,19 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
+//                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
                 //i stopped here array part
                 for item in responsePriceRule?.price_rules ?? []{
                     var name = item.title
 //                    if promo == name{
 //                        returnedValue =  item.value
 //                    }
-                    print("\n NAME == \(name)")
+//                    print("\n NAME == \(name)")
                     if name == promo {
-                        print("\n FOUNDEDDDD \n")
-                        print("\n \(item.title)")
+//                        print("\n FOUNDEDDDD \n")
+//                        print("\n \(item.title)")
                         returnedValue = item.value
-                        print("\n \(returnedValue)")
+//                        print("\n \(returnedValue)")
                     }
                 }
             case .failure(let error):
@@ -90,7 +90,7 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
+//                print("PRICE RULE POSSSSSTTT\(String(describing: responsePriceRule))")
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
             }
@@ -105,7 +105,7 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responseDiscountRule = response
-                print("DISCOUNT CODE POSTTTTTTT\(String(describing: responseDiscountRule))")
+//                print("DISCOUNT CODE POSTTTTTTT\(String(describing: responseDiscountRule))")
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
             }
@@ -118,11 +118,13 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responseDiscount = response
-                print("RESPONSE DISCOUNT CODE === \(responseDiscount)")
+//                print("RESPONSE DISCOUNT CODE === \(responseDiscount)")
+                
                 self.discountArr = responseDiscount?.discountCodes ?? []
+                
                 for discount in self.discountArr {
-                    print("DISCOUNT CODE == \(discount.code)\n")
-                    
+//                    print("DISCOUNT CODE == \(discount.code)\n")
+
                 }
                 
                 
@@ -135,6 +137,7 @@ class DiscountCodeViewModel: ObservableObject {
     
     
 //    //call the function to get the value -- start
+    
 //        viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
 //    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //        if viewModelDiscount.returnedValue != "0"{

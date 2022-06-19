@@ -22,6 +22,14 @@ struct OrderListView: View {
     @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     @State var isActive : Bool = false
     @State var refresh = false
+    @State var promoCodeName : String = ""
+
+    //For Loading
+    @State private var currentProgress = 0.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+
+    @ObservedObject  var viewModelDiscount = DiscountCodeViewModel()
+
     init(){
         shoppingCartViewModel.getAllDraftOrders()
     }
@@ -123,7 +131,40 @@ struct OrderListView: View {
                 //MARK: TOTAL PRICE
                 Section{
                     HStack{
+                    
                         VStack(alignment: .leading){
+                            HStack(alignment: .firstTextBaseline){
+                              
+                                TextField("Enter PromoCode", text: $promoCodeName)
+                                
+                                Button {
+                                    print("pressed \(promoCodeName)") //"SALE15OFF"
+                                    viewModelDiscount.getDiscountValue(promo: promoCodeName )
+                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                         if viewModelDiscount.returnedValue != "0"{
+                                             print("GET FUNCTION VALUE DISCOUNT == \(viewModelDiscount.returnedValue!)")
+                                             
+                                             self.shoppingCartViewModel.totalPrice  = self.shoppingCartViewModel.totalPrice + Double(viewModelDiscount.returnedValue!)!
+                                             
+                                             
+                                            print( self.shoppingCartViewModel.totalPrice)
+                                         }else{
+                                             viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
+                                 
+                                         }
+                                 
+                                     }
+                                    
+                                } label: {
+                                    Text("Enter")
+                                } .foregroundColor(.white)
+                                    .frame(height: 30)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(3)
+
+                            }
+                            
+                            
                             Text("  subTotal : \(shoppingCartViewModel.subTotalPrice * Double(currencyValue) , specifier: "%.2f") \(currency ?? "nil" )   " )
                             
                                 .foregroundColor(.blue)
@@ -175,8 +216,19 @@ struct OrderListView: View {
             }
             
             else {
-                    emptyOrderList()
-                        .frame(height: UIScreen.main.bounds.size.height - 150 )
+                if #available(iOS 14.0, *) {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                        .onReceive(timer) { _ in
+                        if currentProgress < 30 {
+                            currentProgress += 1
+                        }else{
+                            emptyOrderList()
+                                .frame(height: UIScreen.main.bounds.size.height - 150 )
+                        }
+                        
+                    }
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 150)               }
+                                   
             }
         }
         .navigationBarBackButtonHidden(true)
