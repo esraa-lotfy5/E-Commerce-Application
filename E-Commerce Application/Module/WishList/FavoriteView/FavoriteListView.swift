@@ -87,9 +87,9 @@ struct FavoriteListView: View {
 //                              
 //                              EmptyView()
 //                          }
-                           .background(NavigationLink(destination:  // link in background
-                                                      ProductDetails( heartChecked:true ), isActive: $isActive) { EmptyView() })
-                          
+//                           .background(NavigationLink(destination:  // link in background
+//                                                      ProductDetails( heartChecked:true ), isActive: $isActive) { EmptyView() })
+//
 
         
         

@@ -26,8 +26,17 @@ struct DraftOrders2 : Decodable {
 
 }
 
-struct DraftOrder : Decodable , Identifiable {
+struct DraftOrder : Decodable , Identifiable , Hashable{
+    
 
+    static func == (lhs: DraftOrder, rhs: DraftOrder) -> Bool {
+        return lhs.adminGraphqlApiId == rhs.adminGraphqlApiId && lhs.adminGraphqlApiId == rhs.adminGraphqlApiId
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(adminGraphqlApiId)
+        hasher.combine(adminGraphqlApiId)
+    }
 
 
         let id: Int?
