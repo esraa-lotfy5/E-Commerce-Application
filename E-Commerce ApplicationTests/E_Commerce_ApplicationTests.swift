@@ -69,7 +69,20 @@ class E_Commerce_ApplicationTests: XCTestCase {
     }
     
     func testGetAllDraftOrder(){
+        var shoppingCartProducts = [DraftOrder]()
+            networkAPI.getAllDraftOrders { [weak self] result in
+              try? result.get()?.draftOrders.filter({ DraftOrder in
+                    if(DraftOrder.email == "iosteam@gmail.com" && DraftOrder.note == "cart")
+                    {
+                        shoppingCartProducts.append(DraftOrder)
+                    }
+                   
+                   return true
+               })
+        }
         
+        XCTAssertEqual(shoppingCartProducts.count, 1 )
+           
     }
     
     func testProductQuantity(){
