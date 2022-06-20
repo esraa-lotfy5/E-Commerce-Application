@@ -11,6 +11,8 @@ import XCTest
 
 class E_Commerce_ApplicationTests: XCTestCase {
     var networkAPI = NetworkAPI()
+    var shoppingCartProducts = [DraftOrder]()
+
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -69,12 +71,11 @@ class E_Commerce_ApplicationTests: XCTestCase {
     }
     
     func testGetAllDraftOrder(){
-        var shoppingCartProducts = [DraftOrder]()
             networkAPI.getAllDraftOrders { [weak self] result in
               try? result.get()?.draftOrders.filter({ DraftOrder in
                     if(DraftOrder.email == "iosteam@gmail.com" && DraftOrder.note == "cart")
                     {
-                        shoppingCartProducts.append(DraftOrder)
+                        self?.shoppingCartProducts.append(DraftOrder)
                     }
                    
                    return true
