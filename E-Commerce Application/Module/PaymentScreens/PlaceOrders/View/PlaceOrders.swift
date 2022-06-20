@@ -35,9 +35,9 @@ struct PlaceOrders: View {
     @State var total : Double = 1006.0
     
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-    private var currFirstName = UserDefaults.standard.string(forKey: "first_name")
-    private var currLastName = UserDefaults.standard.string(forKey: "last_name")
-    private var currency = UserDefaults.standard.string(forKey: "currencyString")
+    private let currFirstName = UserDefaults.standard.string(forKey: "first_name")
+    private let currLastName = UserDefaults.standard.string(forKey: "last_name")
+    private let currency = UserDefaults.standard.string(forKey: "currencyString")
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
@@ -186,6 +186,7 @@ struct PlaceOrders: View {
                     print("\(String(describing: type))🎲")
                     print("\(String(describing: paymentMethod))🎲")
                     print("\(String(describing: description))🎲")
+                    print("\(String(describing: address.address1))🎲")
                     
                     addressViewModel.getAllDraftOrders { result in
                         
@@ -243,9 +244,9 @@ struct PlaceOrders: View {
         let shippingAddress = [
             "first_name": currFirstName ?? "",
             "last_name": currLastName ?? "",
-            "address1": addressViewModel.defultAddress.address1,
-            "city": addressViewModel.defultAddress.city,
-            "country": addressViewModel.defultAddress.country
+            "address1": address.address1,
+            "city": address.city,
+            "country": address.country
         ]
         
         let order: Parameters = [ "order": [
