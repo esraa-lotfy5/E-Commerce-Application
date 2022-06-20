@@ -115,10 +115,10 @@ struct AddressScreen: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PaymentOptions(),isActive: $active) {
-                            
-                            EmptyView()
-                        }.edgesIgnoringSafeArea(.vertical)
+//                        NavigationLink(destination: PaymentOptions(),isActive: $active) {
+//                            
+//                            EmptyView()
+//                        }.edgesIgnoringSafeArea(.vertical)
                         
                         Button(action: {
                             let addressPar  = [

@@ -46,6 +46,8 @@ struct PlaceOrders: View {
     @State var showDropIn = false
     @ObservedObject var addressViewModel = AddressViewModel()
     
+    var address : Addresss
+
     var body: some View {
         let size = Decimal(amountInt)
         let test = pow(size, 2) - 1

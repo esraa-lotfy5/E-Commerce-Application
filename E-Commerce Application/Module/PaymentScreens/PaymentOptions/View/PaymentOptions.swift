@@ -26,7 +26,8 @@ struct PaymentOptions: View {
     
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+    var address : Addresss
+
     var paymentsOptions = ["PayPal","Cash On Delivery"]
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -135,7 +136,7 @@ struct PaymentOptions: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PlaceOrders(),isActive: $active) {
+                        NavigationLink(destination: PlaceOrders(address: address),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
