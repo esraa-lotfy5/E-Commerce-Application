@@ -13,6 +13,8 @@ import Alamofire
 class WishListViewModel : ObservableObject {
     var api :NetworkAPIProtocol = NetworkAPI()
     @Published var wishList : [DraftOrder] = []
+    private let currEmail = UserDefaults.standard.string(forKey: "email")
+//
 
     
     init() {
@@ -22,7 +24,7 @@ class WishListViewModel : ObservableObject {
     func getFavorites(){
         api.getAllDraftOrders { (result) in
             try? result.get()?.draftOrders.filter({ draftFavorite in
-                    if(draftFavorite.email == "iosteam@gmail.com" && draftFavorite.note == Constants.favorite){
+                if(draftFavorite.email == self.currEmail ?? "" && draftFavorite.note == Constants.favorite){
                           for index in 0 ..< (draftFavorite.lineItems?.count ?? 0) {
                               self.wishList.append(draftFavorite)
                             }

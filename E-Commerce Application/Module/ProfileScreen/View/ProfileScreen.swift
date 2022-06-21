@@ -7,15 +7,23 @@
 //
 
 import SwiftUI
-
+import Network
 struct ProfileScreen: View {
     var userloggedIn : Bool
-//    var userName : String = "Esraa"
-//    @State var userName : String = "Esraa"
+
     @State private var userName = UserDefaults.standard.string(forKey: "first_name")
-      @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    //Internet
+    @State var NetworkState : Bool = true
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    let monitor = NWPathMonitor()
+    init(userloggedIn : Bool){
+        self.userloggedIn = userloggedIn
+     checkNetwork()
+    }
     var body: some View {
-//        NavigationView{
+        if NetworkState == true {
         ScrollView{
             VStack{
                 ProfileNavigationBar(presentationMode:presentationMode)
@@ -67,7 +75,22 @@ struct ProfileScreen: View {
                 }
             }
         }.navigationBarBackButtonHidden(true)
-//            .navigationBarTitle("Profile")
+        }else{
+            NoNetworkView()
+        }
+    }
+    func checkNetwork(){
+        monitor.pathUpdateHandler = { pathUpdateHandler  in
+            if pathUpdateHandler.status == .satisfied {
+                DispatchQueue.main.sync {
+                    NetworkState = true
+                }
+            }else{
+                DispatchQueue.main.sync {
+                    NetworkState = false
+                }
+            }
+        }
     }
 }
 

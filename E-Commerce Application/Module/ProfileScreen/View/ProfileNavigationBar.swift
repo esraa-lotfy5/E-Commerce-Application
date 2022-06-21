@@ -10,33 +10,34 @@ import SwiftUI
 
 struct ProfileNavigationBar: View {
 //    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+    @State private var isActive = false
+    @State private var isActiveCart = false
     var presentationMode :Binding<PresentationMode>
     var body: some View {
         VStack{
             HStack {
-                HStack{
-                    /*
-                    HStack (alignment: .top, spacing: 0){
-                        //MARK:- back button
-                        Spacer().frame(width:10)
-                        
-                        HStack{
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                        }
-                        .onTapGesture {
-//                            self.presentationMode.wrappedValue.dismiss()
-                            print("Do Nothing now")
-                        }
-                        .frame(width: 50, height: 40)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                    }
-                     */
-//                    Spacer()
-                }
+//                HStack{
+//                    /*
+//                    HStack (alignment: .top, spacing: 0){
+//                        //MARK:- back button
+//                        Spacer().frame(width:10)
+//
+//                        HStack{
+//                            Image(systemName: "chevron.left")
+//                                .foregroundColor(.black)
+//                        }
+//                        .onTapGesture {
+////                            self.presentationMode.wrappedValue.dismiss()
+//                            print("Do Nothing now")
+//                        }
+//                        .frame(width: 50, height: 40)
+//                        .background(Color.white)
+//                        .cornerRadius(10)
+//                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+//                    }
+//                     */
+////                    Spacer()
+//                }
                 Spacer().frame(width: 24.0)
                 
                 //  ------------- start of header text --------------------------
@@ -46,24 +47,29 @@ struct ProfileNavigationBar: View {
                 Spacer()
                 //  --------- start of cart icon -----------------
                 Button(action: {
-                    print(String("cart button tapped"))
+                    self.isActiveCart.toggle()
                 })
                 {
-                    HStack {
-                        Image(systemName: "cart")
-                            .foregroundColor(.black)
+                    if #available(iOS 15.0, *) {
+                        HStack {
+                            Image(systemName: "cart")
+                                .foregroundColor(.black)
+                        }
+                        .padding(15)
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .background(NavigationLink(destination: OrderListView(), isActive: $isActiveCart) { EmptyView() })
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                    } else {
+                        // Fallback on earlier versions
                     }
-                    .padding(15)
-                    .frame(width: 50, height: 40)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                 }
                 //  --------- end of cart icon -----------------
                 Spacer().frame(width:8)
                 //  --------- start of fav icon -----------------
                 Button(action: {
-                    print(String("settings button tapped"))
+                    self.isActive.toggle()
                 })
                 {
                     HStack {
@@ -73,6 +79,7 @@ struct ProfileNavigationBar: View {
                     .padding(15)
                     .frame(width: 50, height: 40)
                     .background(Color.white)
+                    .background(NavigationLink(destination: SettingsView(), isActive: $isActive) { EmptyView() })
                     .cornerRadius(10)
                     .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                 }
