@@ -39,6 +39,9 @@ struct ProductDetails: View {
     var productSizes = "OS"
     var productColors = "black"
     var productid :String? //  "6870135275659" //"6870133932171"//
+    
+    //currency
+    
     @State var currency = UserDefaults.standard.string(forKey: "currencyString")
     @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     init(productId: String){

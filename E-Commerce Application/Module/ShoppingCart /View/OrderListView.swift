@@ -34,6 +34,8 @@ struct OrderListView: View {
         shoppingCartViewModel.getAllDraftOrders()
     }
     var body: some View {
+        if shoppingCartViewModel.NetworkState == true {
+
         VStack {
             HStack{
                 HStack (alignment: .top, spacing: 0){
@@ -232,8 +234,12 @@ struct OrderListView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        }
+        
+    else{
+        NoNetworkView()
     }
-    
+    }
    
 //    private func delete(with indexSet: IndexSet) {
 //

@@ -16,6 +16,7 @@ struct ProfileNavigationBar: View {
         VStack{
             HStack {
                 HStack{
+                    /*
                     HStack (alignment: .top, spacing: 0){
                         //MARK:- back button
                         Spacer().frame(width:10)
@@ -33,6 +34,7 @@ struct ProfileNavigationBar: View {
                         .cornerRadius(10)
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                     }
+                     */
 //                    Spacer()
                 }
                 Spacer().frame(width: 24.0)

@@ -42,27 +42,35 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 //    }
     
     func getAllDraftOrders() {
-        
-        DispatchQueue.global(qos: .background).async {
+        monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
+            print( "network \(pathUpdateHandler.status)")
+            if pathUpdateHandler.status == .satisfied {
+                DispatchQueue.main.sync {
+//                    self?.shoppingCartProducts = []
 
-            self.networkApi.getAllDraftOrders { [weak self] result in
-               try? result.get()?.draftOrders.filter({ DraftOrder in
+                    self?.NetworkState = true
+                }
 
-                    if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
-                    {
-                    
-                        if (DraftOrder.note == "cart"){
-                            
-                            self?.shoppingCartProducts.append(DraftOrder)
-                        }
-                        self?.totalPrice =  self?.shoppingCartProducts.reduce(0.0) {
+                self?.networkApi.getAllDraftOrders { [weak self] result in
+//                    self?.shoppingCartProducts = []
 
-                            partialResult, draftorder in
-                            partialResult + Double(draftorder.totalPrice)!
-                            
-                        } ?? 0.0
+                    try? result.get()?.draftOrders.filter({ DraftOrder in
                         
-                        self?.subTotalPrice =  self?.shoppingCartProducts.reduce(0.0) {
+                        if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
+                        {
+                            
+                            if (DraftOrder.note == "cart"){
+                                
+                                self?.shoppingCartProducts.append(DraftOrder)
+                            }
+                            self?.totalPrice =  self?.shoppingCartProducts.reduce(0.0) {
+                                
+                                partialResult, draftorder in
+                                partialResult + Double(draftorder.totalPrice)!
+                                
+                            } ?? 0.0
+                            
+                            self?.subTotalPrice =  self?.shoppingCartProducts.reduce(0.0) {
                             
                             partialResult, draftorder in
                             partialResult + Double(draftorder.subtotalPrice)!
@@ -78,7 +86,16 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     return true
                 })
             }
+            }else{
+                DispatchQueue.main.sync {
+                    self?.NetworkState = false
+                    self?.shoppingCartProducts = []
+
+                }
+            }
         }
+        monitor.start(queue: queue)
+        
     }
     
     func deleteDraftOrder(draftOrderID: Int) {

@@ -18,6 +18,12 @@ struct CategoryCell: View {
     let product : CategoryProduct
     var viewWidth : CGFloat = CGFloat(0.0)
     @State private var fav : Bool = false // by default is un fav
+    
+    //currency
+    
+    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+    
     init(product: CategoryProduct){
         self.viewWidth = (UIScreen.main.bounds.size.width-50)/2
         self.product = product
@@ -38,7 +44,8 @@ struct CategoryCell: View {
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    Text("$ \(product.variants[0].price)")
+                
+                    Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) * Double(currencyValue) , specifier: "%.2f")")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)

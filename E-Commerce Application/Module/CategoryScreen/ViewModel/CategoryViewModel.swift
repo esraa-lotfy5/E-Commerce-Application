@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-
+import Network
 class CategoryViewModel : ObservableObject{
     var brandName : String?
     @Published var selectedCategory : CategoryTabs.Category = .Men
@@ -19,37 +19,56 @@ class CategoryViewModel : ObservableObject{
     @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
     
+    //Internet
+    @Published var NetworkState : Bool = true
+
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    let monitor = NWPathMonitor()
+    
+    
     init(brandName: String) {
         param.updateValue(brandName, forKey: "vendor")
         getProducts()
     }
     func getProducts(){
         let newParameters = updateParameters()
-        api.getCategoryProducts(parameters: newParameters){(result) in
-            switch result {
-            case .success(let response):
-                let productsResponse = response
-                //print("-----------------------------------")
-                self.products = productsResponse?.products ?? []
-                //self.productsCopy = self.products
-                //print("----------------------------------for: \(self.products.isEmpty)----------")
-                for product in self.products{
-                    //print("----------------------------------product----------")
-//                    print("product name -> \(product.title)")
+        monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
+            print( "network \(pathUpdateHandler.status)")
+            if pathUpdateHandler.status == .satisfied {
+                DispatchQueue.main.sync {
+                    self?.NetworkState = true
                 }
-            case .failure(let error):
-                // Show UI Error
-                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
-            }
+                self?.api.getCategoryProducts(parameters: newParameters){(result) in
+                    switch result {
+                    case .success(let response):
+                        let productsResponse = response
+                        //print("-----------------------------------")
+                        self?.products = productsResponse?.products ?? []
+                  
+                    case .failure(let error):
+                        // Show UI Error
+                        print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+                    }
             
+                }
+            } else{
+                DispatchQueue.main.sync {
+                    self?.NetworkState = false
+                }
+            }
         }
+        monitor.start(queue: queue)
+
     }
     
     func updateParameters() -> [String:String]{
-        print("before updating params: \(param)")
+//        print("before updating params: \(param)")
+        
         var newParam = param
-        if(param["vendor"] == ""){newParam.removeValue(forKey: "vendor")}
-        if(param["collection_id"] == ""){newParam.removeValue(forKey: "collection_id")}else{
+//        let newParameters = updateParameters()
+     
+                if(self.param["vendor"] == ""){newParam.removeValue(forKey: "vendor")}
+                if(self.param["collection_id"] == ""){newParam.removeValue(forKey: "collection_id")}else{
             switch(newParam["collection_id"]){
             case "Men", "273053679755":
                 newParam.updateValue("273053679755", forKey: "collection_id")
@@ -67,10 +86,9 @@ class CategoryViewModel : ObservableObject{
                 break
             }
         }
-        if(param["product_type"] == ""){newParam.removeValue(forKey: "product_type")}
-//
-//        print("-------------------------new param -----------------")
-//        print("after updating param: \(newParam)")
+        if(self.param["product_type"] == ""){newParam.removeValue(forKey: "product_type")}
+        
+        
         return newParam
     }
 }
