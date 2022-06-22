@@ -119,7 +119,7 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     
     func updateDraftOrder(draftOrderID: Int,parameter: Parameters) {
         self.writeData(target: .
-            updateDraftOrder(draftOrderID: draftOrderID,parameters: parameter), responseClass: DraftOrders2.self) { result in
+            updateDraftOrder(draftOrderID: draftOrderID,parameters: parameter), responseClass: DraftOrders.self) { result in
             
         }
     }

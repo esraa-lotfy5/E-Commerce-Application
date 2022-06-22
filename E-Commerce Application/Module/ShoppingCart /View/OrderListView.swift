@@ -150,10 +150,11 @@ struct OrderListView: View {
                                              
                                              
                                             print( self.shoppingCartViewModel.totalPrice)
-                                         }else{
-                                             viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
-                                 
                                          }
+//                                         else{
+//                                             viewModelDiscount.getDiscountValue(promo: "SALE15OFF")
+//
+//                                         }
                                  
                                      }
                                     

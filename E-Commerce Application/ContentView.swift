@@ -21,8 +21,8 @@ struct ContentView: View {
 //        LoginScreen()
        
         
-        SplachScreenView()
-        
+       // SplachScreenView()
+        DiscountCodeListView()
         //SettingsView()
    
         

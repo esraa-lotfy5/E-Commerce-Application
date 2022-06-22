@@ -19,7 +19,7 @@ class BaseAPI<T: TargetType> {
         AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding: params.1, headers: headers)
             .validate()
             .responseDecodable(of: responseClass) { (response) in
-//                print(response.debugDescription)
+              //  print(response.debugDescription)
                 guard let statusCode = response.response?.statusCode else {
                     // Add custom error
                     print("Can't get status code")
@@ -67,6 +67,8 @@ class BaseAPI<T: TargetType> {
         AF.request(target.baseURL + target.path, method: method, parameters: params.0, encoding: params.1, headers: headers)
             .validate()
             .responseJSON { (response) in
+                print(response.debugDescription)
+
                 guard let statusCode = response.response?.statusCode else {
                     // Add custom error
                     print("Can't get status code")
