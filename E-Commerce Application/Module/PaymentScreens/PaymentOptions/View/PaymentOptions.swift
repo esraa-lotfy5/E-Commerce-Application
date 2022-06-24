@@ -22,11 +22,11 @@ struct PaymentOptions: View {
   //  @State private var currencyString = UserDefaults.standard.string(forKey: "PaymentOptions")
     @State var optionsArr :[PaymentType] = [.CashOnDeleviry, .PayPal]
     @State var optionsIndex = 1
-    @ObservedObject  var vm = PaymentOptionViewModel()
-    
+   // @ObservedObject  var vm = PaymentOptionViewModel()
+    @ObservedObject var store = Store()
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    var address : Addresss
 
     var paymentsOptions = ["PayPal","Cash On Delivery"]
     let steps = [
@@ -44,7 +44,7 @@ struct PaymentOptions: View {
     
     
     @State var active :Bool = false
-    @State var payment :Double = 0.0
+    
     var body: some View {
         
         VStack {
@@ -72,33 +72,21 @@ struct PaymentOptions: View {
                     
                     
                     //start of element currency
-                    VStack{
-                        
-                        Toggle(isOn: $vm.PaymentOptionsActivate) {
-                                        Text("Active")
-                                            .font(.system(size: 18))
-                                            .foregroundColor(Color("TextDark"))
-                           // print("value :\()")
+                    VStack {
+                                    HStack {
+                                        Text("Payment Options ")
+                                            .font(.system(size: 18, weight: .medium))
+                                            .foregroundColor(.secondary)
+                                        Spacer()
                                     }
-                                    .padding(.top, 6)
-                        
-                    HStack{
-                        Image(systemName: "creditcard")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        
-                        Picker("chooseCurrency", selection: $vm.setUserDefault) {
-                            ForEach(self.optionsArr, id: \.self) { value in
-                                Text(value.rawValue).tag(value)
-                                       }
-                                   }
-                                   .pickerStyle(SegmentedPickerStyle())
-                        
-                      //end of picker
-                    }
-                }
+                        Picker(selection: $store.paymentType, label: Text("paymentType"), content: {
+                            Text("DelivryOnCash").tag(PaymentType.PayPal)
+                            Text("PayPal").tag(PaymentType.CashOnDeleviry)
+                                        
+                                    })
+                                    .pickerStyle(SegmentedPickerStyle())
+                                }
+                                .padding(.top, 20)
                     
                     
                     //end of element
@@ -107,7 +95,16 @@ struct PaymentOptions: View {
                     
                 }}
             Spacer()
-                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             VStack {
                 VStack {
                     HStack (alignment: .top, spacing: 0){
@@ -127,7 +124,7 @@ struct PaymentOptions: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PlaceOrders().environmentObject(self.shoppingCartViewModel),isActive: $active) {
+                        NavigationLink(destination: PlaceOrders(address: address),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
@@ -159,19 +156,12 @@ struct PaymentOptions: View {
                 }
                 
             }.navigationBarBackButtonHidden(true)
-                .environmentObject(shoppingCartViewModel)
-                .onAppear{
-                    print("______PAYMENT________")
-                    payment = self.shoppingCartViewModel.totalPrice
-                    print(self.payment)
-                }
+            
             
         }.onAppear{
-            print("______PAYMENT________")
-            payment = self.shoppingCartViewModel.totalPrice
-            print(self.payment)
+//            print("Total")
+//            print(vm.getTotal())
         }
-        
         
         
         

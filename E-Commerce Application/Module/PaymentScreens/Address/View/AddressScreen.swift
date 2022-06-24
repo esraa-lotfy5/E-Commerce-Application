@@ -11,7 +11,7 @@ import StepperView
 import BraintreeDropIn
 
 struct AddressScreen: View {
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -24,12 +24,13 @@ struct AddressScreen: View {
         StepperIndicationType.custom(Image(systemName:"3.circle").font(.largeTitle).eraseToAnyView())
     ]
     
-    var addressess : [FakeAddress]
+    
     @State var  name : String = ""
-    @State var address :String = ""
+    @State var address1 :String = ""
     @State var city :String = ""
     @State var state :String = ""
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
@@ -61,14 +62,9 @@ struct AddressScreen: View {
             }
             VStack {
                 
-                TextField("Name", text: self.$name)
-                    .padding()
-                    .padding(.bottom, -25)
-                    .foregroundColor(Color.blue)
                 
-                Divider().padding()
                 
-                TextField("Address", text: self.$address)
+                TextField("Address", text: self.$address1)
                     .padding()
                     .padding(.bottom, -15)
                     .foregroundColor(Color.blue)
@@ -82,7 +78,7 @@ struct AddressScreen: View {
                 
                 Divider().padding().padding(.top, -15)
                 
-                TextField("State", text: self.$state)
+                TextField("Country", text: self.$state)
                     .padding()
                     .padding(.bottom, -15)
                     .foregroundColor(Color.blue)
@@ -115,7 +111,7 @@ struct AddressScreen: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PaymentOptions().environmentObject(self.shoppingCartViewModel),isActive: $active) {
+                        NavigationLink(destination: PaymentOptions(address: vm.defultAddress),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
@@ -125,7 +121,7 @@ struct AddressScreen: View {
                                 
                                 "address" :[
                                     
-                                    "address1": address,
+                                    "address1": address1,
                                     "city": city,
                                     "country": state
                                     
@@ -133,8 +129,16 @@ struct AddressScreen: View {
                                 ]
                                 
                             ]
-//                            print(addressPar)
+                            print(addressPar)
+                            
+                            
+                           
+                            vm.defultAddress.city = city
+                            vm.defultAddress.country = state
+                            vm.defultAddress.address1 = address1
+                            
                             vm.postApi(address: addressPar)
+                            
                             self.active = true
                             
                             
@@ -169,9 +173,6 @@ struct AddressScreen: View {
             
         }.onAppear{
             vm.getAddress()
-//                    print("______PAYMENT________")
-//                    print(self.shoppingCartViewModel.totalPrice)
-                
         }
         
         
