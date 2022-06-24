@@ -32,13 +32,13 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     let monitor = NWPathMonitor()
     
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-//    
+//
 //    func getTotalPrice() -> Double{
-//        
+//
 //        self.getAllDraftOrders()
-//        
+//
 //        return totalPrice
-//        
+//
 //    }
     
     func getAllDraftOrders() {
@@ -80,7 +80,6 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                             
                             partialResult, draftorder in
                             partialResult + Double(draftorder.totalTax)!
-                            
                         } ?? 0.0
                     }
                     return true

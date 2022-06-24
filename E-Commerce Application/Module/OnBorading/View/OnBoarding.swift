@@ -14,13 +14,6 @@ struct OnBoardingView : View {
         if #available(iOS 14.0, *) {
            
             TabView{
-//
-//                CustomPage(image: "welcome",
-//                           desc: "Start enjoying the online shopping and see your favorite brands",
-//                           shownsDismissButton: false,
-//                           shouldShowOnBoarding: $shouldShowOnBoarding,
-//                           skipBtn: true, alignment: .bottom)
-
 
                 CustomPage(image: "BrandsOnHome", desc: "See Your Favorite Brands ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: true, alignment: .bottom)
 
@@ -56,6 +49,8 @@ struct OnBoardingView : View {
                     
                 })
 
+               
+
         } else {
             // Fallback on earlier versions
         }
@@ -77,18 +72,7 @@ struct CustomPage : View {
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 150 )
             .padding()
             .overlay(ImageOverlay(desc: desc , shownsDismissButton: shownsDismissButton , shouldShowOnBoarding: $shouldShowOnBoarding), alignment: alignment )
-            
-            
-//
-//            Text(desc)
-//                .font(.system(size: 30))
-//                .padding(6)
-//                .foregroundColor(.white)
-//                .background(Color.pink)
-//                .opacity(0.8)
-//                .cornerRadius(10.0)
-//                .padding()
-            
+
         }
     }
 }

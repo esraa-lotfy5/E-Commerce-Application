@@ -97,7 +97,7 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     
     func deleteDraftOrder(draftOrder: Int) {
         self.fetchData(target: .deleteDraftOrder(darftOrderID: draftOrder) , responseClass: DraftOrders.self) { (result) in
-            print(result)
+//            print(result)
             
         }
     }
@@ -110,10 +110,9 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     }
 
     func postDraftOrder(parameter: Parameters){
-        print("from postdraftorder func \(parameter) ")
+//        print("from postdraftorder func \(parameter) ")
         self.writeData(target: .
             postDraftOrder(parameters: parameter), responseClass: DraftOrder.self) { result in
-            print("from complition handler \(result)")
         }
     }
     

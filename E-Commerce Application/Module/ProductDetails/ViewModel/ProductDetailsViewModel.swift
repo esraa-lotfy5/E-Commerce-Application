@@ -31,7 +31,6 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void){
 //        print("enetered")
             monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
-                print( "network \(pathUpdateHandler.status)")
                 if pathUpdateHandler.status == .satisfied {
                     DispatchQueue.main.sync {
                         self?.NetworkState = true
@@ -62,11 +61,10 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func getAllDarftOrder(){
         self.fetchData(target: .getDraftOrders , responseClass:
         DraftOrders.self) { (result) in
-//            print("request \(String(describing: try? result.get()?.draftOrders))")
+
             try? result.get()?.draftOrders.filter({ DraftOrder in
                 if(DraftOrder.email == self.currEmail) //TODO: get the current users email
                 {
-                    print(DraftOrder)
                 
                     if (DraftOrder.note == "cart"){
                         self.draftOrderID = DraftOrder.id
@@ -121,9 +119,9 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
                 ]]
             ]
         ]
-        print("\n \(favoriteObjectParameters) \n")
+//        print("\n \(favoriteObjectParameters) \n")
         networkapi.postDraftOrder(parameter: favoriteObjectParameters)
-        print("\n after view model function \n ")
+//        print("\n after view model function \n ")
         self.getAllDarftOrder()
     }
 
@@ -145,8 +143,8 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
                            if  draftFavorite.lineItems?[index].variantId == variantIDFav {
                                self.favoriteHere = true
                                self.favoriteItem = draftFavorite
-                                print("\n FAVORITE ITEM IS FOUND \n")
-                               print("Favorite here \(self.favoriteHere)")
+//                                print("\n FAVORITE ITEM IS FOUND \n")
+//                               print("Favorite here \(self.favoriteHere)")
                                
                             }
                         }
@@ -162,6 +160,13 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     
     
     
+    func refreshPage(id:String) async {
+      
+        self.getProductDetails(id: id) { _ in
+            
+        }
+            
+}
     
     
     

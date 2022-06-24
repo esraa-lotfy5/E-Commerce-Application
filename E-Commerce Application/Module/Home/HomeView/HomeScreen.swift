@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+@available(iOS 14.0, *)
 struct HomeScreen: View {
     @ObservedObject  var viewModel = HomeViewModel()
     //trial
@@ -18,7 +19,8 @@ struct HomeScreen: View {
    // @AppStorage("count") var count : Int = 1
     @State private var count = UserDefaults.standard.integer(forKey: "count")
     
-    
+    @AppStorage("shouldShownOnBoarding") var shouldShownOnBoarding : Bool = true
+
 var body: some View {
     VStack{
                 NavigationHome()
@@ -28,7 +30,10 @@ var body: some View {
     //    Text("\(viewModel.str.count)")
 
              Spacer()
-            }
+            }.fullScreenCover(isPresented:
+                                    $shouldShownOnBoarding, content: {
+                OnBoardingView(shouldShowOnBoarding: $shouldShownOnBoarding)
+            })
 //    .blur(radius: presentAlert ? 30 : 0)
 //
 //        .onReceive(timer, perform: { _ in

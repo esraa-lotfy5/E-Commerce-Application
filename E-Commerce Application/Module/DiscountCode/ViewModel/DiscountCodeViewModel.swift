@@ -37,10 +37,10 @@ class DiscountCodeViewModel: ObservableObject {
                     var name = item.title
                     switch name {
                     case "OPENING45OFF":
-                        print ("BACKKK")
+//                        print ("BACKKK")
                         self.priceArr.append(item)
                     case "SALE15OFF":
-                        print ("BACKKK")
+//                        print ("BACKKK")
                         self.priceArr.append(item)
                     default:
                         print("NOT OUR PROMO CODE")
@@ -150,7 +150,6 @@ class DiscountCodeViewModel: ObservableObject {
 //
 //    }
 //    //call the function to get the value -- end
-    
     
     
 }

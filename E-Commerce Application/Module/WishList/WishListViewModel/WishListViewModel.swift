@@ -26,7 +26,7 @@ class WishListViewModel : ObservableObject {
                           for index in 0 ..< (draftFavorite.lineItems?.count ?? 0) {
                               self.wishList.append(draftFavorite)
                             }
-                        print("WISHLIST ARRAY == \(self.wishList)")
+//                        print("WISHLIST ARRAY == \(self.wishList)")
                     }
                 return true
             })

@@ -46,7 +46,7 @@ struct CategoryNavigationBar: View {
             // -------- End back button ---------
             //  --------- start of Search icon -----------------
                Button(action: {
-                    print(String("magnifyingglass button tapped"))
+//                    print(String("magnifyingglass button tapped"))
                 if(self.searchTapped){
                     self.searchTapped = false
                 }else{
@@ -120,9 +120,9 @@ struct CategoryNavigationBar: View {
                 if #available(iOS 14.0, *) {
                     CategorySearchBar(searchWord: $searchWord)
                         .onChange(of: searchWord) { word in
-                            print(searchWord.uppercased())
+//                            print(searchWord.uppercased())
                             if(searchWord == ""){
-                                print("search word is empty")
+//                                print("search word is empty")
                                 categoryViewModel.searchEnbled = false
                             }else{
                                 categoryViewModel.searchEnbled = true

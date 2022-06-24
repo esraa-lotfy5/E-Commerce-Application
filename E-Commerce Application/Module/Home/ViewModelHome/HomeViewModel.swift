@@ -47,7 +47,7 @@ class HomeViewModel : ObservableObject {
                 let responseBrand = response
                 
                 self.brands = responseBrand?.smart_collections ?? []
-                print(self.brands)
+//                print(self.brands)
                 for brand in responseBrand?.smart_collections ?? [] {
                     
                     //print("BRAND TITLE  : \(brand.title)")

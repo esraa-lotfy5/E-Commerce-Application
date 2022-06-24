@@ -33,7 +33,7 @@ class CategoryViewModel : ObservableObject{
     func getProducts(){
         let newParameters = updateParameters()
         monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
-            print( "network \(pathUpdateHandler.status)")
+//            print( "network \(pathUpdateHandler.status)")
             if pathUpdateHandler.status == .satisfied {
                 DispatchQueue.main.sync {
                     self?.NetworkState = true
