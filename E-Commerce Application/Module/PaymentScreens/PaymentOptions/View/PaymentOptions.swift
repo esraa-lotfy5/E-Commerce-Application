@@ -22,8 +22,8 @@ struct PaymentOptions: View {
   //  @State private var currencyString = UserDefaults.standard.string(forKey: "PaymentOptions")
     @State var optionsArr :[PaymentType] = [.CashOnDeleviry, .PayPal]
     @State var optionsIndex = 1
-    @ObservedObject  var vm = PaymentOptionViewModel()
-    
+   // @ObservedObject  var vm = PaymentOptionViewModel()
+    @ObservedObject var store = Store()
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var address : Addresss
@@ -72,33 +72,21 @@ struct PaymentOptions: View {
                     
                     
                     //start of element currency
-                    VStack{
-                        
-                        Toggle(isOn: $vm.PaymentOptionsActivate) {
-                                        Text("Active")
-                                            .font(.system(size: 18))
-                                            .foregroundColor(Color("TextDark"))
-                           // print("value :\()")
+                    VStack {
+                                    HStack {
+                                        Text("Payment Options ")
+                                            .font(.system(size: 18, weight: .medium))
+                                            .foregroundColor(.secondary)
+                                        Spacer()
                                     }
-                                    .padding(.top, 6)
-                        
-                    HStack{
-                        Image(systemName: "creditcard")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        
-                        Picker("chooseCurrency", selection: $vm.setUserDefault) {
-                            ForEach(self.optionsArr, id: \.self) { value in
-                                Text(value.rawValue).tag(value)
-                                       }
-                                   }
-                                   .pickerStyle(SegmentedPickerStyle())
-                        
-                      //end of picker
-                    }
-                }
+                        Picker(selection: $store.paymentType, label: Text("paymentType"), content: {
+                            Text("DelivryOnCash").tag(PaymentType.PayPal)
+                            Text("PayPal").tag(PaymentType.CashOnDeleviry)
+                                        
+                                    })
+                                    .pickerStyle(SegmentedPickerStyle())
+                                }
+                                .padding(.top, 20)
                     
                     
                     //end of element

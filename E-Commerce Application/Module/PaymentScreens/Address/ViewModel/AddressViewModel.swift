@@ -16,15 +16,15 @@ class AddressViewModel:ObservableObject{
     var api :NetworkAPIProtocol = NetworkAPI()
     @Published  var comingAddressess :[Addresss] = []
     @Published var defultAddress :Addresss = Addresss(id: 1, address1: "", city: "", country: "")
-    private let currEmail = UserDefaults.standard.string(forKey: "email")
+    private let currId = UserDefaults.standard.integer(forKey: "id")
     
     init() {
         getAddress()
     }
     
-    
+    //5754051854475
     func postApi (address: Parameters){
-        api.postAddress( coustmerId: "5754051854475", address: address) {(result) in
+        api.postAddress( coustmerId: "\(currId)", address: address) {(result) in
             switch result {
             case .success(let response):
                 let addressResponse = response
@@ -39,7 +39,7 @@ class AddressViewModel:ObservableObject{
     }
     
     func getAddress(){
-        api.getAddress(coustmerId: "5754051854475") {(result) in
+        api.getAddress(coustmerId: "\(currId)") {(result) in
             switch result {
             case .success(let response):
                 let addressResponse = response

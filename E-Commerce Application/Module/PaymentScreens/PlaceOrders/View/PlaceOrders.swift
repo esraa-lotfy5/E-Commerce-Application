@@ -12,6 +12,7 @@ import StepperView
 import BraintreeDropIn
 import Alamofire
 
+
 struct PlaceOrders: View {
     
     let steps = [
@@ -34,20 +35,34 @@ struct PlaceOrders: View {
     @State var discound : Double = 0.0
     @State var total : Double = 1006.0
     
-    private let currEmail = UserDefaults.standard.string(forKey: "email")
-    private let currFirstName = UserDefaults.standard.string(forKey: "first_name")
-    private let currLastName = UserDefaults.standard.string(forKey: "last_name")
-    private let currency = UserDefaults.standard.string(forKey: "currencyString")
+    
+    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValye")
+      
+    @State private var PaymentOptions = UserDefaults.standard.string(forKey: "PaymentOptions")
+    @State private var isPayPal = UserDefaults.standard.bool(forKey: "isPay")
+    @State var active :Bool = false
+    
+    var address :Addresss
+    
+   // @EnvironmentObject var  vm :AddressViewModel
     
     let tokenizationKey = "sandbox_rzw4gpvr_d4c5wgkkpdhthsgg"
     var amountInt :Int = 1
     var amount : NSDecimalNumber = 1000000
     
     @State var showDropIn = false
-    @ObservedObject var addressViewModel = AddressViewModel()
     
-    var address : Addresss
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    
+     let currEmail = UserDefaults.standard.string(forKey: "email")
+    var currFirstName = UserDefaults.standard.string(forKey: "first_name")
+    var currLastName = UserDefaults.standard.string(forKey: "last_name")
+       var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @ObservedObject var addressViewModel = AddressViewModel()
 
+    
+    
     var body: some View {
         let size = Decimal(amountInt)
         let test = pow(size, 2) - 1
@@ -70,7 +85,7 @@ struct PlaceOrders: View {
                         HStack{
                             Text("Sub Total")
                             Spacer()
-                            Text("\(subTotal) USD")
+                            Text("\(currencyValue) USD")
                             
                         }}.padding()
                     Section{
@@ -166,12 +181,22 @@ struct PlaceOrders: View {
             
             
         }.navigationBarBackButtonHidden(true)
+            .onAppear{
+                           print("___PAYMENT___")
+                           total = self.shoppingCartViewModel.totalPrice
+                           subTotal = self.shoppingCartViewModel.subTotalPrice
+                           print(self.total)
+                       }
         
         //////////
+        NavigationLink(destination: HomeScreen(),isActive: $active) {
+            
+            EmptyView()
+        }.edgesIgnoringSafeArea(.vertical)
         
+        if self.isPayPal{
+          if  self.showDropIn{
         
-        
-        if self.showDropIn {
             BTDropInRepresentable(authorization: tokenizationKey, amount: resultD,handler: { controller, result, error in
                 if let error = error {
                     print("Error: \(error.localizedDescription)")
@@ -186,7 +211,6 @@ struct PlaceOrders: View {
                     print("\(String(describing: type))🎲")
                     print("\(String(describing: paymentMethod))🎲")
                     print("\(String(describing: description))🎲")
-                    print("\(String(describing: address.address1))🎲")
                     
                     addressViewModel.getAllDraftOrders { result in
                         
@@ -215,7 +239,7 @@ struct PlaceOrders: View {
 
                             }
 //
-                            placeOrder(lineItems: lineItems)
+                            placeOrderPayPal(lineItems: lineItems)
                             
                             
                         case .failure(let error):
@@ -230,14 +254,21 @@ struct PlaceOrders: View {
                     print("Ready for checkout...")
                 }
                 self.showDropIn = false
+                self.active = true
             }).edgesIgnoringSafeArea(.vertical)
+            }
+            
         }
+    
+                
+        
+        
         
         
     }
     
     
-    func placeOrder(lineItems: [Parameters]) {
+    func placeOrderPayPal(lineItems: [Parameters]) {
         
         print("place order clicked")
 
@@ -258,7 +289,60 @@ struct PlaceOrders: View {
         ]
         
         print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
-        print("order with address: \(addressViewModel.defultAddress.address1), city: \(addressViewModel.defultAddress.city) and country: \(addressViewModel.defultAddress.country)")
+        print("order with address: \(address.address1), city: \(address.city) and country: \(address.country)")
+        print("order items: \(lineItems)")
+        
+        addressViewModel.createOrder(order: order) { result in
+            
+            switch result {
+                
+            case .success(let order):
+                print("order in view: \(order)")
+                
+            case .failure(let error):
+                // handle error
+                print("error occurred")
+                print("error: \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
+    
+    
+    func elsee(){
+        
+        
+    }
+    
+    
+    
+    
+    
+    func placeOrderCash(lineItems: [Parameters]) {
+        
+        print("place order clicked")
+
+        let shippingAddress = [
+            "first_name": currFirstName ?? "",
+            "last_name": currLastName ?? "",
+            "address1": address.address1,
+            "city": address.city,
+            "country": address.country
+        ]
+        
+        let order: Parameters = [ "order": [
+            "email": currEmail ?? "",
+            "currency": currency ?? "EGP",
+            "line_items": lineItems,
+            "shipping_address": shippingAddress,
+            "financial_status": "pending"
+            
+        ]
+        ]
+        
+        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+        print("order with address: \(address.address1), city: \(address.city) and country: \(address.country)")
         print("order items: \(lineItems)")
         
         addressViewModel.createOrder(order: order) { result in
@@ -278,6 +362,18 @@ struct PlaceOrders: View {
     }
     
 }
+
+        
+        
+       
+    
+    
+    
+
+
+//func pay
+
+
 
 struct BTDropInRepresentable: UIViewControllerRepresentable {
     var authorization: String
@@ -314,3 +410,4 @@ struct BTDropInRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: BTDropInController, context: UIViewControllerRepresentableContext<BTDropInRepresentable>) {
     }
 }
+
