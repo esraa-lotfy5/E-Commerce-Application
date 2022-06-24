@@ -11,7 +11,7 @@ import StepperView
 import BraintreeDropIn
 
 struct AddressScreen: View {
-    
+    @State var errorMessage: String = ""
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -131,7 +131,7 @@ struct AddressScreen: View {
                             ]
                             print(addressPar)
                             
-                            
+                            if self.validateData(){
                            
                             vm.defultAddress.city = city
                             vm.defultAddress.country = state
@@ -140,9 +140,11 @@ struct AddressScreen: View {
                             vm.postApi(address: addressPar)
                             
                             self.active = true
+                            }
                             
-                            
-                        }) {
+                        }
+                        
+                        ) {
                             HStack {
                                 Spacer()
                                 Text("Next")
@@ -154,6 +156,10 @@ struct AddressScreen: View {
                             .frame(height: 55)
                             .background(Color.accentColor)
                             .cornerRadius(15)
+                            
+                            Text(self.errorMessage)
+                                .foregroundColor(Color.red)
+                                .multilineTextAlignment(.center)
                         }
                         
                         Spacer()
@@ -177,4 +183,35 @@ struct AddressScreen: View {
         
         
     }
+    func validateData() -> Bool {
+        
+        if !validateFields() {
+            
+            self.showErrorMessage("Please fill all the fields or select from cards!")
+            return false
+            
+       
+            
+        } else {
+            
+            // continue with register
+            return true
+            
+        }
+        
+    }
+    
+    func validateFields() -> Bool {
+        
+        if self.address1.count > 0 && self.city.count > 0 && self.state.count > 0 {
+            return true
+        }
+        
+        return false
+        
+    }
+    func showErrorMessage(_ errorMessage: String) {
+        self.errorMessage = errorMessage
+    }
+    
 }
