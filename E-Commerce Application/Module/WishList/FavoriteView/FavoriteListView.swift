@@ -14,7 +14,7 @@ struct FavoriteListView: View {
     @State private var isActive = false
     @ObservedObject  var viewModelDetails = ProductDetailsViewModel()
     @State var productFavId : Int?
-    //@State var favoriteList : [DraftOrder] = viewModelFavorite.wishList
+    //@State var favoriteList : [DraftOrder]?
    // @ObservedObject  var viewModelFavorite = WishListViewModel()
 
     
@@ -72,9 +72,11 @@ struct FavoriteListView: View {
                                //.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                            
                                
-                           }.onAppear(perform: {
-                               self.productFavId = row.id
-                               print("PRODUCT ID == \(productFavId)")
+                           }
+                           .onAppear(perform: {
+//                               self.productFavId = row.id
+//                               print("PRODUCT ID == \(productFavId)")
+                             //  viewModelFavorite.getFavorites()
                            })
                            .onTapGesture {
                                print("onTap == \(String(describing: row.id))")
@@ -82,29 +84,43 @@ struct FavoriteListView: View {
                                
                                
 
-                          }
-//                           NavigationLink(destination: ProductDetails(),isActive: $isActive) {
-//                              
-//                              EmptyView()
-//                          }
-                           .background(NavigationLink(destination:  // link in background
-                                                      ProductDetails(productId: String(productFavId ?? 0)), isActive: $isActive) { EmptyView() })
-//
-
-        
-        
+                           }.alert(isPresented: $isActive) { () -> Alert in
+                                   Alert(title: Text("Alert"), message: Text("Do you want to delete this item ?"), primaryButton: .default(Text("Delete"), action: {
+                                       print("Okay Click")
+                                       deleteItem(productId: row.id ?? 0)
+                                      // viewModelFavorite.getFavorites()
+                           
+                                   }), secondaryButton: .destructive(Text("Cancel")))
+                           }
+                           
+                           
+                           //                           NavigationLink(destination: ProductDetails(),isActive: $isActive) {
+                           //
+                           //                              EmptyView()
+                           //                          }
+//                           .background(NavigationLink(destination:  // link in background
+//                                                      ProductDetails(productId: String(productFavId ?? 0)), isActive: $isActive) { EmptyView() })
+                           
+                           
+                           
+                           
                        }
-                       .onDelete(perform: self.delete)
-
+                       
+                       //.onDelete(perform: self.delete)
+                       
+                       
+                   }
+//                   .onAppear(perform: {
+//                       self.viewModelFavorite.getFavorites()
+//                   })
                    
-               }
         
         
         
-    //}
-        .navigationBarBackButtonHidden(true)
-    
-
+        //}
+                   .navigationBarBackButtonHidden(true)
+        
+        
     }
     
     private func delete(at offsets: IndexSet) {
@@ -114,13 +130,48 @@ struct FavoriteListView: View {
         
         print("OFFSET == \(productFavId)")
         self.viewModelDetails.deleteFavorite(draftFavoriteID: self.productFavId ?? 0)
-        self.viewModelFavorite.getFavorites()
         
         
-   }
-
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private func deleteItem (productId : Int){
+//        for (index, element) in viewModelFavorite.wishList.enumerated() {
+//            if element.id == productId {
+//                viewModelFavorite.wishList.remove(at: index)
+                print("DELETED FROM ARRAY")
+                print("OFFSET == \(productId)")
+                self.viewModelDetails.deleteFavorite(draftFavoriteID: productId)
+                //self.viewModelFavorite.getFavorites()
+            
+       // }
+  
+    }
+    
+    
+    
     
 }
+
+
+
+
+
+
+
+
 
 
 

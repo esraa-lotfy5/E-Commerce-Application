@@ -38,6 +38,7 @@ enum NetworkRequest{
     case getUserOrders
     
     case updatedCurrency (baseLg : String)
+    case updateInventoryLevel  (inventoryLevel : Parameters)
 }
 
 extension NetworkRequest : TargetType {
@@ -115,6 +116,9 @@ extension NetworkRequest : TargetType {
           
         case.updatedCurrency(let base):
             return "latest?symbols=EGP,USD,AED,AFN&base=\(base)&apikey=SEYGO2EroCLponB3IyndgQQ04a0oN1jl"
+            
+        case .updateInventoryLevel( let inventoryLevel):
+            return "inventory_levels/adjust.json"
         }
     }
     
@@ -180,6 +184,9 @@ extension NetworkRequest : TargetType {
         case.updatedCurrency:
             return .get
             
+        case .updateInventoryLevel:
+            return .post
+
         }
     }
     
@@ -248,6 +255,9 @@ extension NetworkRequest : TargetType {
             
         case .updatedCurrency:
             return .requestPlain
+            
+        case .updateInventoryLevel(let inventoryLevel ):
+            return .requestParameters(parameters: inventoryLevel, encoding: URLEncoding.default)
         }
     }
     

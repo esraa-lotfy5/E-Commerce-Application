@@ -60,7 +60,7 @@ struct DiscountCodeListView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }.background(Image("DiscountCode").resizable().frame(width: 100, height: 100))
 
-                        Text("Code : \(row.title)")
+                        Text("Code :\n \(row.title)")
                             .font(.body)
                             .fontWeight(.semibold)
                             .padding()

@@ -95,7 +95,8 @@ struct ProductDetails: View {
                                     productDetailsViewModel.favoriteHere = false
                                 }
 
-                            }else{ //item is unliked ---> turn to like POST
+                            }
+                            else{ //item is unliked ---> turn to like POST
                                 DispatchQueue.main.async {
                                 let variantIdFav = productDetailsViewModel.Products?.variants?[0].id ?? 0
                                 productDetailsViewModel.postFavorite(variantIDFav: variantIdFav )

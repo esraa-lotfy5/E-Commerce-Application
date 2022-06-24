@@ -7,27 +7,31 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct  Product4 {
     var image :String
     var name :String
 }
 struct ProductRow: View {
-    let firstItem : ProductItem
-    let secondItem : ProductItem
+    @ObservedObject  var viewModelFavorite = WishListViewModel()
+
+
+
+    let firstItem : DraftOrder
+    let secondItem : DraftOrder
     var viewWidth : CGFloat = CGFloat(0.0)
     @State private var fav : Bool = false // by default is un fav
-    init(firstItem: ProductItem, secondItem: ProductItem){
+    init(firstItem: DraftOrder, secondItem: DraftOrder){
         self.viewWidth = (UIScreen.main.bounds.size.width-50)/2
         self.firstItem = firstItem
         self.secondItem = secondItem
     }
-
     var body: some View {
         HStack{
         Spacer().frame(width: 16)
         VStack(alignment: .leading){
-            Image(firstItem.image)
+            Image(firstItem.name ?? "N/A")
             .resizable()
                 .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height-50)/3)
                 .cornerRadius(15)
@@ -35,13 +39,13 @@ struct ProductRow: View {
             HStack{
                 VStack(alignment: .leading){
                     VStack(alignment: .leading){
-                        Text(firstItem.name)
+                        Text(firstItem.lineItems?[0].name ?? "N/A")
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    Text("$ \(firstItem.price)")
+                    Text("$ \(firstItem.totalPrice)")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)
@@ -52,7 +56,7 @@ struct ProductRow: View {
         Spacer()
         
         VStack(alignment: .leading){
-            Image(secondItem.image)
+            KFImage(URL(string:secondItem.noteAttributes?[0].value ?? ""))
             .resizable()
                 .frame(width: (UIScreen.main.bounds.size.width-50)/2, height: (UIScreen.main.bounds.size.height-50)/3)
                 .cornerRadius(15)
@@ -60,13 +64,13 @@ struct ProductRow: View {
             HStack{
                 VStack(alignment: .leading){
                     VStack(alignment: .leading){
-                        Text(secondItem.name)
+                        Text(secondItem.lineItems?[0].name ?? "N/A")
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    Text("$ \(secondItem.price)")
+                    Text("$ \(secondItem.totalPrice)")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)
@@ -78,11 +82,11 @@ struct ProductRow: View {
     }
 }
 
-struct ProductRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductRow(firstItem: dummyProducts[0], secondItem: dummyProducts[1])
-    }
-}
+//struct ProductRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProductRow(firstItem: viewModelFavorite.wishList[0], secondItem: viewModelFavorite.wishList[1])
+//    }
+//}
 
 
 //.padding(.bottom, 10)

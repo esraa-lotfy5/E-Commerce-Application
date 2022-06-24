@@ -144,7 +144,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
         print("\n \(favoriteObjectParameters) \n")
         networkapi.postDraftOrder(parameter: favoriteObjectParameters)
         print("\n after view model function \n ")
-        self.getAllDarftOrder()
+     //   self.getAllDarftOrder()
     }
 
 
