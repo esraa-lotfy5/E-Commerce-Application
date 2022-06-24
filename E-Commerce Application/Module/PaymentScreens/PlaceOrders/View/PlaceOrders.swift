@@ -34,6 +34,7 @@ struct PlaceOrders: View {
     @State var validation : String = "Validate"
     @State var discound : Double = 0.0
     @State var total : Double = 1006.0
+    @State private var showProgressView: Bool = false
     
     
     @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
@@ -53,7 +54,7 @@ struct PlaceOrders: View {
     
     @State var showDropIn = false
     
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
     
      let currEmail = UserDefaults.standard.string(forKey: "email")
     var currFirstName = UserDefaults.standard.string(forKey: "first_name")
@@ -124,61 +125,7 @@ struct PlaceOrders: View {
                 Spacer()
                 
                 
-                
-                
-                
-                VStack {
-                    VStack {
-                        HStack (alignment: .top, spacing: 0){
-                            //MARK:- back button
-                            Spacer().frame(width:10)
-                            HStack{
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(.black)
-                            }
-                            .onTapGesture {
-                                self.presentationMode.wrappedValue.dismiss()
-                                
-                            }
-                            .frame(width: 50, height: 40)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                            Spacer().frame(width:50)
-                            
-                            NavigationLink(destination: Text("")) {
-                                
-                                Button(action: { self.showDropIn = true }) {
-                                    HStack {
-                                        Spacer()
-                                        Text("Select Payment Method")
-                                            .fontWeight(.bold)
-                                            .font(.body)
-                                        Spacer()
-                                    }
-                                    .foregroundColor(.white)
-                                    .frame(height: 55)
-                                    .background(Color.accentColor)
-                                    .cornerRadius(15)
-                                }
-                                
-                                Spacer()
-                            }.edgesIgnoringSafeArea(.vertical)
-                            
-                            
-                            
-                            
-                        }.frame(height:200)
-                    }
-                    
-                }
-                
-                
             }
-            
-            
-            
-            
             
         }.navigationBarBackButtonHidden(true)
             .onAppear{
@@ -189,12 +136,59 @@ struct PlaceOrders: View {
                        }
         
         //////////
-        NavigationLink(destination: HomeScreen(),isActive: $active) {
-            
+        NavigationLink(destination: ProfileScreen(userloggedIn: true),isActive: $active) {
+
             EmptyView()
         }.edgesIgnoringSafeArea(.vertical)
         
         if self.isPayPal{
+            
+            VStack {
+                VStack {
+                    HStack (alignment: .center, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
+                        }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer().frame(width:50)
+                        
+                        NavigationLink(destination: Text("")) {
+                            
+                            Button(action: { self.showDropIn = true }) {
+                                HStack {
+                                    Spacer()
+                                    Text("Select Payment Method")
+                                        .fontWeight(.bold)
+                                        .font(.body)
+                                    Spacer()
+                                }
+                                .foregroundColor(.white)
+                                .frame(height: 55)
+                                .background(Color.accentColor)
+                                .cornerRadius(15)
+                            }
+                            
+                            Spacer()
+                        }.edgesIgnoringSafeArea(.vertical)
+                        
+                        
+                        
+                        
+                    }.frame(height:200)
+                }
+                
+            }
+            
           if  self.showDropIn{
         
             BTDropInRepresentable(authorization: tokenizationKey, amount: resultD,handler: { controller, result, error in
@@ -258,12 +252,111 @@ struct PlaceOrders: View {
             }).edgesIgnoringSafeArea(.vertical)
             }
             
-        }
-    
+        } else {
+            
+            VStack {
+                VStack {
+                    HStack (alignment: .center, spacing: 0){
+                        //MARK:- back button
+                        Spacer().frame(width:10)
+                        HStack{
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(.black)
+                        }
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        }
+                        .frame(width: 50, height: 40)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
+                        Spacer().frame(width:50)
+                        
+                            
+                            Button(action: {
+                                
+                                showProgressView = true
+                                
+                                
+                                
+                                addressViewModel.getAllDraftOrders { result in
+                                    
+                                    switch result {
+                                    
+                                    case .success(let draftOrders):
+                                        print("place order screen draft orders: \(draftOrders)")
+                                        
+                                        var lineItems = [Parameters]()
+                                        var itemParameter: Parameters = [:]
+                                        
+                                        guard let draftOrdersResponse = draftOrders?.draftOrders else {
+                                            return
+                                        }
+                                        
+                                        let orders = draftOrdersResponse.filter {
+                                            $0.email?.lowercased() == currEmail?.lowercased()
+                                        }
+                                        
+                                        for draftOrder in orders {
+
+                                            itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
+                                            itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
+
+                                            lineItems.append(itemParameter)
+
+                                        }
+                //
+                                        placeOrderCash(lineItems: lineItems)
+                                        
+                                        
+                                    case .failure(let error):
+                                        print("error while placing order: \(error)")
+                                        
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                            ) {
+                                
+                                if showProgressView {
+                                    
+                                    if #available(iOS 14.0, *) {
+                                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    
+                                } else {
+                                    
+                                    HStack {
+                                        Spacer()
+                                        Text("Pay Cash on Delivery")
+                                            .fontWeight(.bold)
+                                            .font(.body)
+                                        Spacer()
+                                    }
+                                    
+                                    
+                                }
+                                
+                            }
+                            .foregroundColor(.white)
+                            .frame(height: 55)
+                            .background(Color.accentColor)
+                            .cornerRadius(15)
+                            
+                            Spacer()
+                        
+                        
+                        
+                    }.frame(height:200)
+                }
                 
-        
-        
-        
+            }
+            
+        }
         
     }
     
@@ -298,6 +391,7 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
+                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -309,19 +403,10 @@ struct PlaceOrders: View {
     }
     
     
-    
-    func elsee(){
-        
-        
-    }
-    
-    
-    
-    
-    
     func placeOrderCash(lineItems: [Parameters]) {
         
         print("place order clicked")
+        showProgressView = true
 
         let shippingAddress = [
             "first_name": currFirstName ?? "",
@@ -351,25 +436,22 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
+                active = true
+                showProgressView = false
+                
+                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
                 print("error occurred")
                 print("error: \(error.localizedDescription)")
+                showProgressView = false
             }
             
         }
     }
     
 }
-
-        
-        
-       
-    
-    
-    
-
 
 //func pay
 
