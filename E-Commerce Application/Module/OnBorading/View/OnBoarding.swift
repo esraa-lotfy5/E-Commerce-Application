@@ -15,6 +15,7 @@ struct OnBoardingView : View {
            
             TabView{
 
+               
                 CustomPage(image: "BrandsOnHome", desc: "See Your Favorite Brands ", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: true, alignment: .bottom)
 
                 CustomPage(image: "SettingsOnHome", desc: "You Can Edit your Settings", shownsDismissButton: false, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: true, alignment: .bottom)
@@ -36,18 +37,7 @@ struct OnBoardingView : View {
                 CustomPage(image: "explore the products",  desc: "Lets enjoy the shopping ", shownsDismissButton: true, shouldShowOnBoarding: $shouldShowOnBoarding, skipBtn: false, alignment: .bottom)
                 
             }.tabViewStyle(.page)
-                .alert(isPresented: self.$shouldShowOnBoarding, content: {
-                    Alert(
-                        title: Text("Welcome"), // $alerttitle
-                        message: Text("Would You like to know how to use the app?"),
-                        primaryButton: .destructive(Text("Skip")) {
-                            self.shouldShowOnBoarding = false
-                        }, secondaryButton: .default(Text("Ok"), action: {
-                            self.shouldShowOnBoarding = true
-                        })
-                    )
-                    
-                })
+              
 
                
 

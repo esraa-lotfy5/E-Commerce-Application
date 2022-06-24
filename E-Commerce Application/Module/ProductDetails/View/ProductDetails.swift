@@ -135,27 +135,27 @@ struct ProductDetails: View {
                     //                FeatureCard(image:  $0.src ?? " ")
                     
                     //MARK: Images
-//                    if productDetailsViewModel.Products?.images?.count ?? 0 == 3 {
+                    if productDetailsViewModel.Products?.images?.count ?? 0 >= 3 {
                         PageView(pages: [
                             
-                            FeatureCard(image:    productDetailsViewModel.Products?.images?[0].src! ?? "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
+                            FeatureCard(image:    productDetailsViewModel.Products?.images?[0].src! ?? ""),
                             
                             
-                            FeatureCard(image:    productDetailsViewModel.Products?.images?[1].src! ?? "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg")
+                            FeatureCard(image:    productDetailsViewModel.Products?.images?[1].src! ?? "")
                             ,
                             
-                            FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg") 
+                            FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? "")
                         ]).frame( height: 300)
                         
-//                    }else{
-//                        PageView(pages: [
-//
-//                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
-//                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
-//                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg")
-//                        ]
-//                        ).frame( height: 300)
-//                    }
+                    }else{
+                        PageView(pages: [
+
+                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
+                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
+                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg")
+                        ]
+                        ).frame( height: 300)
+                    }
                     VStack(alignment: .leading) {
                         //MARK: TITLE AND PRICE
                         HStack {

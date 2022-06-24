@@ -174,6 +174,7 @@ struct OrderListView: View {
                             Text("  Total Tax : \(shoppingCartViewModel.totalTax * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "nil" )")
                                 .foregroundColor(.blue)
                                 .font(.headline)
+                            //* 1.0 /*Double(currencyValue)*/
                             Text("  Total Price: \(shoppingCartViewModel.totalPrice * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "nil" )")
                             
                                 .foregroundColor(.blue)
@@ -189,6 +190,10 @@ struct OrderListView: View {
                     .padding(.trailing)
                     .padding(.top)
                     .padding(.bottom)
+                    }.onAppear{
+                        self.shoppingCartViewModel.calcTotal()
+                        print(currencyValue)
+                        print(currency)
                     }
                     
                     

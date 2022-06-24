@@ -32,15 +32,28 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     let monitor = NWPathMonitor()
     
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-//
-//    func getTotalPrice() -> Double{
-//
-//        self.getAllDraftOrders()
-//
-//        return totalPrice
-//
-//    }
+
     
+    func calcTotal(){
+        self.totalPrice =  self.shoppingCartProducts.reduce(0.0) {
+            
+            partialResult, draftorder in
+            partialResult + Double(draftorder.totalPrice)!
+            
+        } ?? 0.0
+        
+        self.subTotalPrice =  self.shoppingCartProducts.reduce(0.0) {
+            
+            partialResult, draftorder in
+            partialResult + Double(draftorder.subtotalPrice)!
+            
+        } ?? 0.0
+        self.totalTax =  self.shoppingCartProducts.reduce(0.0) {
+            
+            partialResult, draftorder in
+            partialResult + Double(draftorder.totalTax)!
+        } ?? 0.0
+    }
     func getAllDraftOrders() {
         monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
             print( "network \(pathUpdateHandler.status)")
@@ -56,7 +69,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 
                     try? result.get()?.draftOrders.filter({ DraftOrder in
                         
-                        if(DraftOrder.email == self?.currEmail ?? "iosteam@gmail.com") //TODO: get the current users email
+                        if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                         {
                             
                             if (DraftOrder.note == "cart"){
