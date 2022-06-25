@@ -136,7 +136,7 @@ struct PlaceOrders: View {
                        }
         
         //////////
-        NavigationLink(destination: ProfileScreen(userloggedIn: true),isActive: $active) {
+        NavigationLink(destination: ProfileScreen(),isActive: $active) {
 
             EmptyView()
         }.edgesIgnoringSafeArea(.vertical)

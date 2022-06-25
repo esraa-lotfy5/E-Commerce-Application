@@ -32,7 +32,7 @@ struct TabBarHome: View {
             }
             
             
-            ProfileScreen(userloggedIn: true)
+            ProfileScreen()
                 .tabItem{
                     Image(systemName: "person.fill")
                     Text("Profile")

@@ -108,7 +108,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     func postFavorite (variantIDFav : Int){
         let favoriteObjectParameters = [
             "draft_order": [
-                "email" : currEmail ,  //TODO: get the current users email
+                "email" : currEmail ?? "" ,  //TODO: get the current users email
                 "note" : Constants.favorite,
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"]

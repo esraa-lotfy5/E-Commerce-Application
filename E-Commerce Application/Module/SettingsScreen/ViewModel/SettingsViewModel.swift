@@ -26,7 +26,7 @@ class SettingsViewModel:ObservableObject{
     }
 
     func updatedCurrencyFunc() {
-        api.getUpdatedCurrency(baselan: "USD") {(result) in
+        api.getUpdatedCurrency(baselan: "EGP") {(result) in
             switch result {
             case.success(let response):
                 self.updatedCurrency = response ?? Currency(base: "USD", rates: Rates(EGP: 14.2, USD: 1.55, AED: 1.568, AFN: 1.568))

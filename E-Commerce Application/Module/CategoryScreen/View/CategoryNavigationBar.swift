@@ -17,7 +17,7 @@ struct CategoryNavigationBar: View {
     @State var searchWord : String = ""
     let categoryViewModel : CategoryViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     @ObservedObject  var viewModelWishList = WishListViewModel()
     
     
@@ -73,12 +73,20 @@ struct CategoryNavigationBar: View {
                Spacer()
             //  --------- start of cart icon -----------------
             
+                
+                
                 if #available(iOS 15.0, *) {
                     HStack {
                         Image(systemName: "cart")
                             .foregroundColor(.black)
                     }
-                    .onTapGesture {self.isActivef.toggle() }
+                    .onTapGesture {
+                        if isLoggedIn {
+                            self.isActivef.toggle()
+                        }
+                        
+                        
+                    }
                     
                     .background(NavigationLink(destination: OrderListView(), isActive: $isActivef) { EmptyView() })
                     
@@ -99,7 +107,13 @@ struct CategoryNavigationBar: View {
                     Image(systemName: "heart")
                     .foregroundColor(.black)
                 }
-                .onTapGesture {self.isActive.toggle() }
+                .onTapGesture {
+                    if isLoggedIn {
+                        self.isActive.toggle()
+                    }
+                    
+                    
+                }
                     
             //    .background(NavigationLink(destination: WishList(product: [Product3(name: "test", price: 90.0, size: "S", desc: "desc")]), isActive: $isActive) { EmptyView() })
              //   .background(NavigationLink(destination: WishList(), isActive: $isActive) { EmptyView() })

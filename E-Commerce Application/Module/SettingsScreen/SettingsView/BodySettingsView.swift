@@ -25,7 +25,8 @@ struct BodySettingsView : View{
 
 @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
 @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
-    
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+
     @State private var selectedIndex = 0
     
 
@@ -119,30 +120,34 @@ var body: some View{
                     
                 }
                 
-                Section{
-                    //start of element logout
-                    HStack{
-                        Image(systemName: "multiply.circle")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        
-                        NavigationLink(destination: LoginScreen(),isActive: $active) {
-                         EmptyView()
+                if isLoggedIn {
+                    Section{
+                        //start of element logout
+                        HStack{
+                            Image(systemName: "multiply.circle")
+                            .frame(width: 25, height: 25)
+                                .foregroundColor(Color.white)
+                                .background(Color.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            
+                            NavigationLink(destination: LoginScreen(),isActive: $active) {
+                             EmptyView()
+                            }
+                            Button(action: {
+                                print("logout is clicked")
+                                isloggedOut()
+                                self.active = true
+                                    
+                            }, label: {
+                                Text("Logout")
+                            })
+                                .foregroundColor(Color.red)
                         }
-                        Button(action: {
-                            print("logout is clicked")
-                            isloggedOut()
-                            self.active = true
-                                
-                        }, label: {
-                            Text("Logout")
-                        })
-                            .foregroundColor(Color.red)
+                        //end of element
                     }
-                    //end of element
                 }
+                
+                
                 
             
                 
