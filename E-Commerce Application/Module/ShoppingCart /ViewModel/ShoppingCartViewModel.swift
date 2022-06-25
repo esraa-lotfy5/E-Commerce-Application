@@ -73,9 +73,9 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                         
                         if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                         {
-                            print("enter")
-                            print(self?.currEmail)
-                            print(DraftOrder.note)
+//                            print("enter")
+//                            print(self?.currEmail)
+//                            print(DraftOrder.note)
                             if (DraftOrder.note == "cart"){
                                 
                                 self?.shoppingCartProducts.append(DraftOrder)

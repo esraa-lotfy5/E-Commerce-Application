@@ -50,6 +50,7 @@ class BaseAPI<T: TargetType> {
                     
                     // Add custom error based on status code
                     print("Status code not successful 200")
+                    print(response.debugDescription)
                     let error = NSError(domain: target.baseURL, code: statusCode, userInfo: [NSLocalizedDescriptionKey: ErrorMessages.genericError])
                     completion(.failure(error))
                     

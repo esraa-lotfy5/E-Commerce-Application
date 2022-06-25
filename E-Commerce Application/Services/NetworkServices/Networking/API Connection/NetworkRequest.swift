@@ -256,7 +256,7 @@ extension NetworkRequest : TargetType {
         default:
 
             return [
-                "X-Shopify-Access-Token":"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"
+                "X-Shopify-Access-Token":"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"
             ]
         }
     }

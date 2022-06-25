@@ -20,7 +20,7 @@ struct HomeScreen: View {
     @State private var count = UserDefaults.standard.integer(forKey: "count")
     
 //    @AppStorage("shouldShownOnBoarding")
-    @State var shouldShownOnBoarding : Bool = true
+    @AppStorage("shouldShownOnBoarding") var shouldShownOnBoarding : Bool = true
     @State var shouldShownOnBoarding2 : Bool = false
 
 var body: some View {

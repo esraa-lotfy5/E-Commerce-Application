@@ -10,7 +10,7 @@ import Foundation
 
 struct Constants {
     
-    static let baseUrl = "https://@madalex20220.myshopify.com/admin/api/2022-04/"
+    static let baseUrl = "https://madalex2022-ios.myshopify.com/admin/api/2022-04/"
     
     static let baseUrlCurrency = "https://api.apilayer.com/exchangerates_data/"
     //trial favorite

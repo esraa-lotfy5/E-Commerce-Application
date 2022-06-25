@@ -136,7 +136,7 @@ struct ProductDetails: View {
                             ,
                             
                             FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? "") ,
-                            FeatureCard(image:    productDetailsViewModel.Products?.images?[3].src! ?? "")
+                          
                         ]).frame( height: 300)
                         
                 

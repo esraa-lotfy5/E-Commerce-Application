@@ -15,7 +15,7 @@ class CategoryViewModel : ObservableObject{
     @Published  var products :[CategoryProduct] = []
     @Published var searchEnbled = false
     @Published var productsCopy : [CategoryProduct] = []
-    @Published var param : [String: String] = ["vendor":"","collection_id":"273053679755","product_type":""] // by default for men
+    @Published var param : [String: String] = ["vendor":"","collection_id":"286254596269","product_type":""] // by default for men
     @Published var isProductTypeChanged = ""
     var api :NetworkAPIProtocol = NetworkAPI()
     
@@ -32,8 +32,8 @@ class CategoryViewModel : ObservableObject{
     }
     func getProducts(){
         let newParameters = updateParameters()
+        print(newParameters)
         monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
-//            print( "network \(pathUpdateHandler.status)")
             if pathUpdateHandler.status == .satisfied {
                 DispatchQueue.main.sync {
                     self?.NetworkState = true
@@ -70,17 +70,17 @@ class CategoryViewModel : ObservableObject{
                 if(self.param["vendor"] == ""){newParam.removeValue(forKey: "vendor")}
                 if(self.param["collection_id"] == ""){newParam.removeValue(forKey: "collection_id")}else{
             switch(newParam["collection_id"]){
-            case "Men", "273053679755":
-                newParam.updateValue("273053679755", forKey: "collection_id")
+            case "Men", "286254596269":
+                newParam.updateValue("286254596269", forKey: "collection_id")
                 break
-            case "Women", "273053712523":
-                newParam.updateValue("273053712523", forKey: "collection_id")
+            case "Women", "286254629037":
+                newParam.updateValue("286254629037", forKey: "collection_id")
                 break
-            case "Kids", "273053745291":
-                newParam.updateValue("273053745291", forKey: "collection_id")
+            case "Kids", "286254661805":
+                newParam.updateValue("286254661805", forKey: "collection_id")
                 break
-            case "Sale", "273053778059":
-                newParam.updateValue("273053778059", forKey: "collection_id")
+            case "Sale", "286254694573":
+                newParam.updateValue("286254694573", forKey: "collection_id")
                 break
             default:
                 break

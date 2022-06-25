@@ -29,13 +29,13 @@ struct CategoryScreen: View {
             CategoryNavigationBar(categoryViewModel: self.categoryViewModel)
             Spacer()
             
-            //MARK:- Tabs
+            //MARK: Tabs
             if #available(iOS 14.0, *) {
                 CategoryTabs(selectedCategory: $categoryViewModel.selectedCategory)
                     .onChange(of: categoryViewModel.selectedCategory) { newValue in
                         categoryViewModel.param.updateValue(newValue.rawValue, forKey: "collection_id")
                         categoryViewModel.getProducts()
-//                        print("new value -> \(newValue)")
+                        print("new value -> \(newValue)")
                     }
             } else {
                 // Fallback on earlier versions
