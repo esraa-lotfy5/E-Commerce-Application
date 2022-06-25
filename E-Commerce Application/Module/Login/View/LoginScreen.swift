@@ -31,62 +31,212 @@ struct LoginScreen: View {
             
             VStack {
                 
-                Spacer()
-                Text("Login")
-                    .bold()
-                    .font(.largeTitle)
-                    .foregroundColor(.black)
-                
-                
-                TextField("Email", text: self.$email)
-                    .padding()
-                    .padding(.bottom, -25)
-                    .foregroundColor(Color.blue)
-                
-                Divider().padding()
-                
-                HStack {
+                VStack {
                     
-                    Group {
+                    Spacer()
+                    Text("Login")
+                        .bold()
+                        .font(.largeTitle)
+                        .foregroundColor(.black)
+                    
+                    
+                    TextField("Email", text: self.$email)
+                        .padding()
+                        .padding(.bottom, -25)
+                        .foregroundColor(Color.blue)
+                    
+                    Divider().padding()
+                    
+                    HStack {
                         
-                        if hidePassword {
+                        Group {
                             
-                            VStack {
+                            if hidePassword {
                                 
-                                SecureField("Password", text: self.$password)
-                                    .padding()
-                                    .padding(.bottom, -15)
-                                    .foregroundColor(Color.blue)
+                                VStack {
+                                    
+                                    SecureField("Password", text: self.$password)
+                                        .padding()
+                                        .padding(.bottom, -15)
+                                        .foregroundColor(Color.blue)
+                                    
+                                    Divider().padding().padding(.top, -15)
+                                    
+                                }
                                 
-                                Divider().padding().padding(.top, -15)
+                            } else {
                                 
+                                VStack {
+                                    
+                                    TextField("Password", text: self.$password)
+                                        .padding()
+                                        .padding(.bottom, -15)
+                                        .foregroundColor(Color.blue)
+                                    
+                                    Divider().padding().padding(.top, -15)
+                                    
+                                }
+                                
+                            }
+                        }
+
+                        Button(action: {
+                            self.hidePassword.toggle()
+                        }) {
+                            Image(systemName: self.hidePassword ? "eye.slash" : "eye")
+                                .padding()
+                                .padding(.top, -15)
+                                .accentColor(.gray)
+                        }
+                    }
+                    
+                }
+                
+                VStack {
+                 
+                    if #available(iOS 15.0, *) {
+                        NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
+                            EmptyView()
+                        }
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                    
+                    
+                    Button(action: {
+                        
+                        if self.validateFields() {
+                            // continue with register
+                            loginCustomer(email: email, password: password)
+                        }
+                        
+                    }) {
+                        
+                        if showProgressView {
+                            
+                            if #available(iOS 14.0, *) {
+                                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
                             }
                             
                         } else {
-                            
-                            VStack {
-                                
-                                TextField("Password", text: self.$password)
-                                    .padding()
-                                    .padding(.bottom, -15)
-                                    .foregroundColor(Color.blue)
-                                
-                                Divider().padding().padding(.top, -15)
-                                
-                            }
-                            
+                            Text("Login")
+                                .bold()
+                                .frame(maxWidth: .infinity)
                         }
+                        
+                    }.padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding()
+                    
+                    
+                    NavigationLink(destination: RegisterScreen()
+                        .navigationBarBackButtonHidden(true)
+                                   //                    .navigationViewStyle(StackNavigationViewStyle())
+                                   //                    .navigationBarHidden(true)
+                    ){
+                        
+                        Text("Create an Account")
+                            .bold()
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color.white)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .padding()
+                        
+                        
                     }
 
-                    Button(action: {
-                        self.hidePassword.toggle()
-                    }) {
-                        Image(systemName: self.hidePassword ? "eye.slash" : "eye")
-                            .padding()
-                            .padding(.top, -15)
-                            .accentColor(.gray)
+    //                NavigationLink(destination: RegisterScreen()
+    //                    .navigationBarBackButtonHidden(true)
+    //                               //                    .navigationViewStyle(StackNavigationViewStyle())
+    //                               //                    .navigationBarHidden(true)
+    //                ){
+    //
+    //                    Text("Create an Account")
+    //                        .bold()
+    //                        .padding()
+    //                        .frame(maxWidth: .infinity)
+    //                        .foregroundColor(Color.white)
+    //                        .background(Color.blue)
+    //                        .cornerRadius(10)
+    //                        .padding()
+    //
+    //
+    //                }
+                    
+    //                NavigationLink(destination: TabBarHome()
+                    
+    //                ){
+    //                    Text("Create an Account")
+    //                        .bold()
+    //                        .padding()
+    //                        .frame(maxWidth: .infinity)
+    //                        .foregroundColor(Color.white)
+    //                        .background(Color.blue)
+    //                        .cornerRadius(10)
+    //                        .padding()
+    //                }
+                    
+                    HStack {
+                     
+                        Spacer()
+                        
+                        NavigationLink(destination: TabBarHome()
+                            .navigationBarBackButtonHidden(true)
+                                       //                    .navigationViewStyle(StackNavigationViewStyle())
+                                       //                    .navigationBarHidden(true)
+                        ){
+                            
+                            Text("Skip for now >")
+                                .bold()
+                                .padding()
+                                .frame(width: 150)
+                                .foregroundColor(Color.black)
+                                .background(Color.gray.opacity(0.3))
+                                .cornerRadius(10)
+                                .padding(.trailing)
+                            
+                            
+                        }
+                        
                     }
+                    
+                    
+                    
+                    Spacer()
+                    
+                    
+
+                        
+    //                Button(action: {
+    //
+    //                    if self.validateFields() {
+    //                        // continue with login
+    //                    } else {
+    //                        self.showErrorMessage("You need to provide email and password")
+    //                    }
+    //
+    //                }) {
+    //
+    //                    Text("Login").bold()
+    //
+    //                }.padding().frame(maxWidth: .infinity)
+    //                    .foregroundColor(Color.white)
+    //                    .background(Color.blue)
+    //                    .cornerRadius(10)
+    //                    .padding()
+                    
+                    Text(self.errorMessage)
+                        .foregroundColor(Color.red)
+                        .multilineTextAlignment(.center)
+                    
                 }
+                
+                
                 
 //                Button(action: {
 //
@@ -118,86 +268,7 @@ struct LoginScreen: View {
 //                        .padding()
 //                }
                 
-                if #available(iOS 15.0, *) {
-                    NavigationLink(destination: TabBarHome().navigationBarBackButtonHidden(true), isActive: $proceedWithLogin) {
-                        EmptyView()
-                    }
-                } else {
-                    // Fallback on earlier versions
-                }
                 
-                
-                Button(action: {
-                    
-                    if self.validateFields() {
-                        // continue with register
-                        loginCustomer(email: email, password: password)
-                    }
-                    
-                }) {
-                    
-                    if showProgressView {
-                        
-                        if #available(iOS 14.0, *) {
-                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        }
-                        
-                    } else {
-                        Text("Login")
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                    }
-                    
-                }.padding()
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(Color.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding()
-                
-                
-                NavigationLink(destination: RegisterScreen()
-                    .navigationBarBackButtonHidden(true)
-                               //                    .navigationViewStyle(StackNavigationViewStyle())
-                               //                    .navigationBarHidden(true)
-                ){
-                    
-                    Text("Create an Account")
-                        .bold()
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .padding()
-                    
-                    
-                }
-
-                Spacer()
-
-                    
-//                Button(action: {
-//
-//                    if self.validateFields() {
-//                        // continue with login
-//                    } else {
-//                        self.showErrorMessage("You need to provide email and password")
-//                    }
-//
-//                }) {
-//
-//                    Text("Login").bold()
-//
-//                }.padding().frame(maxWidth: .infinity)
-//                    .foregroundColor(Color.white)
-//                    .background(Color.blue)
-//                    .cornerRadius(10)
-//                    .padding()
-                
-                Text(self.errorMessage)
-                    .foregroundColor(Color.red)
-                    .multilineTextAlignment(.center)
                     
             }
 //            .navigationBarTitle("Login")

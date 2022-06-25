@@ -136,7 +136,7 @@ struct PlaceOrders: View {
                        }
         
         //////////
-        NavigationLink(destination: ProfileScreen(userloggedIn: true),isActive: $active) {
+        NavigationLink(destination: ProfileScreen(),isActive: $active) {
 
             EmptyView()
         }.edgesIgnoringSafeArea(.vertical)
@@ -214,6 +214,7 @@ struct PlaceOrders: View {
                             print("place order screen draft orders: \(draftOrders)")
                             
                             var lineItems = [Parameters]()
+                            var itemsIds = [Int]()
                             var itemParameter: Parameters = [:]
                             
                             guard let draftOrdersResponse = draftOrders?.draftOrders else {
@@ -228,12 +229,14 @@ struct PlaceOrders: View {
 
                                 itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
                                 itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
+                                
 
                                 lineItems.append(itemParameter)
+                                itemsIds.append(draftOrder.lineItems?[0].id ?? -1)
 
                             }
 //
-                            placeOrderPayPal(lineItems: lineItems)
+                            placeOrderPayPal(lineItems: lineItems, itemsIds: itemsIds)
                             
                             
                         case .failure(let error):
@@ -361,7 +364,7 @@ struct PlaceOrders: View {
     }
     
     
-    func placeOrderPayPal(lineItems: [Parameters]) {
+    func placeOrderPayPal(lineItems: [Parameters], itemsIds: [Int]) {
         
         print("place order clicked")
 
@@ -384,6 +387,7 @@ struct PlaceOrders: View {
         print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
         print("order with address: \(address.address1), city: \(address.city) and country: \(address.country)")
         print("order items: \(lineItems)")
+        print("order items ids: \(itemsIds)")
         
         addressViewModel.createOrder(order: order) { result in
             
@@ -391,7 +395,12 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
-                shoppingCartViewModel.deleteAllDraftOrder()
+                
+                for id in itemsIds {
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+                }
+                
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
