@@ -19,23 +19,23 @@ And every user has a profile page has the user current liked items and recent or
 • Settings page .</br>
 
 # Tools & Libraries
-*Xcode 
-*SwiftUI
-*MVVM design architeture 
-*Github
-*Paypal
-*Shopify
-*Postman
-*Invision
-*KingFisher
-*Alamofire
-*Stepperview
-*QGrid
+*Xcode </br>
+*SwiftUI </br>
+*MVVM design architeture  </br>
+*Github </br>
+*Paypal </br> 
+*Shopify </br>
+*Postman </br>
+*Invision </br>
+*KingFisher </br>
+*Alamofire </br>
+*Stepperview </br>
+*QGrid </br>
 
 
 # Developed by
-*Abdelrahman Ahmed
-*Aya Abdelraouf
-*Esraa Lotfy
-*Nour Gweda
-*Nour-Allah Ahmed
+*Abdelrahman Ahmed </br>
+*Aya Abdelraouf </br>
+*Esraa Lotfy </br>
+*Nour Gweda </br>
+*Nour-Allah Ahmed </br>
