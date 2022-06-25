@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ProfileWishlist: View {
+    @ObservedObject  var viewModelFavorite = WishListViewModel()
+    @State private var isActive = false
     var body: some View {
         VStack{
             //  ------------ start of wishlist title --------------------
@@ -22,14 +24,27 @@ struct ProfileWishlist: View {
                     .foregroundColor(.black)
                     .onTapGesture {
                         print("Navigate to wishlist screen")
-                }
+                        isActive.toggle()
+                }.background(NavigationLink(destination:  // link in background
+               FavoriteView(), isActive: $isActive) { EmptyView() })
                 Spacer().frame(width: 24)
             }
             .padding(.bottom, 16)
             //  ------------ end of wishlist title ----------------------
             //  ------------ start of wishlist list --------------------
-            ProductRow(firstItem: dummyProducts[0], secondItem: dummyProducts[1])
-            ProductRow(firstItem: dummyProducts[2], secondItem: dummyProducts[3])
+            if viewModelFavorite.wishList.count >  0 {
+                ProductViewOneOnly(firstItem: viewModelFavorite.wishList[0])
+            }
+            if viewModelFavorite.wishList.count >  1 {
+                ProductRow(firstItem: viewModelFavorite.wishList[0], secondItem: viewModelFavorite.wishList[1])
+                
+            }
+            if viewModelFavorite.wishList.count <=  0 {
+                
+                NoFavoriteView()
+            }
+            
+            //ProductRow(firstItem: dummyProducts[2], secondItem: dummyProducts[3])
             //  ------------ end of wishlist list ----------------------
         }
     }

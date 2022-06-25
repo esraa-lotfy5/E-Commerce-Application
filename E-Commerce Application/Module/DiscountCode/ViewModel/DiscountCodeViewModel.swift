@@ -31,24 +31,24 @@ class DiscountCodeViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 let responsePriceRule = response
-//                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
-                //i stopped here array part
-                for item in responsePriceRule?.price_rules ?? [] {
-                    var name = item.title
-                    switch name {
-                    case "OPENING45OFF":
+////                print("PRICE RULE GETTTT\(String(describing: responsePriceRule))")
+//                //i stopped here array part
+//                for item in responsePriceRule?.price_rules ?? [] {
+//                    var name = item.title
+//                    switch name {
+//                    case "OPENING45OFF":
 //                        print ("BACKKK")
-                        self.priceArr.append(item)
-                    case "SALE15OFF":
+//                        self.priceArr.append(item)
+//                    case "SALE15OFF":
 //                        print ("BACKKK")
-                        self.priceArr.append(item)
-                    default:
-                        print("NOT OUR PROMO CODE")
-                    }
-                }
-//                print("\n ARRAYYYY OF PRICE RANGE \n")
-//                print(priceArr)
-                
+//                        self.priceArr.append(item)
+//                    default:
+//                        print("NOT OUR PROMO CODE")
+//                    }
+//                }
+////                print("\n ARRAYYYY OF PRICE RANGE \n")
+////                print(priceArr)
+                priceArr = responsePriceRule?.price_rules ?? []
             case .failure(let error):
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
             }
@@ -150,6 +150,7 @@ class DiscountCodeViewModel: ObservableObject {
 //
 //    }
 //    //call the function to get the value -- end
+    
     
     
 }

@@ -13,7 +13,6 @@ import SwiftUI
 struct TabBarHome: View {
 
     var body: some View {
-
         TabView{
             if #available(iOS 14.0, *) {
                 HomeScreen()

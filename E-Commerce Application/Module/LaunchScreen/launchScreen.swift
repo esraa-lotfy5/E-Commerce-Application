@@ -36,7 +36,7 @@ struct SplachScreenView: View{
 //            }
             
             LoginScreen()
-////            HomeScreen()
+/////           HomeScreen()
         }
         else{
         VStack{

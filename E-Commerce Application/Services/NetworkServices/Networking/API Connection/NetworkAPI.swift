@@ -38,6 +38,8 @@ protocol NetworkAPIProtocol {
     func getUserOrders(completion: @escaping(Result<OrdersResponse?, NSError>) -> Void)
      
     func getUpdatedCurrency(baselan :String, completion: @escaping(Result<Currency?, NSError>) -> Void)
+    func updateInventoryLevel (InventoryItem : Parameters ,completion : @escaping (Result<InventoryLevel? , NSError>)-> Void)
+
 }
 
 
@@ -118,7 +120,7 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     
     func updateDraftOrder(draftOrderID: Int,parameter: Parameters) {
         self.writeData(target: .
-            updateDraftOrder(draftOrderID: draftOrderID,parameters: parameter), responseClass: DraftOrders2.self) { result in
+            updateDraftOrder(draftOrderID: draftOrderID,parameters: parameter), responseClass: DraftOrders.self) { result in
             
         }
     }
@@ -170,6 +172,12 @@ class NetworkAPI: BaseAPI<NetworkRequest>, NetworkAPIProtocol {
     func getUserOrders(completion: @escaping (Result<OrdersResponse?, NSError>) -> Void) {
         self.fetchData(target: .getUserOrders, responseClass: OrdersResponse.self) { (result) in
             completion(result)
+        }
+    }
+    
+    func updateInventoryLevel (InventoryItem : Parameters ,completion : @escaping (Result<InventoryLevel? , NSError>)-> Void){
+        self.writeData(target: .updateInventoryLevel(inventoryLevel: InventoryItem), responseClass: InventoryLevel.self) { (result) in
+            completion (result)
         }
     }
     

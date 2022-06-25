@@ -20,9 +20,9 @@ struct ContentView: View {
 //        }
 //        LoginScreen()
        
-        
+       // HomeScreen()
         SplachScreenView()
-        
+      //  DiscountCodeListView()
         //SettingsView()
    
         
