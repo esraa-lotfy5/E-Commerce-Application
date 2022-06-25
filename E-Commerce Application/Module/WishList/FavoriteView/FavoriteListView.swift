@@ -70,7 +70,7 @@ struct FavoriteListView: View {
                                .deleteDisabled(false)
                                .padding()
                                //.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                           
+                               
                                
                            }
                            .onAppear(perform: {
@@ -148,15 +148,15 @@ struct FavoriteListView: View {
     
     
     private func deleteItem (productId : Int){
-//        for (index, element) in viewModelFavorite.wishList.enumerated() {
-//            if element.id == productId {
-//                viewModelFavorite.wishList.remove(at: index)
+        for (index, element) in viewModelFavorite.wishList.enumerated() {
+            if element.id == productId {
+                viewModelFavorite.wishList.remove(at: index)
                 print("DELETED FROM ARRAY")
                 print("OFFSET == \(productId)")
                 self.viewModelDetails.deleteFavorite(draftFavoriteID: productId)
-                //self.viewModelFavorite.getFavorites()
+                self.viewModelFavorite.getFavorites()
             
-       // }
+        }
   
     }
     
@@ -166,7 +166,7 @@ struct FavoriteListView: View {
 }
 
 
-
+}
 
 
 

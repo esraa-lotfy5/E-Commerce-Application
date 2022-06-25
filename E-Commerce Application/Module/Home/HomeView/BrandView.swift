@@ -25,7 +25,6 @@ struct GridCell: View {
     @State var brandName : String?
     @ObservedObject  var viewModelCategory = CategoryViewModel(brandName: "")
     var body: some View {
-
         VStack(){
             KFImage(URL(string: brands.brandImage))
             .resizable()
@@ -49,7 +48,6 @@ struct GridCell: View {
             } // activate link on image tap"
             .background(NavigationLink(destination:  // link in background
                                        CategoryScreen( brandName: brandName ?? ""), isActive: $isActive) { EmptyView() })
- 
  
 }
 }

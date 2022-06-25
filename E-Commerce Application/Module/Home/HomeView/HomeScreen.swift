@@ -12,7 +12,6 @@ struct HomeScreen: View {
     @ObservedObject  var viewModel = HomeViewModel()
     //trial
     @State var presentAlert = false
-    
     let timer = Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()
 
    // @AppStorage("count") var count : Int = 1
@@ -28,7 +27,7 @@ var body: some View {
     //    Text("\(viewModel.str.count)")
 
              Spacer()
-            }
+    }
 //    .blur(radius: presentAlert ? 30 : 0)
 //
 //        .onReceive(timer, perform: { _ in

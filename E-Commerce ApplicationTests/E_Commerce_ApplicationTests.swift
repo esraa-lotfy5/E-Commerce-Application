@@ -12,7 +12,7 @@ import XCTest
 class E_Commerce_ApplicationTests: XCTestCase {
     var networkAPI = NetworkAPI()
     var shoppingCartProducts = [DraftOrder]()
-
+    var FavoriteItems = [DraftOrder]()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -96,4 +96,47 @@ class E_Commerce_ApplicationTests: XCTestCase {
            
         }
     }
+    
+    //trial
+    func testGetSmartCollections(){
+            networkAPI.getSmartCollections {result in
+                guard let smartCollections = (result as? SmartCollections)?.smart_collections.count else{
+                    return
+                }
+                XCTAssertEqual(smartCollections , 10 )
+    }
+    
 }
+
+    func testGetPriceRules(){
+        networkAPI.getPriceRule {result in
+            guard let priceRules = (result as? PriceRules)?.price_rules.count else{
+                    return
+                }
+                XCTAssertEqual(priceRules , 10 )
+    }
+    
+}
+
+    func testGetFavorite(){
+        networkAPI.getAllDraftOrders {  result in
+            try? result.get()?.draftOrders.filter({ DraftOrder in
+                if(DraftOrder.email == "iosteam@gmail.com" && DraftOrder.note == Constants.favorite)
+                  {
+                    self.FavoriteItems.append(DraftOrder)
+                  }
+                 
+                 return true
+             })}
+        XCTAssertEqual(FavoriteItems.count , 0 )
+    }
+    
+    
+    
+    
+    
+    
+}
+    
+    
+
