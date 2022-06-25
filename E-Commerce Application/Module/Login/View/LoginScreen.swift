@@ -185,22 +185,26 @@ struct LoginScreen: View {
                      
                         Spacer()
                         
-                        NavigationLink(destination: TabBarHome()
-                            .navigationBarBackButtonHidden(true)
-                                       //                    .navigationViewStyle(StackNavigationViewStyle())
-                                       //                    .navigationBarHidden(true)
-                        ){
-                            
-                            Text("Skip for now >")
-                                .bold()
-                                .padding()
-                                .frame(width: 150)
-                                .foregroundColor(Color.black)
-                                .background(Color.gray.opacity(0.3))
-                                .cornerRadius(10)
-                                .padding(.trailing)
-                            
-                            
+                        if #available(iOS 15.0, *) {
+                            NavigationLink(destination: TabBarHome()
+                                .navigationBarBackButtonHidden(true)
+                                           //                    .navigationViewStyle(StackNavigationViewStyle())
+                                           //                    .navigationBarHidden(true)
+                            ){
+                                
+                                Text("Skip for now >")
+                                    .bold()
+                                    .padding()
+                                    .frame(width: 150)
+                                    .foregroundColor(Color.black)
+                                    .background(Color.gray.opacity(0.3))
+                                    .cornerRadius(10)
+                                    .padding(.trailing)
+                                
+                                
+                            }
+                        } else {
+                            // Fallback on earlier versions
                         }
                         
                     }
