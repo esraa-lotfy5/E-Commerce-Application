@@ -48,6 +48,9 @@ struct ProductDetails: View {
     init(productId: String){
         print(productId)
         self.productid = productId
+        self.productDetailsViewModel.getProductDetails(id: String(self.productid ?? "")) { re in
+            print(  try? re.get()?.product)
+        }
     }
     var body: some View {
         if productDetailsViewModel.NetworkState == true {
@@ -120,22 +123,10 @@ struct ProductDetails: View {
                         Spacer()
                     }
                     
-                    //                PageView(pages: [
-                    //
-                    //                    FeatureCard(image:    productDetailsViewModel.Products?.images?[0].src! ?? " "),
-                    //
-                    //
-                    //                    FeatureCard(image:    productDetailsViewModel.Products?.images?[1].src! ?? " ")
-                    //                        ,
-                    //
-                    //                    FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? " ")
-                    //                ]).frame( height: 300)
-                    
-                    //productDetailsViewModel.Products?.images?.map{
-                    //                FeatureCard(image:  $0.src ?? " ")
+
                     
                     //MARK: Images
-                    if productDetailsViewModel.Products?.images?.count ?? 0 >= 3 {
+                  
                         PageView(pages: [
                             
                             FeatureCard(image:    productDetailsViewModel.Products?.images?[0].src! ?? ""),
@@ -144,24 +135,17 @@ struct ProductDetails: View {
                             FeatureCard(image:    productDetailsViewModel.Products?.images?[1].src! ?? "")
                             ,
                             
-                            FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? "")
+                            FeatureCard(image:    productDetailsViewModel.Products?.images?[2].src! ?? "") ,
+                            FeatureCard(image:    productDetailsViewModel.Products?.images?[3].src! ?? "")
                         ]).frame( height: 300)
                         
-                    }else{
-                        PageView(pages: [
-
-                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
-                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg"),
-                            FeatureCard(image:    "https://i.pinimg.com/564x/0a/4f/22/0a4f224b042630049a0592ddd2e7c057.jpg")
-                        ]
-                        ).frame( height: 300)
-                    }
+                
                     VStack(alignment: .leading) {
                         //MARK: TITLE AND PRICE
                         HStack {
                             Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                             Spacer()
-                            Text("\((Double(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  * Double(currencyValue) , specifier: "%.2f")  \(currency ?? " ")").foregroundColor(.blue)
+                            Text("\((Double(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Double(currencyValue ?? 1.0) , specifier: "%.2f")  \(currency ?? "EGP ")").foregroundColor(.blue)
                         }
                         
                         

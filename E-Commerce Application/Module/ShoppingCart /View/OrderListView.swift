@@ -9,23 +9,43 @@
 import SwiftUI
 
 
+@available(iOS 15.0, *)
 
 struct OrderListView: View {
-    @State var shoppingCartCount : Int = 0
-//    @State var shoppingCartProducts : [DraftOrder] = []
-    @State var counter : Int = 0
+  
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
+
+    @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
+    @ObservedObject  var viewModelDiscount = DiscountCodeViewModel()
+
+    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+    @State var isActive : Bool = false
+    @State var refresh = false
+    @State var promoCodeName : String = ""
+    @State var shoppingCartCount : Int = 0
+    @State var counter : Int = 0
+
+    @State var IsClicked = false
+    @State var NotClickableColor = Color.accentColor
+    //For Loading
+    @State private var currentProgress = 0.0
     
     
-    init(){
-        shoppingCartViewModel.getAllDraftOrders()
-    }
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    @State var totalPrice : Double = 0.0
+
+//    init(){
+//            self.shoppingCartViewModel.getAllDraftOrders()
+//    
+//    }
     var body: some View {
+        if shoppingCartViewModel.NetworkState == true {
+
         VStack {
             HStack{
                 HStack (alignment: .top, spacing: 0){
-                    //MARK:- back button
+                    //MARK: back button
                     Spacer().frame(width:10)
                     
                     HStack{
@@ -48,81 +68,55 @@ struct OrderListView: View {
             
             
             if shoppingCartViewModel.shoppingCartProducts.count > 0 {
-                List {
-                    ForEach(shoppingCartViewModel.shoppingCartProducts) { item in
+                ScrollView {
+                    //MARK: Orders
+                    VStack{
+                    ForEach(shoppingCartViewModel.shoppingCartProducts ) { item in
                         VStack{
-                            OrderRow(product: item).opacity(0.9)
-                            
+                            OrderRow(product: item)
+                                .opacity(0.9)
+                                .padding(5)
+                            //MARK: Quantity
                             Text("          quantity: \(item.lineItems?.first?.quantity ?? 0)")
                                 .foregroundColor(.black)
                                 .font(.headline)
                                 .padding(5)
                             HStack{
                                 Spacer()
-                                
-                                //TODO: deleteProduct
-                                Button(action: {
-                                    
-                                    //TODO: delete
-                                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-                                }) {
-                                    Image(systemName: "trash")
-                                        .resizable()
-                                        .foregroundColor(.gray)
-                                        .frame(width: 25, height: 25)
-                                }
-                                
-                                
-                                
-                                
-//                                //TODO: decrement
-//                                Button(action: {
-//                                    print("\(item.lineItems?.first?.quantity)!)")
-//
-//                                    if((item.lineItems?.first?.quantity)! - 1) == 0{
-//                                        //TODO: delete
-//                                        shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
-//                                    }
-//                                    else{
-//                                        //TODO: update
-//                                        shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
-//                                    }
-//
-//                                }) {
-//                                    Image(systemName: "minus.square.fill")
-//                                        .resizable()
-//                                        .foregroundColor(.blue)
-//                                        .frame(width: 25, height: 25)
-//                                }
-//
-//
-//                                Text(" \(item.lineItems?.first?.quantity ?? 0)").bold()
-//
-//                                //TODO: increment
-//                                Button(action: {
-//                                    shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)                                }) {
-//                                    Image(systemName: "plus.square.fill")
-//                                        .resizable()
-//                                        .foregroundColor(.blue)
-//                                        .frame(width: 25, height: 25)
-//                                }
+                                    //TODO: deleteProduct
+                                    Button(action: {
+                                        
+                                        //TODO: delete
+                                        shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                        
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .resizable()
+                                            .foregroundColor(.blue)
+                                            .frame(width: 25, height: 25)
+                                    } .buttonStyle(BorderlessButtonStyle())
                                 
                                 
                                 Spacer()
                                 Section{
                                     Stepper.init("", onIncrement: {
                                         shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: ((item.lineItems?.first?.quantity)!) + 1, draftOrderID: item.id!)
+                                    
+                                        refresh = true
 
 
                                     }, onDecrement: {
                                         if((item.lineItems?.first?.quantity)! - 1) == 0{
-                                            //TODO: delete
+                                            //MARK: delete
                                             shoppingCartViewModel.deleteDraftOrder(draftOrderID: item.id!)
+                                            refresh = true
                                         }
                                         else{
-                                            //TODO: update
+                                            //MARK: update
 
                                             shoppingCartViewModel.updateDraftOrder(variantId: (item.lineItems?.first?.variantId)!, quantity: (item.lineItems?.first?.quantity)! - 1, draftOrderID: item.id!)
+                                            refresh = true
+
                                         }
 
                                     })
@@ -130,24 +124,79 @@ struct OrderListView: View {
                             }
                             
                             
-                        } .background(Color.white).opacity(10)
+                        }.padding()
+                            .background(Color.white).opacity(10)
                             .cornerRadius(10)
-                            .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                    } //.onDelete(perform: delete)
+                            .border(Color.gray)
+                            .frame(width: UIScreen.main.bounds.width - 30)
+                    }
+                }.refreshable {
+                    //MARK: REFRESH
+                    while refresh {
+                        print("refresh")
+                        print(refresh)
+
+                        await shoppingCartViewModel.refreshPage2()
+                        refresh = false
+                        print(refresh)
+                    }
+                
+                }
                 }
 
                 //MARK: TOTAL PRICE
                 Section{
                     HStack{
+                    
                         VStack(alignment: .leading){
-                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice , specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )   " )
+                            HStack{
+                                TextField("Enter PromoCode", text: $promoCodeName).padding(15)
+                               Spacer()
+                                //MARK: ENTER PROMOCODE
+                                Button {
+                                    
+                                    print("pressed \(promoCodeName)") //"SALE15OFF"
+                                        self.totalPrice = self.shoppingCartViewModel.totalPrice
+                                    viewModelDiscount.getDiscountValue(promo: promoCodeName )
+                                    
+                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                         if viewModelDiscount.returnedValue != "0" {
+                                             print("GET FUNCTION VALUE DISCOUNT == \(viewModelDiscount.returnedValue ?? "9")")
+                                             self.shoppingCartViewModel.totalPrice  = self.shoppingCartViewModel.totalPrice + Double(viewModelDiscount.returnedValue ?? "0")!
+                                             
+                                             //MARK: Inner check
+                                             if self.totalPrice > self.shoppingCartViewModel.totalPrice{
+                                                 self.IsClicked = true
+                                                 self.NotClickableColor = Color.gray
+                                             }
+                                            print( self.shoppingCartViewModel.totalPrice)
+                                         }
+                                        
+                                     }
+                                    
+                                } label: {
+                                    Spacer(minLength: 3)
+                                    Text("Enter")
+                                        .fontWeight(.bold)
+                                        .font(.body)
+                                    Spacer(minLength: 3)
+                                }.disabled(IsClicked)
+                                    .foregroundColor(.white)
+                                    .frame(height: 50)
+                                    .background(NotClickableColor)
+                                    .cornerRadius(15)
+
+                            }
+                            
+                            
+                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Double(currencyValue ?? 1.0) , specifier: "%.2f") \(currency ?? "EGP" )   " )
                             
                                 .foregroundColor(.blue)
                                 .font(.headline)
-                            Text("  Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" ) ")
+                            Text("  Total Tax : \(shoppingCartViewModel.totalTax * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "EGP" )")
                                 .foregroundColor(.blue)
                                 .font(.headline)
-                            Text("  Total Price: \(shoppingCartViewModel.totalPrice,  specifier: "%.2f") \(shoppingCartViewModel.shoppingCartProducts.first?.currency ?? "nil" )")
+                            Text("  Total Price: \(shoppingCartViewModel.totalPrice * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "EGP" )")
                             
                                 .foregroundColor(.blue)
                                 .font(.headline)
@@ -162,27 +211,63 @@ struct OrderListView: View {
                     .padding(.trailing)
                     .padding(.top)
                     .padding(.bottom)
+                    }.onAppear{
+                        self.shoppingCartViewModel.calcTotal()
+                       
                     }
                     
-                    NavigationLink("CheckOut",destination: AddressScreen())
+                    
+                    
+                    Button(action: {
+                        self.isActive = true
+                    }) {
+                        HStack {
+                            Spacer()
+                            Text("Check Out")
+                                .fontWeight(.bold)
+                                .font(.body)
+                            Spacer()
+                        }
+                        .foregroundColor(.white)
+                        .frame(height: 55)
+                        .background(Color.accentColor)
+                        .cornerRadius(15)
+                        .padding()
+                    }
+                   
+                    NavigationLink( destination: AddressScreen().environmentObject(self.shoppingCartViewModel),isActive: $isActive) {
+                        EmptyView()
+                    }.edgesIgnoringSafeArea(.vertical)
 
                 }
             }
             
             else {
-                    emptyOrderList()
-                        .frame(height: UIScreen.main.bounds.size.height - 150 )
-                        .onAppear{
-                            print("from else")
+                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                    .onReceive(timer) { _ in
+                        if currentProgress == 30.0 {
+                            currentProgress += 1
+                            print("progress")
+                            print(currentProgress)
+                            
                         }
-                
-                
-            }
+                        else{
+                            emptyOrderList()
+                            
+                        }
+                        
+                    }
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 150)               }
+            
         }
         .navigationBarBackButtonHidden(true)
+        }
         
+        else{
+            NoNetworkView()
+        }
     }
-    
+   
 //    private func delete(with indexSet: IndexSet) {
 //
 //        indexSet.forEach {
@@ -196,7 +281,11 @@ struct OrderListView: View {
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderListView()
+        if #available(iOS 15.0, *) {
+            OrderListView()
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
 

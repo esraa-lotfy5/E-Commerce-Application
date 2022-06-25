@@ -45,7 +45,7 @@ struct CategoryCell: View {
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
                 
-                    Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) * Double(currencyValue) , specifier: "%.2f")")
+                    Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) / Double(currencyValue ?? 1.0) , specifier: "%.2f")")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }.padding(.leading, 16)

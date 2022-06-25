@@ -32,7 +32,9 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     let monitor = NWPathMonitor()
     
     private let currEmail = UserDefaults.standard.string(forKey: "email")
-
+    init(){
+        self.getAllDraftOrders()
+    }
     
     func calcTotal(){
         self.totalPrice =  self.shoppingCartProducts.reduce(0.0) {
@@ -63,7 +65,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 
                     self?.NetworkState = true
                 }
-
+                print("ENtered")
                 self?.networkApi.getAllDraftOrders { [weak self] result in
 //                    self?.shoppingCartProducts = []
 
@@ -71,10 +73,13 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                         
                         if(DraftOrder.email == self?.currEmail ?? "") //TODO: get the current users email
                         {
-                            
+                            print("enter")
+                            print(self?.currEmail)
+                            print(DraftOrder.note)
                             if (DraftOrder.note == "cart"){
                                 
                                 self?.shoppingCartProducts.append(DraftOrder)
+                                print(DraftOrder)
                             }
                             self?.totalPrice =  self?.shoppingCartProducts.reduce(0.0) {
                                 

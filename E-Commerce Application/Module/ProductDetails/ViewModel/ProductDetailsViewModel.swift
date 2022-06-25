@@ -35,6 +35,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
                     DispatchQueue.main.sync {
                         self?.NetworkState = true
                     }
+                    print("ENTERD")
                     self?.networkapi.getProductDetails(id: id) { (result) in
                         self?.Products = try? result.get()?.product
                     }
@@ -80,9 +81,10 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
 
     
     func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String){
+        print(currEmail)
         let parameters =     [
             "draft_order": [
-                "email" : currEmail,  //TODO: get the current users email
+                "email" : currEmail ?? "" ,  //TODO: get the current users email
                 "note" : "cart",
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"],
