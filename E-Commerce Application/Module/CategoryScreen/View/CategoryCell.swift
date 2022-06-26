@@ -48,6 +48,7 @@ struct CategoryCell: View {
                     Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) / Double(currencyValue ?? 1.0) , specifier: "%.2f")")
                         .font(.subheadline)
                         .foregroundColor(.blue)
+                    Text("\(currencyValue)")
                 }.padding(.leading, 16)
 //                VStack(alignment: .trailing){
 //                    Button(action: {

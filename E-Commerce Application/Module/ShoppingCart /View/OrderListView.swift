@@ -189,7 +189,7 @@ struct OrderListView: View {
                             }
                             
                             
-                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Double(currencyValue ?? 1.0) , specifier: "%.2f") \(currency ?? "EGP" )   " )
+                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Double(currencyValue) , specifier: "%.2f") \(currency ?? "EGP" )   " )
                             
                                 .foregroundColor(.blue)
                                 .font(.headline)

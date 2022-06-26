@@ -280,21 +280,23 @@ struct ProductDetails: View {
                         //MARK: Details
                         
                         Text("Details").bold()
-                        
+                        VStack{
                         ProductDetailsContent(title: "Vendor", details: productDetailsViewModel.Products?.vendor ??  "N/A", backgroundColor: colorGray)
                             .padding(.top, -8)
                         
                         ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite)
                             .padding(.top, -8)
 //                        if productDetailsViewModel.Products?.options?.count ?? 0 == 2 {
-                            ProductDetailsContentWithOptions(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
+                        ProductDetailsContentWithOptions(title: "Sizes", details:  [], backgroundColor: colorWhite, text: self.$selectedSize)
                                 .padding(.top, -8)
                             
-                            
-                            ProductDetailsContentWithOptions(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorWhite, text: self.$selectedColor)
+                        ProductDetailsContentWithOptions(title: "", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
+                            .padding(.top, -8)
+
+                        ProductDetailsContentWithOptions(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorWhite, text: self.$selectedColor)
                                 .padding(.top, -8)
                             
-//                        }
+                        }
                         
                     }.padding()
                     

@@ -34,18 +34,19 @@ struct ProductDetailsContentWithOptions: View {
     @State var isSelected : Bool = false
     @State var color : Color = Color.black
     var body: some View {
-        
+      
         HStack {
             Text(title)
-            Spacer()
+            Spacer(minLength: 2)
+            ScrollView{
                 HStack {
                     ForEach(details , id: \.self){ item  in
                         Button(action: {
                             _text.wrappedValue = item
                         }, label: {
-                            Text(item)
+                            Text(" \(item) ")
                                 .scaledToFit()
-                                .font(.system(size: 16))
+                                .font(.system(size: 12))
                                 .foregroundColor( _text.wrappedValue == item ? .black: .white)  // <-- Here
 //                                .fontWeight(.semibold)
                                 .padding(6)
@@ -57,7 +58,7 @@ struct ProductDetailsContentWithOptions: View {
                     }
                 }
             .frame(height: 50)
-            
+        }
         }.padding().background(backgroundColor)
         
     }
