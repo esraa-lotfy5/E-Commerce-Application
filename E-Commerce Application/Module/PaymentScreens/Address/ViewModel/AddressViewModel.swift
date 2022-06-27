@@ -14,12 +14,12 @@ import Alamofire
 class AddressViewModel:ObservableObject{
     
     var api :NetworkAPIProtocol = NetworkAPI()
-    @Published  var comingAddressess :[Addresss] = []
+   // @Published  var comingAddressess :[Addresss] = []
     @Published var defultAddress :Addresss = Addresss(id: 1, address1: "", city: "", country: "")
     private let currId = UserDefaults.standard.integer(forKey: "id")
     
     init() {
-        getAddress()
+       // getAddress()
     }
     
     //5754051854475
@@ -38,23 +38,23 @@ class AddressViewModel:ObservableObject{
         }
     }
     
-    func getAddress(){
+    func getAddress(completion: @escaping(Result<[Addresss]?, NSError>) -> Void){
+        var list = [Addresss]()
+        
         api.getAddress(coustmerId: "\(currId)") {(result) in
             switch result {
             case .success(let response):
-                let addressResponse = response
+               
                 
-                self.comingAddressess = addressResponse?.addresses ?? []
+            list = response?.addresses ?? []
 //                print(self.comingAddressess)
-                for address in addressResponse?.addresses ?? [] {
-                    
-//                    print("addresss : \(address.address1)")
-                }
+                completion(.success(list))
                 
                 //print("address \(String(describing: addressResponse?.city))")
             case .failure(let error):
                 // Show UI Error
                 print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+                completion(.failure(error))
             }
             
         }
