@@ -17,6 +17,8 @@ struct FavoriteListView: View {
     @State var favoriteArr : [DraftOrder]?
    // @ObservedObject  var viewModelFavorite = WishListViewModel()
 
+    @State var currencyFav = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValueFav = UserDefaults.standard.float(forKey: "currencyValue")
     
     var body: some View {
         
@@ -53,7 +55,12 @@ struct FavoriteListView: View {
                                                    .fontWeight(.semibold)
                                                    .padding()
                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                               Text("Price: \(row.lineItems?[0].price ?? "")")
+                                               
+                                             //  Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) / Double(currencyValue ?? 1.0) , specifier: "%.2f")")
+                                               
+                                               //Text("Price: \((row.lineItems?[0].price ?? "")/ Double(currencyValueFav ?? 1.0) , specifier: "%.2f") \(currencyFav ?? "")")
+                                               Text("Price: \((Double(row.lineItems?[0].price ?? "") ?? 0.0) / Double(currencyValueFav ) , specifier: "%.2f") \(currencyFav ?? "")")
+                                               
                                                    .font(.subheadline)
                                                    .fontWeight(.semibold)
                                                    .padding()
@@ -82,17 +89,28 @@ struct FavoriteListView: View {
                                        print("Delete")
                                        print("Row id == \(row.id)")
                                        deleteItem(productId: row.id ?? 0)
+                                      // isActive.toggle()
                                        
                                    } label: {
                                        
                                        Label("Delete",systemImage: "trash.circle.fill")
                                            
                                        
-                                   }.tint(Color.red)
+                                   }
+
+                                    .tint(Color.red)
                                    
                                    
                                }
-                               
+//                               .alert(isPresented: $isActive) { () -> Alert in
+//                                   Alert(title: Text("Alert"), message: Text("Do you want to delete this item ?"), primaryButton: .default(Text("Delete"), action: {
+//                                       print("Okay Click")
+//                                       print("Delete")
+//                                       print("Row id == \(row.id)")
+//                                       deleteItem(productId: row.id ?? 0)
+//
+//                                   }), secondaryButton: .destructive(Text("Cancel")))
+//                               }
                                
                                
                                
@@ -100,9 +118,9 @@ struct FavoriteListView: View {
                                    //                               self.productFavId = row.id
                                    //                               print("PRODUCT ID == \(productFavId)")
                                    //  viewModelFavorite.getFavorites()
-                                   favoriteArr = viewModelFavorite.wishList
-                                   print("Array from on appear == \(favoriteArr)")
-                                   
+                                   //favoriteArr = viewModelFavorite.wishList
+                                   //print("Array from on appear == \(favoriteArr)")
+                                  // self.viewModelFavorite.getFavorites()
                                })
                                .onTapGesture {
                                    //                               print("onTap == \(String(describing: row.id))")
@@ -115,14 +133,8 @@ struct FavoriteListView: View {
                                // Fallback on earlier versions
                            }
                            }
-//                           .alert(isPresented: $isActive) { () -> Alert in
-//                                   Alert(title: Text("Alert"), message: Text("Do you want to delete this item ?"), primaryButton: .default(Text("Delete"), action: {
-//                                       print("Okay Click")
-//                                       deleteItem(productId: row.id ?? 0)
-//                                      // viewModelFavorite.getFavorites()
-//
-//                                   }), secondaryButton: .destructive(Text("Cancel")))
-//                           }
+                       //.onDelete(perform:self.delete)
+
                            
                            
                            //                           NavigationLink(destination: ProductDetails(),isActive: $isActive) {
@@ -136,7 +148,7 @@ struct FavoriteListView: View {
                            
                            
                        }
-                     //  .onDelete(perform:self.delete)
+                       
                        
                        
                        
@@ -158,26 +170,8 @@ struct FavoriteListView: View {
     private func delete(at offsets: IndexSet) {
         
         self.favoriteArr?.remove(atOffsets: offsets)
-        
-        
-
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     private func deleteItem (productId : Int ){
         for (index, element) in viewModelFavorite.wishList.enumerated() {
@@ -189,7 +183,7 @@ struct FavoriteListView: View {
                 //self.viewModelFavorite.getFavorites()
             
         }
-  
+           // self.viewModelFavorite.getFavorites()
     }
     
     
