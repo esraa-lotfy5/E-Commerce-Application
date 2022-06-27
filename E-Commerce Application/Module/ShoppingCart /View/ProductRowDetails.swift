@@ -12,6 +12,8 @@ struct ProductRowDetails: View {
     
     @State public var total : Double  = 1.0
     
+    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     var body: some View {
         HStack {
             VStack(alignment: .leading){
@@ -41,8 +43,9 @@ struct ProductRowDetails: View {
                 
 //
                 //MARK: Price
+           
 
-                Text("Price: \((Double(product.lineItems?.first?.price ?? "0.0")! * total ).description)")
+                Text("Price: \((Double(product.lineItems?.first?.price ?? "0.0")! * total)  / Double(currencyValue ?? 1.0) , specifier: "%.2f") \(currency ?? "EGP ") ")
                     .foregroundColor(.black)
                     .padding(5)
 

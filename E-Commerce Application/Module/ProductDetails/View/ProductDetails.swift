@@ -300,7 +300,17 @@ struct ProductDetails: View {
                         
                     }.padding()
                     
-                }.onAppear{
+                }.refreshable {
+                    
+                    while true{
+                    
+                    await productDetailsViewModel.refreshPage(id: self.productid!)
+                    print("refresh")
+                    }
+                    
+                }
+                
+                .onAppear{
                     
                     self.productDetailsViewModel.getProductDetails(id: self.productid ?? "0") { (result) in
                         
@@ -323,13 +333,6 @@ struct ProductDetails: View {
                         
                     }
                     
-                    
-                }.refreshable {
-                    
-                    while true{
-                    
-                    await productDetailsViewModel.refreshPage(id: self.productid!)
-                                    }
                     
                 }
             } else {
