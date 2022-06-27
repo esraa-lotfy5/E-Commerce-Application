@@ -35,11 +35,11 @@ struct ProfileWishlist: View {
             if viewModelFavorite.wishList.count >  0 {
                 ProductViewOneOnly(firstItem: viewModelFavorite.wishList[0])
             }
-            if viewModelFavorite.wishList.count >  1 {
+            else if viewModelFavorite.wishList.count >  1 {
                 ProductRow(firstItem: viewModelFavorite.wishList[0], secondItem: viewModelFavorite.wishList[1])
                 
             }
-            if viewModelFavorite.wishList.count <=  0 {
+            else if viewModelFavorite.wishList.count <=  0 {
                 
                 NoFavoriteView()
             }
