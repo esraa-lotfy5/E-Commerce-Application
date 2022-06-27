@@ -86,7 +86,7 @@ struct CategoryNavigationBar: View {
                     }
                     .onTapGesture {
                       
-                            if isLoggedIn {
+                            if isLoggedIn == false {
                                 self.showingAlert.toggle()
                                 alert_Title = "Warrning"
                                 alertMessage = "Please sign in to show wishlist"
@@ -113,7 +113,7 @@ struct CategoryNavigationBar: View {
                     .foregroundColor(.black)
                 }
                 .onTapGesture {
-                    if isLoggedIn {
+                    if isLoggedIn  == false {
                         self.showingAlert.toggle()
                         alert_Title = "Warrning"
                         alertMessage = "Please sign in to show wishlist"
