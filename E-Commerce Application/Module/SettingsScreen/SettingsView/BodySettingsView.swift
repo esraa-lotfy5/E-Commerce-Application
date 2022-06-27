@@ -127,7 +127,7 @@ var body: some View{
                             print("logout is clicked")
                             isloggedOut()
                             self.active = true
-                                
+               
                         }, label: {
                             Text("Logout")
                         })
@@ -145,6 +145,10 @@ var body: some View{
     }
     func isloggedOut (){
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        UserDefaults.standard.set("", forKey: "id")
+        UserDefaults.standard.set("", forKey: "email")
+        UserDefaults.standard.set("", forKey: "first_name")
+        UserDefaults.standard.set("", forKey: "last_name")
         
     }
     

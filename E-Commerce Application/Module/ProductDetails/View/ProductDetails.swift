@@ -37,6 +37,7 @@ struct ProductDetails: View {
     @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
     @State private var usd = UserDefaults.standard.float(forKey: "USD")
     @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
@@ -93,8 +94,10 @@ struct ProductDetails: View {
                                     }
                             }
                             .onTapGesture {
-                                print("\n  favorite button is clicked  \n")
-                                print(" \n variant id == \( productDetailsViewModel.Products?.variants?[0].id) \n")
+//                                print("\n  favorite button is clicked  \n")
+//                                print(" \n variant id == \( productDetailsViewModel.Products?.variants?[0].id) \n")
+                                
+                                if isLoggedIn {
                                 if productDetailsViewModel.getFavorites(variantIDFav: productDetailsViewModel.Products?.variants?[0].id ?? 0) {  // item is liked -- > turn to unlike DELETE
                                     DispatchQueue.main.async {
                                         let productIdFav = productDetailsViewModel.favoriteItem?.id
@@ -110,6 +113,14 @@ struct ProductDetails: View {
                                         productDetailsViewModel.favoriteHere = true
                                         print("\n posted \n")
                                     }
+                                }
+                                }
+                                else{
+                                    self.showingAlert.toggle()
+                                 
+                                        alert_Title = "Warrning"
+                                        alertMessage = "Please sign in to add to WishList "
+                                    
                                 }
                                 
                             }.frame(width: 50, height: 40)
@@ -240,7 +251,7 @@ struct ProductDetails: View {
                         
                         //MARK: add to Cart BUTTON
                         Button(action: {
-                            
+                            if isLoggedIn{
                             self.showingAlert.toggle()
                             // TODO: check that the user choose size and color
                             if (selectedSize == "" || selectedColor == ""){
@@ -268,6 +279,13 @@ struct ProductDetails: View {
                                 print("test product details \(productVarientId)")
                                 productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize)
                                 
+                            }
+                                
+                            }else{
+                                self.showingAlert.toggle()
+                             
+                                    alert_Title = "Warrning"
+                                    alertMessage = "Please sign in to add to Shopping Cart "
                             }
                         }) {
                             

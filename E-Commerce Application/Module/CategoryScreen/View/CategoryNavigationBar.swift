@@ -17,11 +17,13 @@ struct CategoryNavigationBar: View {
     @State var searchWord : String = ""
     let categoryViewModel : CategoryViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var alertMessage: String
+    @Binding var alert_Title : String
     @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
     @ObservedObject  var viewModelWishList = WishListViewModel()
-    
-    
-    
+
+    @Binding  var showingAlert : Bool
+
     var body: some View {
         VStack{
             HStack {
@@ -31,6 +33,8 @@ struct CategoryNavigationBar: View {
             
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
+                    
+//                    NavigationLink(destination: HomeScreen(), isActive: $isActivef) { EmptyView() }
                 })
                 {
                     HStack {
@@ -81,11 +85,12 @@ struct CategoryNavigationBar: View {
                             .foregroundColor(.black)
                     }
                     .onTapGesture {
-                        if isLoggedIn {
-                            self.isActivef.toggle()
-                        }
-                        
-                        
+                      
+                            if isLoggedIn {
+                                self.showingAlert.toggle()
+                                alert_Title = "Warrning"
+                                alertMessage = "Please sign in to show wishlist"
+                            }
                     }
                     
                     .background(NavigationLink(destination: OrderListView(), isActive: $isActivef) { EmptyView() })
@@ -109,7 +114,9 @@ struct CategoryNavigationBar: View {
                 }
                 .onTapGesture {
                     if isLoggedIn {
-                        self.isActive.toggle()
+                        self.showingAlert.toggle()
+                        alert_Title = "Warrning"
+                        alertMessage = "Please sign in to show wishlist"
                     }
                     
                     
@@ -154,11 +161,11 @@ struct CategoryNavigationBar: View {
         }
     }
 }
-    
-struct CategoryNavigationBar_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryNavigationBar(categoryViewModel: CategoryViewModel(brandName: ""))
-    }
-}
+//    
+//struct CategoryNavigationBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoryNavigationBar(categoryViewModel: CategoryViewModel(brandName: "") )
+//    }
+//}
 
 

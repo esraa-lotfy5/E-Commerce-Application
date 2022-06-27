@@ -23,7 +23,7 @@ class WishListViewModel : ObservableObject {
     func getFavorites(){
         api.getAllDraftOrders { (result) in
             try? result.get()?.draftOrders.filter({ draftFavorite in
-                if(draftFavorite.email == self.currEmail! && draftFavorite.note == Constants.favorite){
+                if(draftFavorite.email == self.currEmail ?? "" && draftFavorite.note == Constants.favorite){
                           for index in 0 ..< (draftFavorite.lineItems?.count ?? 0) {
                               self.wishList.append(draftFavorite)
                             }
