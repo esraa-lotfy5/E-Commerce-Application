@@ -24,7 +24,7 @@ struct ProductDetails: View {
     @State var alert_Title = ""
     @State var varientID:Int?
     @State var refresh = true
-
+    @State var inventory_item_id : Int?
     //trial favorite
     @State var varientIDFav:Int = 0
     
@@ -267,6 +267,7 @@ struct ProductDetails: View {
                                     
                                     if varient.option2 == selectedColor && varient.option1 == selectedSize{
                                         varientID = varient.id
+                                        inventory_item_id = varient.inventory_item_id ?? 0
                                         alert_Title = "Adding item"
                                         alertMessage = "\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart"
                                     }
@@ -277,7 +278,7 @@ struct ProductDetails: View {
                                 //MARK: check that the user choose size and color
                                 guard let productVarientId = varientID else {return}
                                 print("test product details \(productVarientId)")
-                                productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize)
+                                productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize, inventory_item_id: inventory_item_id ?? 0 )
                                 
                             }
                                 
@@ -318,10 +319,9 @@ struct ProductDetails: View {
                         ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite)
                             .padding(.top, -8)
 //                        if productDetailsViewModel.Products?.options?.count ?? 0 == 2 {
-                        ProductDetailsContentWithOptions(title: "Sizes", details:  [], backgroundColor: colorWhite, text: self.$selectedSize)
-                                .padding(.top, -8)
+                        
                             
-                        ProductDetailsContentWithOptions(title: "", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
+                        ProductDetailsContentWithOptions(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
                             .padding(.top, -8)
 
                         ProductDetailsContentWithOptions(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorWhite, text: self.$selectedColor)

@@ -38,8 +38,8 @@ struct ProductDetailsContentWithOptions: View {
         HStack {
             Text(title)
             Spacer(minLength: 2)
-            ScrollView{
-                HStack {
+            ScrollView (.horizontal,showsIndicators: false){
+                HStack(alignment :.top,spacing: 2) {
                     ForEach(details , id: \.self){ item  in
                         Button(action: {
                             _text.wrappedValue = item
