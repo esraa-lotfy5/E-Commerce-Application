@@ -134,15 +134,15 @@ struct CategoryNavigationBar: View {
                 if #available(iOS 14.0, *) {
                     CategorySearchBar(searchWord: $searchWord)
                         .onChange(of: searchWord) { word in
-//                            print(searchWord.uppercased())
+                            print(searchWord.uppercased())
                             if(searchWord == ""){
-//                                print("search word is empty")
+                                print("search word is empty")
                                 categoryViewModel.searchEnbled = false
                             }else{
                                 categoryViewModel.searchEnbled = true
                                 for product in categoryViewModel.products {
                                     if(product.title.split(separator: "|")[1].contains(searchWord.uppercased())){
-//                                        print("title: \(product.title)")
+                                        print("title: \(product.title)")
                                     }
                                 }
                                 categoryViewModel.productsCopy = categoryViewModel.products.filter {$0.title.contains(searchWord.uppercased()) }

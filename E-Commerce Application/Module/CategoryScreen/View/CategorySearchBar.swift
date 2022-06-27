@@ -15,28 +15,16 @@ struct CategorySearchBar: View {
     var body: some View {
         HStack{
             Spacer().frame(width: 24)
-    //            if(self.searchWord == "") || (arr.filter {$0.contains(searchWord) }.isEmpty){
             VStack{
             TextField("Search", text: $searchWord)
                 .font(.title)
                 .frame(width: UIScreen.main.bounds.size.width-100, alignment: .center)
-    //            } else{
-    //                if(!arr.filter {$0.contains(searchWord) }.isEmpty){
-    //                    TextField(arr.filter {$0.contains(searchWord) }[0], text: $searchWord)
-    //                        .font(.title)
-    //                        .frame(width: UIScreen.main.bounds.size.width-100, alignment: .center)
-    //                }else{
-    //
-    //                }
-    //            }
             Divider()
                 .frame(width: UIScreen.main.bounds.size.width-100, height: 1)
                 .background(Color.black)
                 }
             Spacer().frame(width: 24.0)
         }.padding(.bottom, 16)
-                                //Text("Hello")
-    //        }.frame(width: UIScreen.main.bounds.size.width)
     }
 }
 

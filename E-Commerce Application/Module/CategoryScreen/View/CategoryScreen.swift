@@ -50,13 +50,18 @@ struct CategoryScreen: View {
             }
             Spacer()
             
-            QGrid((categoryViewModel.products), columns: 2,vPadding: 0, hPadding: 8) {
-                CategoryCell(product: $0)
+            if(categoryViewModel.searchEnbled){
+                QGrid((categoryViewModel.productsCopy), columns: 2,vPadding: 0, hPadding: 8) {
+                    CategoryCell(product: $0)}
                 
+            }else{
+                QGrid((categoryViewModel.products), columns: 2,vPadding: 0, hPadding: 8) {
+                    CategoryCell(product: $0)}
             }
             
             
         }.navigationBarBackButtonHidden(true)
+//                .onAppear{categoryViewModel.getProducts()}
         }else{
             NoNetworkView()
 

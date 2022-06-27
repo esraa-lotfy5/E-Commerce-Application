@@ -44,6 +44,7 @@ class CategoryViewModel : ObservableObject{
                         let productsResponse = response
                         //print("-----------------------------------")
                         self?.products = productsResponse?.products ?? []
+                        //self?.productsCopy = self?.products ?? []
                   
                     case .failure(let error):
                         // Show UI Error
