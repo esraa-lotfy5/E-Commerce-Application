@@ -32,6 +32,12 @@ struct ProductDetails: View {
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
     
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+    @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
     
@@ -41,10 +47,7 @@ struct ProductDetails: View {
     var productColors = "black"
     var productid :String? //  "6870135275659" //"6870133932171"//
     
-    //currency
-    
-    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+   
     init(productId: String){
         print(productId)
         self.productid = productId
@@ -145,7 +148,17 @@ struct ProductDetails: View {
                         HStack {
                             Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                             Spacer()
-                            Text("\((Double(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Double(currencyValue ?? 1.0) , specifier: "%.2f")  \(currency ?? "EGP ")").foregroundColor(.blue)
+                            
+                            if IsEgp ?? true {
+                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  , specifier: "%.2f")  USD ").foregroundColor(.blue)
+                            }
+                            else{
+                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Egp , specifier: "%.2f")  USD ").foregroundColor(.blue)
+                                
+                                
+                            }
+                            
+                         
                         }
                         
                         
@@ -325,6 +338,11 @@ struct ProductDetails: View {
                             isAvailable = true
                             addToCartColor = Color.gray
                         }
+                        
+                        
+
+                        self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+
                     }
                     
                     //TODO: - product inventory_quantity
@@ -340,6 +358,9 @@ struct ProductDetails: View {
             }
             
         }.navigationBarBackButtonHidden(true)
+                .onAppear{
+                    self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+                }
         }
         else{
             NoNetworkView()

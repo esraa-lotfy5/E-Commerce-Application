@@ -10,10 +10,12 @@ struct ProductRowDetails: View {
     @State var product : DraftOrder
 
     
-    @State public var total : Double  = 1.0
-    
-    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+//    @State public var total : Float  = 1.0
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+    @State var currencyString = UserDefaults.standard.string(forKey: "options")
     var body: some View {
         HStack {
             VStack(alignment: .leading){
@@ -44,13 +46,28 @@ struct ProductRowDetails: View {
 //
                 //MARK: Price
            
+                
+                if IsEgp ?? true {
+                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!, specifier: "%.2f")  USD ") .foregroundColor(.black)
+                        .padding(5)
 
-                Text("Price: \((Double(product.lineItems?.first?.price ?? "0.0")! * total)  / Double(currencyValue ?? 1.0) , specifier: "%.2f") \(currency ?? "EGP ") ")
-                    .foregroundColor(.black)
-                    .padding(5)
-
-                    .font(.headline)
+                        .font(.headline)
+                }
+                else{
+                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!  / Egp , specifier: "%.2f")  USD ") .foregroundColor(.black)
+                        .padding(5)
+                        .font(.headline)
+                    
+                    
+                }
+                
+              
                                 
+            }.onAppear{
+                
+
+                self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+
             }
             Spacer()
         }

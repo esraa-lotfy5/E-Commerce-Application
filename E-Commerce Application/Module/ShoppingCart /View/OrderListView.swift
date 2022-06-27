@@ -18,8 +18,12 @@ struct OrderListView: View {
     @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
     @ObservedObject  var viewModelDiscount = DiscountCodeViewModel()
 
-    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+    
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+    @State var currencyString = UserDefaults.standard.string(forKey: "options")
     @State var isActive : Bool = false
     @State var refresh = false
     @State var promoCodeName : String = ""
@@ -33,7 +37,7 @@ struct OrderListView: View {
     
     
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    @State var totalPrice : Double = 0.0
+    @State var totalPrice : Float = 0.0
 
 //    init(){
 //            self.shoppingCartViewModel.getAllDraftOrders()
@@ -162,7 +166,8 @@ struct OrderListView: View {
                                      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                          if viewModelDiscount.returnedValue != "0" {
                                              print("GET FUNCTION VALUE DISCOUNT == \(viewModelDiscount.returnedValue ?? "9")")
-                                             self.shoppingCartViewModel.totalPrice  = self.shoppingCartViewModel.totalPrice + Double(viewModelDiscount.returnedValue ?? "0")!
+                                             self.shoppingCartViewModel.totalPrice  = self.shoppingCartViewModel.totalPrice + Float(viewModelDiscount.returnedValue ?? "0")!
+                                             self.shoppingCartViewModel.discount = Float(viewModelDiscount.returnedValue  ?? "0.0")!
                                              
                                              //MARK: Inner check
                                              if self.totalPrice > self.shoppingCartViewModel.totalPrice{
@@ -187,19 +192,35 @@ struct OrderListView: View {
                                     .cornerRadius(15)
 
                             }
-                            
-                            
-                            Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Double(currencyValue) , specifier: "%.2f") \(currency ?? "EGP" )   " )
-                            
-                                .foregroundColor(.blue)
-                                .font(.headline)
-                            Text("  Total Tax : \(shoppingCartViewModel.totalTax * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "EGP" )")
-                                .foregroundColor(.blue)
-                                .font(.headline)
-                            Text("  Total Price: \(shoppingCartViewModel.totalPrice * Double(currencyValue) ,  specifier: "%.2f") \(currency ?? "EGP" )")
-                            
-                                .foregroundColor(.blue)
-                                .font(.headline)
+                            if IsEgp ?? true{
+                                
+                                Text("  subTotal : \(shoppingCartViewModel.subTotalPrice  , specifier: "%.2f") EGP" )
+                                
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                                Text("  Total Tax : \(shoppingCartViewModel.totalTax ,  specifier: "%.2f") EGP" )
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                                Text("  Total Price: \(shoppingCartViewModel.totalPrice ,  specifier: "%.2f") EGP")
+                                
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                            }
+                            else{
+                                
+                                Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Egp   , specifier: "%.2f" ) USD" )
+                                
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                                Text("  Total Tax : \(shoppingCartViewModel.totalTax  / Egp ,  specifier: "%.2f") USD " )
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                                Text("  Total Price: \(shoppingCartViewModel.totalPrice / Egp  ,  specifier: "%.2f") USD")
+                                
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                            }
+                           
                         }
                         
                         Spacer()
@@ -259,6 +280,8 @@ struct OrderListView: View {
                     }
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 150)               }
             
+        }.onAppear{
+            self.IsEgp =  UserDefaults.standard.bool(forKey: "isEGP")
         }
         .navigationBarBackButtonHidden(true)
         }
