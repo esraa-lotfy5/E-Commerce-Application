@@ -126,6 +126,19 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
             
         }
     }
+    
+    func deleteDraftOrderFromOrders(draftOrderID: Int) {
+//        DispatchQueue.global(qos: .background).async {
+
+            networkApi.deleteDraftOrder(draftOrder: draftOrderID)
+//            DispatchQueue.main.async {
+//                self.refreshPage()
+
+//            }
+            
+//        }
+    }
+    
     func deleteAllDraftOrder() {
         
         for i in shoppingCartProducts{

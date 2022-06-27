@@ -61,6 +61,7 @@ struct PlaceOrders: View {
     var currLastName = UserDefaults.standard.string(forKey: "last_name")
        var currency = UserDefaults.standard.string(forKey: "currencyString")
     @ObservedObject var addressViewModel = AddressViewModel()
+    @ObservedObject var ordersViewModel = OrdersViewModel()
 
     
     
@@ -302,12 +303,22 @@ struct PlaceOrders: View {
 
                                             itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
                                             itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
+                                            itemParameter["order_id"] = draftOrder.lineItems?[0].id
 
                                             lineItems.append(itemParameter)
 
                                         }
                 //
-                                        placeOrderCash(lineItems: lineItems)
+                                        
+                                        var orderIds = [Int]()
+                                        
+                                        for i in orders {
+                                            
+                                            orderIds.append(i.id ?? 0)
+                                            
+                                        }
+                                        
+                                        placeOrderCash(lineItems: lineItems, orderIds: orderIds)
                                         
                                         
                                     case .failure(let error):
@@ -381,7 +392,7 @@ struct PlaceOrders: View {
         ]
         ]
         
-        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+        print("order with email: \(currEmail ?? ""), firstname: \(currFirstName ?? "") and lastname: \(currLastName ?? "")")
         print("order with address: \(address.address1), city: \(address.city) and country: \(address.country)")
         print("order items: \(lineItems)")
         
@@ -390,8 +401,37 @@ struct PlaceOrders: View {
             switch result {
                 
             case .success(let order):
-                print("order in view: \(order)")
-                shoppingCartViewModel.deleteAllDraftOrder()
+                print("order in view: \(order ?? [:])")
+                
+//                Button {
+//                        let inventoryItemObj = [
+//                            "location_id": Constants.locationId,
+//                            "inventory_item_id": 43702138863789,
+//                            "available_adjustment": -1
+//                      ]
+                    
+//                    ordersViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
+//                            addressViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
+//                } label: {
+//                    Text("update value the inventory item of certain item")
+//                        .padding()
+//                        .foregroundColor(.blue)
+//
+//                }
+                
+                var orderItemsDict: [[String: Any]]
+                
+//                let item: [String: Any] = lineItems[0]
+                orderItemsDict = lineItems
+                
+//                shoppingCartViewModel.deleteDraftOrder(draftOrderID: item["variantId"])
+                for order in orderItemsDict {
+                    print("deleting order: \(order)")
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: order["order_id"] as! Int)
+                }
+                
+                
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -403,7 +443,7 @@ struct PlaceOrders: View {
     }
     
     
-    func placeOrderCash(lineItems: [Parameters]) {
+    func placeOrderCash(lineItems: [Parameters], orderIds: [Int]) {
         
         print("place order clicked")
         showProgressView = true
@@ -426,7 +466,7 @@ struct PlaceOrders: View {
         ]
         ]
         
-        print("order with email: \(currEmail), firstname: \(currFirstName) and lastname: \(currLastName)")
+        print("order with email: \(currEmail ?? ""), firstname: \(currFirstName ?? "") and lastname: \(currLastName ?? "")")
         print("order with address: \(address.address1), city: \(address.city) and country: \(address.country)")
         print("order items: \(lineItems)")
         
@@ -435,11 +475,27 @@ struct PlaceOrders: View {
             switch result {
                 
             case .success(let order):
-                print("order in view: \(order)")
+                print("order in view: \(order ?? [:])")
                 active = true
                 showProgressView = false
                 
-                shoppingCartViewModel.deleteAllDraftOrder()
+                var orderItemsDict: [[String: Any]]
+                
+//                let item: [String: Any] = lineItems[0]
+                orderItemsDict = lineItems
+                print("orderItemDict \(orderItemsDict)")
+                
+//                shoppingCartViewModel.deleteDraftOrder(draftOrderID: item["variantId"])
+//                for order in orderItemsDict {
+//                    print("deleting order: \(order)")
+//                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: order["order_id"] as! Int)
+//                }
+                
+                for order in orderIds {
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: order)
+                }
+                
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error

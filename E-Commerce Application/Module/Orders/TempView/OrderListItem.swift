@@ -32,7 +32,7 @@ struct OrderListItem: View {
                 }
                 
                 Spacer()
-                Text("\(order.financial_status ?? "")").bold().foregroundColor(.green)
+                Text("\((order.financial_status == "paid") ? "Paid" : "Unpaid")").bold().foregroundColor(.green)
                 
             }.font(.title).padding(.bottom, 5)
             
@@ -68,18 +68,6 @@ struct OrderListItem: View {
                 
             }.font(.subheadline)
             
-            // date created
-//            let formattedDate = formattedDateFromString(order.created_at ?? "", withFormat: "yyyy-MM-dd")
-            
-            
-            
-            
-            
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-//            let date = dateFormatter.date(from: order.created_at ?? "")
-//
-//            print("\(date)")
             
         }.padding()
         
@@ -87,8 +75,6 @@ struct OrderListItem: View {
     
     func convertDate(date: String) -> String {
         
-//        let myDateString = "2016-01-01 04:31:32"
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let originalDate = dateFormatter.date(from: date)!
@@ -97,6 +83,10 @@ struct OrderListItem: View {
         let formattedDate = dateFormatter.string(from: originalDate)
         
         return formattedDate
+    }
+    
+    func getOrderStatus() {
+        
     }
     
 }

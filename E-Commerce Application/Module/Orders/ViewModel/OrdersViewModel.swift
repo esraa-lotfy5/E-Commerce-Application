@@ -95,4 +95,19 @@ class OrdersViewModel: ObservableObject {
         
     }
     
+    func updateInventoryLevel (inventoryItem : Parameters) -> Bool{
+        var returned : Bool = false
+        networkAPI.updateInventoryLevel(InventoryItem: inventoryItem) { (result) in
+            switch result {
+            case .success(let response):
+                let responseInventoryItem = response
+                print("INVENTORY ITEM POSTTTTTTT\(String(describing: responseInventoryItem))")
+                returned = true
+            case .failure(let error):
+                print(error.userInfo[NSLocalizedDescriptionKey] as? String ?? "Unknown Error")
+            }
+        }
+        return returned
+
+    }
 }
