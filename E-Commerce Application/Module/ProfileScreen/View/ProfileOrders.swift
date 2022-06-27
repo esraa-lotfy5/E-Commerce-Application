@@ -12,11 +12,14 @@ import SwiftUI
 struct ProfileOrders: View {
     
     @ObservedObject var ordersViewModel = OrdersViewModel()
+    @State var orders: [Order] = []
+    @State var showMore = false
+    @State var returnedItems = 0
 //    @State private var showMoreOrders: Bool = false
     
     var body: some View {
         
-        VStack{
+        VStack {
             //  ------------ start of order title --------------------
             HStack{
                 Spacer().frame(width: 24)
@@ -46,33 +49,52 @@ struct ProfileOrders: View {
             //  ------------ end of order title ----------------------
             //  ------------ start of order grid --------------------
             
-            let returnedItems = getOrderReturnNum(ordersCount: ordersViewModel.orders.count)
-            
-            let orders = ordersViewModel.orders.prefix(returnedItems)
+            let orders = orders.prefix(returnedItems)
             ForEach(orders) { order in
-                
+
                 OrderListItem(order: order)
-                
+
             }
              
-//            ProductRow(firstItem: dummyProducts[0], secondItem: dummyProducts[1])
+        }.onAppear {
+            
+            getOrders()
+            
         }
     }
     
-    func getOrderReturnNum(ordersCount: Int) -> Int {
-     
-        var returnItems = 0
+    func getOrders() {
         
-        if ordersViewModel.orders.count == 1 {
-            returnItems = 1
-        } else {
-            print("will show more...")
-            returnItems = 2
-//            showMoreOrders = true
+        ordersViewModel.getUserOrders { result in
+            
+            print("getUserOrders \(result)")
+            
+            switch result {
+            
+            case .success(let ordersResponse):
+                orders = ordersResponse ?? []
+                
+                print("orders profile \(orders)")
+                
+                if orders.count == 1 {
+                    print("orders count = 1")
+                    returnedItems = 1
+                } else {
+                    returnedItems = 2
+                    print("will show more if else... \(returnedItems)")
+                    showMore = true
+                }
+                
+                print("orders in OrderList \(orders)")
+                
+            case .failure(let error):
+                print("error \(error)")
+                
+            }
+            
         }
         
-        print("returned items \(returnItems)")
-        return returnItems
+        print("returned items \(returnedItems)")
         
     }
     
@@ -80,7 +102,7 @@ struct ProfileOrders: View {
         
         var showMore = false
         
-        if ordersViewModel.orders.count == 1 {
+        if orders.count == 1 {
 //            returnItems = 1
         } else {
             print("will show more...")

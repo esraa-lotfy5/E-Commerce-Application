@@ -11,13 +11,13 @@ import Alamofire
 
 class OrdersViewModel: ObservableObject {
     
-    private let networkAPI: NetworkAPI = NetworkAPI()
-    @Published var orders: [Order] = []
+    private let networkAPI: NetworkAPIProtocol = NetworkAPI()
+//    @Published var orders: [Order] = []
     private let currEmail = UserDefaults.standard.string(forKey: "email")
     
-    init() {
-        getUserOrders()
-    }
+//    init() {
+////        getUserOrders()
+//    }
     
     func createOrder(order: Parameters, completion: @escaping(Result<[String: Any]?, NSError>) -> Void) {
 
@@ -40,7 +40,9 @@ class OrdersViewModel: ObservableObject {
         
     }
     
-    func getUserOrders() {
+    func getUserOrders(completion: @escaping(Result<[Order]?, NSError>) -> Void) {
+        
+        var list = [Order]()
 
         networkAPI.getUserOrders { result in
             
@@ -55,24 +57,41 @@ class OrdersViewModel: ObservableObject {
                     return
                 }
                 
-                self.orders = ordersResponse.orders.filter {
+                list = ordersResponse.orders.filter {
                     $0.email?.lowercased() == self.currEmail?.lowercased()
                 }
+//
+//                return ordersResponse.orders.filter {
+//                    $0.email?.lowercased() == self.currEmail?.lowercased()
+//                }
                 
-                if self.orders.count > 0 {
-                    print("there are \(self.orders.count) orders for this user")
+                if list.count > 0 {
+                    print("there are \(list.count) orders for this user")
                     // append to your list
                     
                 } else {
                     print("there is no orders for this user")
                 }
                 
+//                completion(list)
+                completion(.success(list))
+                
+                
+//
+//                list = ordersResponse.orders.filter {
+//                    $0.email?.lowercased() == self.currEmail?.lowercased()
+//                }
+                
             case .failure(let error):
                 print("error: \(error.localizedDescription)")
+                completion(.failure(error))
+//                completion(error)
                 
             }
             
         }
+        
+//        return list
         
     }
     

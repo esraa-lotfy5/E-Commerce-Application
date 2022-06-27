@@ -12,6 +12,7 @@ struct OrderList: View {
     
     @ObservedObject var ordersViewModel = OrdersViewModel()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State var orders: [Order] = []
 //    @State private var currEmail = UserDefaults.standard.string(forKey: "email")
     
     var body: some View {
@@ -41,7 +42,7 @@ struct OrderList: View {
         
             List {
                 
-                ForEach(ordersViewModel.orders) { order in
+                ForEach(orders) { order in
                     
                     OrderListItem(order: order)
                     
@@ -49,12 +50,39 @@ struct OrderList: View {
                 
             }.listStyle(.plain)
             
+        }.onAppear {
+            getOrders()
         }
+//        .onAppear(perform: fetch)
         
         
         
     }
     
+    func getOrders(){
+        
+//        orders = ordersViewModel.getUserOrders()
+        ordersViewModel.getUserOrders { result in
+            switch result {
+                
+            case .success(let ordersResponse):
+                orders = ordersResponse ?? []
+                print("orders in OrderList \(orders)")
+                
+            case .failure(let error):
+                print("error \(error)")
+                
+            }
+        }
+        print("profile orders \(orders)")
+        
+    }
+    
+//    func fetch(){
+//        orders = ordersViewModel.orders
+////        ordersViewModel.getUserOrders()
+//    }
+//
     
 }
 
