@@ -161,7 +161,7 @@ struct ProductDetails: View {
                             Spacer()
                             
                             if IsEgp ?? true {
-                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  , specifier: "%.2f")  USD ").foregroundColor(.blue)
+                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  , specifier: "%.2f")  EGP ").foregroundColor(.blue)
                             }
                             else{
                                 Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Egp , specifier: "%.2f")  USD ").foregroundColor(.blue)
