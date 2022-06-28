@@ -27,7 +27,17 @@ struct ProductDetails: View {
     @State var inventory_item_id : Int?
     //trial favorite
     @State var varientIDFav:Int = 0
-    
+    var inventory_quantity : Int {
+        var result  = 0
+        for i in productDetailsViewModel.Products?.variants ?? []{
+            
+            if i.option2 == selectedColor && i.option1 == selectedSize{
+                result =  i.inventory_quantity ?? 0
+            }
+            
+        }
+        return result
+    }
     @State var heartChecked : Bool = false
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
@@ -175,15 +185,17 @@ struct ProductDetails: View {
                         
                         //MARK: quanitity AND status
                         HStack{
-                            Text("\(productDetailsViewModel.productInventoryQuantity?.count ?? 0 )")
+                            
+                            if inventory_quantity != 0 {
+                            Text("\(inventory_quantity)")
                                 .foregroundColor(Color.blue)
                                 .font(Font.headline)
-                            
+                         
                             Text(productDetailsViewModel.Products?.status ==  "active" ?  "available"  : "not available")
                                 .foregroundColor(Color.blue)
                                 .font(Font.headline)
-                        }
-                        
+                            }
+                            }
                         
                         //MARK: HTML BODY
                         VStack(alignment: .center){
@@ -252,22 +264,30 @@ struct ProductDetails: View {
                         //MARK: add to Cart BUTTON
                         Button(action: {
                             if isLoggedIn{
-                            self.showingAlert.toggle()
-                            // TODO: check that the user choose size and color
-                            if (selectedSize == "" || selectedColor == ""){
-                                print("nil")
-                                alert_Title = "Warrning"
-                                alertMessage = "Please choose size and color !"
-                            }
+                                self.showingAlert.toggle()
+                                // TODO: check that the user choose size and color
+                                if (selectedSize == "" || selectedColor == ""){
+                                    print("nil")
+                                    alert_Title = "Warrning"
+                                    alertMessage = "Please choose size and color !"
+                                }
                             
                             else{
-                                
+                                if inventory_quantity < 0 || inventory_quantity < productCount {
+                                    self.showingAlert.toggle()
+                                    showingAlert = true
+                                    alert_Title = "Warrning"
+                                    alertMessage = "Out of stock!!"
+                                }
+                                else{
+                                    
                                 //MARK: getting the varient of the product
                                 productDetailsViewModel.Products?.variants?.filter({ varient in
                                     
                                     if varient.option2 == selectedColor && varient.option1 == selectedSize{
                                         varientID = varient.id
                                         inventory_item_id = varient.inventory_item_id ?? 0
+//                                        inventory_quantity = varient.inventory_quantity ?? 0
                                         alert_Title = "Adding item"
                                         alertMessage = "\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart"
                                     }
@@ -279,6 +299,8 @@ struct ProductDetails: View {
                                 guard let productVarientId = varientID else {return}
                                 print("test product details \(productVarientId)")
                                 productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize, inventory_item_id: inventory_item_id ?? 0 )
+                                
+                                }
                                 
                             }
                                 
@@ -385,5 +407,16 @@ struct ProductDetails: View {
         }
  
         
+    }
+}
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { self.wrappedValue },
+            set: { newValue in
+                self.wrappedValue = newValue
+                handler(newValue)
+            }
+        )
     }
 }

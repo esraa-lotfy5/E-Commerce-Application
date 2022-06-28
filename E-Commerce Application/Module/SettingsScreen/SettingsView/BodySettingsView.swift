@@ -5,7 +5,6 @@
 //  Created by Nour Gweda on 6/2/22.
 //  Copyright © 2022 iti. All rights reserved.
 //
-
 import Foundation
 import SwiftUI
 
@@ -18,6 +17,8 @@ enum CurrencyType: String, CaseIterable {
 }
 
 
+
+
 struct BodySettingsView : View{
 
 @State var currencyArr :[CurrencyType] = [.EGP , .USD]
@@ -25,8 +26,7 @@ struct BodySettingsView : View{
 
 @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
 @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
-    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-
+    
     @State private var selectedIndex = 0
     
 
@@ -49,38 +49,27 @@ var body: some View{
                     //start of element currency
                     VStack{
                         
-                        Toggle(isOn: $vm.CurrencyActivate) {
-                                        Text("Active")
-                                            .font(.system(size: 18))
-                                            .foregroundColor(Color("TextDark"))
-                           // print("value :\()")
-                                    }
-                                    .padding(.top, 6)
-                        
-                    HStack{
-                        Image(systemName: "creditcard")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        
-                        Picker("chooseCurrency", selection: $vm.setUsetDefault) {
-                            ForEach(self.currencyArr, id: \.self) { value in
-                                           Text(value.rawValue).tag(value)
-                                       }
-                                   }
-                                   .pickerStyle(SegmentedPickerStyle())
-                        
-                      //end of picker
+                        HStack {
+                            Text(" choose Currency ")
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        }
+                        Picker(selection: $vm.currencyType, label: Text("currencyType"), content: {
+                            Text("EGP").tag(CurrencyType.EGP)
+                            Text("USD").tag(CurrencyType.USD)
+                            
+                        })
+                        .pickerStyle(SegmentedPickerStyle())
                     }
+                    .padding(.top, 20)
                 }
                     
                     
                     //end of element
-
                     
                     
-             }
+             
                 
                 Section{
                     //start of element contact us
@@ -120,34 +109,30 @@ var body: some View{
                     
                 }
                 
-                if isLoggedIn {
-                    Section{
-                        //start of element logout
-                        HStack{
-                            Image(systemName: "multiply.circle")
-                            .frame(width: 25, height: 25)
-                                .foregroundColor(Color.white)
-                                .background(Color.gray)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                            
-                            NavigationLink(destination: LoginScreen(),isActive: $active) {
-                             EmptyView()
-                            }
-                            Button(action: {
-                                print("logout is clicked")
-                                isloggedOut()
-                                self.active = true
-                                    
-                            }, label: {
-                                Text("Logout")
-                            })
-                                .foregroundColor(Color.red)
+                Section{
+                    //start of element logout
+                    HStack{
+                        Image(systemName: "multiply.circle")
+                        .frame(width: 25, height: 25)
+                            .foregroundColor(Color.white)
+                            .background(Color.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        
+                        NavigationLink(destination: LoginScreen(),isActive: $active) {
+                         EmptyView()
                         }
-                        //end of element
+                        Button(action: {
+                            print("logout is clicked")
+                            isloggedOut()
+                            self.active = true
+               
+                        }, label: {
+                            Text("Logout")
+                        })
+                            .foregroundColor(Color.red)
                     }
+                    //end of element
                 }
-                
-                
                 
             
                 
@@ -158,11 +143,12 @@ var body: some View{
     }
     func isloggedOut (){
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        UserDefaults.standard.set("", forKey: "id")
+        UserDefaults.standard.set("", forKey: "email")
+        UserDefaults.standard.set("", forKey: "first_name")
+        UserDefaults.standard.set("", forKey: "last_name")
         
     }
     
     
 }
-
-
-
