@@ -20,9 +20,16 @@ struct CategoryCell: View {
     @State private var fav : Bool = false // by default is un fav
     
     //currency
+//
+//    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
+//    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     
-    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+    @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    
     
     init(product: CategoryProduct){
         self.viewWidth = (UIScreen.main.bounds.size.width-50)/2
@@ -44,11 +51,22 @@ struct CategoryCell: View {
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                
-                    Text("\(currency ?? " ") \((Double(product.variants[0].price) ?? 0.0) / Double(currencyValue ?? 1.0) , specifier: "%.2f")")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                    Text("\(currencyValue)")
+                    if IsEgp ?? true {
+                        Text("\(Float(product.variants[0].price)! , specifier: "%.2f") EGP")
+                            .font(.subheadline)
+                            .foregroundColor(.blue)
+                    }
+                    else{
+                 
+                        
+                        Text("\(Float(product.variants[0].price)! / Egp , specifier: "%.2f") USD")
+                            .font(.subheadline)
+                            .foregroundColor(.blue)
+                    }
+                    
+                   
+                    
+                 
                 }.padding(.leading, 16)
 //                VStack(alignment: .trailing){
 //                    Button(action: {
@@ -83,6 +101,9 @@ struct CategoryCell: View {
         .onTapGesture { self.isActive.toggle() } // activate link on image tap
                    .background(NavigationLink(destination:  // link in background
                                               ProductDetails(productId: String(self.product.id)), isActive: $isActive) { EmptyView() })
+                   .onAppear{
+                       self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+                   }
     }
 }
 

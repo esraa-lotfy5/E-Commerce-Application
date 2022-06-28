@@ -29,7 +29,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     let monitor = NWPathMonitor()
     
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void){
-//        print("enetered")
+        print("enetered")
             monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
                 if pathUpdateHandler.status == .satisfied {
                     DispatchQueue.main.sync {
@@ -80,7 +80,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     }
 
     
-    func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String){
+    func postDraftOrder(variantId: Int , quantity : Int , selectedSize : String , inventory_item_id :Int){
         print(currEmail)
         let parameters =     [
             "draft_order": [
@@ -88,8 +88,8 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
                 "note" : "cart",
                 "note_attributes": [
                     ["name": "image","value":Products?.image?.src ?? "default"],
-                    ["name": "size","value" : selectedSize]
-                        
+                    ["name": "size","value" : selectedSize],
+                    ["name": "inventory_item_id" , "value" : inventory_item_id]
                         ]
                 
                 ,

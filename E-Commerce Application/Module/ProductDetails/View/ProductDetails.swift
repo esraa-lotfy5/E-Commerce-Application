@@ -24,7 +24,7 @@ struct ProductDetails: View {
     @State var alert_Title = ""
     @State var varientID:Int?
     @State var refresh = true
-
+    @State var inventory_item_id : Int?
     //trial favorite
     @State var varientIDFav:Int = 0
     
@@ -32,19 +32,22 @@ struct ProductDetails: View {
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
     
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+    @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var productDetailsViewModel : ProductDetailsViewModel = ProductDetailsViewModel()
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
     let colorWhite = Color(red: 1, green: 1, blue: 1)
-    var productSizes = "OS"
-    var productColors = "black"
+   
     var productid :String? //  "6870135275659" //"6870133932171"//
     
-    //currency
-    
-    @State var currency = UserDefaults.standard.string(forKey: "currencyString")
-    @State var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
+   
     init(productId: String){
         print(productId)
         self.productid = productId
@@ -90,8 +93,10 @@ struct ProductDetails: View {
                                     }
                             }
                             .onTapGesture {
-                                print("\n  favorite button is clicked  \n")
-                                print(" \n variant id == \( productDetailsViewModel.Products?.variants?[0].id) \n")
+//                                print("\n  favorite button is clicked  \n")
+//                                print(" \n variant id == \( productDetailsViewModel.Products?.variants?[0].id) \n")
+                                
+                                if isLoggedIn {
                                 if productDetailsViewModel.getFavorites(variantIDFav: productDetailsViewModel.Products?.variants?[0].id ?? 0) {  // item is liked -- > turn to unlike DELETE
                                     DispatchQueue.main.async {
                                         let productIdFav = productDetailsViewModel.favoriteItem?.id
@@ -107,6 +112,14 @@ struct ProductDetails: View {
                                         productDetailsViewModel.favoriteHere = true
                                         print("\n posted \n")
                                     }
+                                }
+                                }
+                                else{
+                                    self.showingAlert.toggle()
+                                 
+                                        alert_Title = "Warrning"
+                                        alertMessage = "Please sign in to add to WishList "
+                                    
                                 }
                                 
                             }.frame(width: 50, height: 40)
@@ -145,7 +158,17 @@ struct ProductDetails: View {
                         HStack {
                             Text(   productDetailsViewModel.Products?.title ??  "").bold() // product.title ??
                             Spacer()
-                            Text("\((Double(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Double(currencyValue ?? 1.0) , specifier: "%.2f")  \(currency ?? "EGP ")").foregroundColor(.blue)
+                            
+                            if IsEgp ?? true {
+                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  , specifier: "%.2f")  EGP ").foregroundColor(.blue)
+                            }
+                            else{
+                                Text("\((Float(productDetailsViewModel.Products?.variants?[0].price ?? "0.0") ?? 0.0)  / Egp , specifier: "%.2f")  USD ").foregroundColor(.blue)
+                                
+                                
+                            }
+                            
+                         
                         }
                         
                         
@@ -227,7 +250,7 @@ struct ProductDetails: View {
                         
                         //MARK: add to Cart BUTTON
                         Button(action: {
-                            
+                            if isLoggedIn{
                             self.showingAlert.toggle()
                             // TODO: check that the user choose size and color
                             if (selectedSize == "" || selectedColor == ""){
@@ -243,6 +266,7 @@ struct ProductDetails: View {
                                     
                                     if varient.option2 == selectedColor && varient.option1 == selectedSize{
                                         varientID = varient.id
+                                        inventory_item_id = varient.inventory_item_id ?? 0
                                         alert_Title = "Adding item"
                                         alertMessage = "\(String(describing: productDetailsViewModel.Products?.title ?? "")) was successfully added to cart"
                                     }
@@ -253,8 +277,15 @@ struct ProductDetails: View {
                                 //MARK: check that the user choose size and color
                                 guard let productVarientId = varientID else {return}
                                 print("test product details \(productVarientId)")
-                                productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize)
+                                productDetailsViewModel.postDraftOrder(variantId: productVarientId, quantity: productCount , selectedSize : selectedSize, inventory_item_id: inventory_item_id ?? 0 )
                                 
+                            }
+                                
+                            }else{
+                                self.showingAlert.toggle()
+                             
+                                    alert_Title = "Warrning"
+                                    alertMessage = "Please sign in to add to Shopping Cart "
                             }
                         }) {
                             
@@ -287,10 +318,9 @@ struct ProductDetails: View {
                         ProductDetailsContent(title: "Type", details:  productDetailsViewModel.Products?.product_type ?? "N/A", backgroundColor: colorWhite)
                             .padding(.top, -8)
 //                        if productDetailsViewModel.Products?.options?.count ?? 0 == 2 {
-                        ProductDetailsContentWithOptions(title: "Sizes", details:  [], backgroundColor: colorWhite, text: self.$selectedSize)
-                                .padding(.top, -8)
+                        
                             
-                        ProductDetailsContentWithOptions(title: "", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
+                        ProductDetailsContentWithOptions(title: "Sizes", details:  productDetailsViewModel.Products?.options?.first?.values? .map { $0 } ?? ["N/A"], backgroundColor:  colorGray, text: self.$selectedSize)
                             .padding(.top, -8)
 
                         ProductDetailsContentWithOptions(title: "Colors", details:  productDetailsViewModel.Products?.options?.last?.values?.map { $0 }  ?? ["N/A"], backgroundColor: colorWhite, text: self.$selectedColor)
@@ -300,7 +330,17 @@ struct ProductDetails: View {
                         
                     }.padding()
                     
-                }.onAppear{
+                }.refreshable {
+                    
+                    while true{
+                    
+                    await productDetailsViewModel.refreshPage(id: self.productid!)
+                    print("refresh")
+                    }
+                    
+                }
+                
+                .onAppear{
                     
                     self.productDetailsViewModel.getProductDetails(id: self.productid ?? "0") { (result) in
                         
@@ -315,6 +355,11 @@ struct ProductDetails: View {
                             isAvailable = true
                             addToCartColor = Color.gray
                         }
+                        
+                        
+
+                        self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+
                     }
                     
                     //TODO: - product inventory_quantity
@@ -324,19 +369,15 @@ struct ProductDetails: View {
                     }
                     
                     
-                }.refreshable {
-                    
-                    while true{
-                    
-                    await productDetailsViewModel.refreshPage(id: self.productid!)
-                                    }
-                    
                 }
             } else {
                 // Fallback on earlier versions
             }
             
         }.navigationBarBackButtonHidden(true)
+                .onAppear{
+                    self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+                }
         }
         else{
             NoNetworkView()
