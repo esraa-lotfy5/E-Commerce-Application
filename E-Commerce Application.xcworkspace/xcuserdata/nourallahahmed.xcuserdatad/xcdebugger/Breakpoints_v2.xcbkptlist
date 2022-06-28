@@ -7,94 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B"
+            uuid = "44B73913-201A-4692-A9FD-798E4CA8A760"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "E-Commerce Application/Module/CategoryScreen/View/CategoryScreen.swift"
+            filePath = "E-Commerce Application/Module/PaymentScreens/Address/View/AddressScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "CategoryScreen"
-            landmarkType = "14">
-            <Locations>
-               <Location
-                  uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B - c518d95db06f0edc"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "property wrapper backing initializer of E_Commerce_Application.CategoryScreen.categoryViewModel : E_Commerce_Application.CategoryViewModel"
-                  moduleName = "E-Commerce Application"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nourallahahmed/Documents/GP/E-Commerce%20Application/Module/CategoryScreen/View/CategoryScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B - d7710f24a628ed7f"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "E_Commerce_Application.CategoryScreen.categoryViewModel.getter : E_Commerce_Application.CategoryViewModel"
-                  moduleName = "E-Commerce Application"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nourallahahmed/Documents/GP/E-Commerce%20Application/Module/CategoryScreen/View/CategoryScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "68">
-               </Location>
-               <Location
-                  uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B - 538def15d5868a8b"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "E_Commerce_Application.CategoryScreen.categoryViewModel.setter : E_Commerce_Application.CategoryViewModel"
-                  moduleName = "E-Commerce Application"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nourallahahmed/Documents/GP/E-Commerce%20Application/Module/CategoryScreen/View/CategoryScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "62">
-               </Location>
-               <Location
-                  uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B - 10d9e6df5189d38a"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "E_Commerce_Application.CategoryScreen.categoryViewModel.modify : E_Commerce_Application.CategoryViewModel with unmangled suffix &quot;.resume.0&quot;"
-                  moduleName = "E-Commerce Application"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nourallahahmed/Documents/GP/E-Commerce%20Application/Module/CategoryScreen/View/CategoryScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "36CFB389-D150-41B7-B217-1BA11C753F8B - 173482501c40e263"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "E_Commerce_Application.CategoryScreen.$categoryViewModel.getter : SwiftUI.ObservedObject&lt;E_Commerce_Application.CategoryViewModel&gt;.Wrapper"
-                  moduleName = "E-Commerce Application"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nourallahahmed/Documents/GP/E-Commerce%20Application/Module/CategoryScreen/View/CategoryScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "87">
-               </Location>
-            </Locations>
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA90747A-BDF5-42B7-802A-E72B5622D097"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "E-Commerce Application/Module/PaymentScreens/Address/View/AddressScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C340262-AF4C-4D24-80D4-4C84896ED0E9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "E-Commerce Application/Module/PaymentScreens/Address/View/AddressScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

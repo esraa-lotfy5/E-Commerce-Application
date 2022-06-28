@@ -5,7 +5,6 @@
 //  Created by Aya Abdelraouf on 08/06/2022.
 //  Copyright © 2022 iti. All rights reserved.
 //
-
 import SwiftUI
 import StepperView
 
@@ -26,9 +25,14 @@ struct PaymentOptions: View {
     @ObservedObject var store = Store()
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
     var address : Addresss
-
+    @State var payment :Float = 0.0
     var paymentsOptions = ["PayPal","Cash On Delivery"]
+    
+    
+    
+    
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -90,7 +94,6 @@ struct PaymentOptions: View {
                     
                     
                     //end of element
-
                     
                     
                 }}
@@ -124,7 +127,7 @@ struct PaymentOptions: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PlaceOrders(address: address),isActive: $active) {
+                        NavigationLink(destination: PlaceOrders(address: address).environmentObject(self.shoppingCartViewModel),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
@@ -156,13 +159,18 @@ struct PaymentOptions: View {
                 }
                 
             }.navigationBarBackButtonHidden(true)
-            
-            
-        }.onAppear{
-//            print("Total")
-//            print(vm.getTotal())
-        }
-        
+                      .environmentObject(shoppingCartViewModel)
+                      .onAppear{
+                          print("______PAYMENT________")
+                          payment = self.shoppingCartViewModel.totalPrice
+                          print(self.payment)
+                      }
+                  
+              }.onAppear{
+                  print("______PAYMENT________")
+                  payment = self.shoppingCartViewModel.totalPrice
+                  print(self.payment)
+              }
         
         
     }
@@ -170,4 +178,3 @@ struct PaymentOptions: View {
     
     
 }
-

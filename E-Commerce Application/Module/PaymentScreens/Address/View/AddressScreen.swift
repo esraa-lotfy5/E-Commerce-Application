@@ -5,13 +5,12 @@
 //  Created by Aya Abdelraouf on 08/06/2022.
 //  Copyright © 2022 iti. All rights reserved.
 //
-
 import SwiftUI
 import StepperView
 import BraintreeDropIn
 
 struct AddressScreen: View {
-    
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -44,7 +43,6 @@ struct AddressScreen: View {
     @State var address : [Addresss] = []
     
     @State var errorMessage: String = ""
-    
     var body: some View {
         
         
@@ -56,10 +54,10 @@ struct AddressScreen: View {
             Spacer()
             
             ScrollView(.horizontal,showsIndicators: false){
-                
                 HStack(alignment :.top,spacing: 10){
                     ForEach(address){ address in
                         AddressItem(address: address)
+                            .environmentObject(self.shoppingCartViewModel)
                     }
                 }.padding()
             }
@@ -113,11 +111,10 @@ struct AddressScreen: View {
                         .cornerRadius(10)
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
-                        
-                        NavigationLink(destination: PaymentOptions(address: vm.defultAddress),isActive: $active) {
-                            
-                            EmptyView()
-                        }.edgesIgnoringSafeArea(.vertical)
+                        NavigationLink(destination: PaymentOptions(address: vm.defultAddress).environmentObject(self.shoppingCartViewModel),isActive: $active) {
+                                                   
+                                                   EmptyView()
+                                               }.edgesIgnoringSafeArea(.vertical)
                         
                         Button(action: {
                             let addressPar  = [
@@ -135,18 +132,8 @@ struct AddressScreen: View {
                             print(addressPar)
                             
                             
-                            if self.validateData(){
-                                                
-                                                 vm.defultAddress.city = city
-                                                 vm.defultAddress.country = state
-                                                 vm.defultAddress.address1 = address1
-                                                 
-                                                 vm.postApi(address: addressPar)
-                                                 
-                                                 self.active = true
-                                                 }
-                            
-                          
+                           
+                        
                             
                             
                         }) {
@@ -161,10 +148,7 @@ struct AddressScreen: View {
                             .frame(height: 55)
                             .background(Color.accentColor)
                             .cornerRadius(15)
-                            
-                            Text(self.errorMessage)
-                                    .foregroundColor(Color.red)
-                                    .multilineTextAlignment(.center)
+                        
                         }
                         
                         Spacer()
@@ -186,9 +170,7 @@ struct AddressScreen: View {
             getAddress()
         }
         
-        
-    }
-    
+        }
     func getAddress(){
         
 //        orders = ordersViewModel.getUserOrders()
@@ -240,5 +222,3 @@ struct AddressScreen: View {
     }
     
 }
-
-
