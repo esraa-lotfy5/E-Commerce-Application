@@ -15,10 +15,7 @@ struct  Product4 {
 }
 struct ProductRow: View {
     @ObservedObject  var viewModelFavorite = WishListViewModel()
-    @State private var IsEgp : Bool?
 
-    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
-    @State private var usd = UserDefaults.standard.float(forKey: "USD")
 
 
     let firstItem : DraftOrder
@@ -48,19 +45,9 @@ struct ProductRow: View {
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    
-                    
-                    if IsEgp ?? true {
-                        
-                        Text(" \(firstItem.totalPrice )  EGP ").foregroundColor(.blue)
-                       
-                    }
-                    else{
-                        Text(" \((Float(firstItem.totalPrice ) ?? 0.0) / Egp , specifier: "%.2f")  USD ").foregroundColor(.blue)
-                        
-                        
-                    }
-                   
+                    Text("$ \(firstItem.totalPrice)")
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
                 }.padding(.leading, 16)
             }
         }.cornerRadius(15)
@@ -92,10 +79,6 @@ struct ProductRow: View {
         .frame(width: self.viewWidth)
         Spacer().frame(width: 16)
         }.padding(.bottom, 16)
-            .onAppear{
-                self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
-
-            }
     }
 }
 

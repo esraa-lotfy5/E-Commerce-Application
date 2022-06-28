@@ -10,12 +10,8 @@ struct ProductRowDetails: View {
     @State var product : DraftOrder
 
     
-//    @State public var total : Float  = 1.0
-    @State private var IsEgp : Bool?
-
-    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
-    @State private var usd = UserDefaults.standard.float(forKey: "USD")
-    @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    @State public var total : Double  = 1.0
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading){
@@ -32,7 +28,7 @@ struct ProductRowDetails: View {
                     .padding(.top)
                 
                 //MARK: Size
-                Text("Size: \(product.noteAttributes?[1].value ?? "nil")")
+                Text("Size: \(product.noteAttributes?.last?.value ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(5)
@@ -45,29 +41,13 @@ struct ProductRowDetails: View {
                 
 //
                 //MARK: Price
-           
-                
-                if IsEgp ?? true {
-                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!, specifier: "%.2f")  EGP ") .foregroundColor(.black)
-                        .padding(5)
 
-                        .font(.headline)
-                    
-                }
-                else{
-                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!  / Egp , specifier: "%.2f")  USD ") .foregroundColor(.black)
-                        .padding(5)
-                        .font(.headline)
-               
-                }
-                
-              
+                Text("Price: \((Double(product.lineItems?.first?.price ?? "0.0")! * total ).description)")
+                    .foregroundColor(.black)
+                    .padding(5)
+
+                    .font(.headline)
                                 
-            }.onAppear{
-                
-
-                self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
-
             }
             Spacer()
         }

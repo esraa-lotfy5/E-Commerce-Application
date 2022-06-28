@@ -29,20 +29,17 @@ struct PlaceOrders: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var cobon = ""
-    @State var subTotal : Float = 0.0
-    @State var tax : Double = 0.0
-
-    @State var shippingFees : Float = 0.0
+    @State var subTotal : Double = 976.0
+    @State var shippingFees : Double = 30.0
     @State var validation : String = "Validate"
-    @State var discound : Float = 0.0
-    @State var total : Float = 0.0
+    @State var discound : Double = 0.0
+    @State var total : Double = 1006.0
     @State private var showProgressView: Bool = false
     
-    @State private var IsEgp : Bool?
-
-    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
-    @State private var usd = UserDefaults.standard.float(forKey: "USD")
-    @State var currencyString = UserDefaults.standard.string(forKey: "options")
+    
+    @State private var currencyString = UserDefaults.standard.string(forKey: "currencyString")
+    @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValye")
+      
     @State private var PaymentOptions = UserDefaults.standard.string(forKey: "PaymentOptions")
     @State private var isPayPal = UserDefaults.standard.bool(forKey: "isPay")
     @State var active :Bool = false
@@ -57,7 +54,7 @@ struct PlaceOrders: View {
     
     @State var showDropIn = false
     
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
     
      let currEmail = UserDefaults.standard.string(forKey: "email")
     var currFirstName = UserDefaults.standard.string(forKey: "first_name")
@@ -85,75 +82,44 @@ struct PlaceOrders: View {
             VStack(alignment: .leading){
                 Spacer()
                 Form{
-                    
-                    
-                    if IsEgp ?? true {
-                        Section{
-                            HStack{
-                                Text("Sub Total")
-                                Spacer()
-                                Text("\(subTotal,  specifier: "%.2f") EGP ")
-                            }}.padding()
-                        Section{
-                            HStack{
-                                Text("Shipping Fees")
-                                Spacer()
-                                Text("\(shippingFees,  specifier: "%.2f") EGP ")                        }
-                        }.padding()
-                       
-                        Section{
-                            HStack{
-                                //MARK: Discount
-                                Text("Discount")
-                                Spacer()
-                                Text("\(discound,  specifier: "%.2f") EGP")                        }
-                        }.padding()
-                        
-                        Section{
-                            HStack{
-                                Text("Grand Total")
-                                Spacer()
-                                Text("\(total,  specifier: "%.2f") EGP " )
-                            }
+                    Section{
+                        HStack{
+                            Text("Sub Total")
+                            Spacer()
+                            Text("\(currencyValue) USD")
+                            
+                        }}.padding()
+                    Section{
+                        HStack{
+                            Text("Shipping Fees")
+                            Spacer()
+                            Text("\(shippingFees) USD")
                         }
-                        .padding()
-                    }
-                    else{
-       
-                        
-                        
-                        Section{
-                            HStack{
-                                Text("Sub Total")
-                                Spacer()
-                                Text("\(subTotal / Egp , specifier: "%.2f") USD")
-                            }}.padding()
-                        Section{
-                            HStack{
-                                Text("Shipping Fees")
-                                Spacer()
-                                Text("\(shippingFees / Egp , specifier: "%.2f") USD"    )                  }
-                        }.padding()
-                       
-                        Section{
-                            HStack{
-                                //MARK: Discount
-                                Text("Discount")
-                                Spacer()
-                                Text("\(discound / Egp , specifier: "%.2f") USD"  )                     }
-                        }.padding()
-                        
-                        Section{
-                            HStack{
-                                Text("Grand Total")
-                                Spacer()
-                                Text("\(total / Egp , specifier: "%.2f") USD")
-                            }
+                    }.padding()
+                    Section{
+                        HStack{
+                            TextField("Cobon",text: $cobon)
+                            Spacer()
+                            Text(validation)
                         }
-                        .padding()
+                    }.padding()
+                    Section{
+                        HStack{
+                            Text("Discount")
+                            Spacer()
+                            Text("\(discound)USD")
+                        }
+                    }.padding()
+                    
+                    Section{
+                        HStack{
+                            Text("Grand Total")
+                            Spacer()
+                            Text("\(total) USD")
+                            //                        Text(String(format: "%.2f", total))
+                        }
                     }
-                    
-                    
+                }.padding()
                 
                 Spacer()
                 Spacer()
@@ -163,24 +129,11 @@ struct PlaceOrders: View {
             
         }.navigationBarBackButtonHidden(true)
             .onAppear{
-                print("___PAYMENT___")
-                
-                
-                
-                
-                self.total = self.shoppingCartViewModel.totalPrice
-                
-                
-                self.subTotal = self.shoppingCartViewModel.subTotalPrice
-                
-                self.shippingFees = self.shoppingCartViewModel.totalTax
-                
-                
-                self.discound = self.shoppingCartViewModel.discount
-                self.IsEgp =  UserDefaults.standard.bool(forKey: "isEGP")
-                
-                print(self.total)
-            }
+                           print("___PAYMENT___")
+                           total = self.shoppingCartViewModel.totalPrice
+                           subTotal = self.shoppingCartViewModel.subTotalPrice
+                           print(self.total)
+                       }
         
         //////////
         NavigationLink(destination: ProfileScreen(),isActive: $active) {
@@ -407,7 +360,7 @@ struct PlaceOrders: View {
         
     }
     
-    }
+    
     func placeOrderPayPal(lineItems: [Parameters]) {
         
         print("place order clicked")
@@ -438,7 +391,7 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
-//                shoppingCartViewModel.deleteAllDraftOrder()
+                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -486,7 +439,7 @@ struct PlaceOrders: View {
                 active = true
                 showProgressView = false
                 
-//                shoppingCartViewModel.deleteAllDraftOrder()
+                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error

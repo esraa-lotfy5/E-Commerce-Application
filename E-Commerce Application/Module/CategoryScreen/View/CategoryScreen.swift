@@ -11,18 +11,12 @@ import QGrid
 
 
 struct CategoryScreen: View {
-   
     @State var selectedCat = ""
     // by deafult user untapp search button
     @State private var searchTapped = false
     var brandName : String?
 
     @ObservedObject var categoryViewModel : CategoryViewModel
-    @State var alertMessage = ""
-    @State var alert_Title = ""
-    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-    @State private var showingAlert = false
-
     init(brandName : String){
         self.categoryViewModel = CategoryViewModel(brandName: brandName)
     }
@@ -30,10 +24,9 @@ struct CategoryScreen: View {
     
     var body: some View {
         if categoryViewModel.NetworkState == true {
-    
+
         VStack{
-            CategoryNavigationBar(categoryViewModel: self.categoryViewModel, alertMessage:  $alertMessage, alert_Title: $alert_Title, showingAlert: $showingAlert
-                )
+            CategoryNavigationBar(categoryViewModel: self.categoryViewModel)
             Spacer()
             
             //MARK: Tabs
@@ -64,13 +57,6 @@ struct CategoryScreen: View {
             
             
         }.navigationBarBackButtonHidden(true)
-                .alert(isPresented: self.$showingAlert) {
-                    Alert(
-                        title: Text(alert_Title), // $alerttitle
-                        message: Text(alertMessage)
-                    )
-                    
-                }
         }else{
             NoNetworkView()
 
