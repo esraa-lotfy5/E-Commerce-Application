@@ -84,7 +84,7 @@ struct PaymentOptions: View {
                                         Spacer()
                                     }
                         Picker(selection: $store.paymentType, label: Text("paymentType"), content: {
-                            Text("DelivryOnCash").tag(PaymentType.PayPal)
+                            Text("Cash on delivery").tag(PaymentType.PayPal)
                             Text("PayPal").tag(PaymentType.CashOnDeleviry)
                                         
                                     })

@@ -235,54 +235,7 @@ struct PlaceOrders: View {
                 
             }
             
-        
-        if self.isPayPal{
-            
-            VStack {
-                VStack {
-                    HStack (alignment: .center, spacing: 0){
-                        //MARK:- back button
-                        Spacer().frame(width:10)
-                        HStack{
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                        }
-                        .onTapGesture {
-                            self.presentationMode.wrappedValue.dismiss()
-                            
-                        }
-                        .frame(width: 50, height: 40)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
-                        Spacer().frame(width:50)
-                        
-                        NavigationLink(destination: Text("")) {
-                            
-                            Button(action: { self.showDropIn = true }) {
-                                HStack {
-                                    Spacer()
-                                    Text("Select Payment Method")
-                                        .fontWeight(.bold)
-                                        .font(.body)
-                                    Spacer()
-                                }
-                                .foregroundColor(.white)
-                                .frame(height: 55)
-                                .background(Color.accentColor)
-                                .cornerRadius(15)
-                            }
-                            
-                            Spacer()
-                        }.edgesIgnoringSafeArea(.vertical)
-                        
-                        
-                        
-                        
-                    }.frame(height:200)
-                }
-                
-            }
+            ////NEWFUNCTION
             
           if  self.showDropIn{
         
@@ -456,8 +409,7 @@ struct PlaceOrders: View {
     }
     
     }
-}
-        func placeOrderPayPal(lineItems: [Parameters]) {
+    func placeOrderPayPal(lineItems: [Parameters]) {
         
         print("place order clicked")
 
@@ -487,7 +439,7 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
-                shoppingCartViewModel.deleteAllDraftOrder()
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -535,7 +487,7 @@ struct PlaceOrders: View {
                 active = true
                 showProgressView = false
                 
-                shoppingCartViewModel.deleteAllDraftOrder()
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -550,7 +502,6 @@ struct PlaceOrders: View {
 }
 
 //func pay
-
 
 
 struct BTDropInRepresentable: UIViewControllerRepresentable {
@@ -588,5 +539,3 @@ struct BTDropInRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: BTDropInController, context: UIViewControllerRepresentableContext<BTDropInRepresentable>) {
     }
 }
-    
-

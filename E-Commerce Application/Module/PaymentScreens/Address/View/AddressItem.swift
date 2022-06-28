@@ -6,18 +6,18 @@
 //  Copyright © 2022 iti. All rights reserved.
 //
 
-
 import SwiftUI
 
 struct AddressItem: View {
     var address : Addresss
     @ObservedObject  var vm = AddressViewModel()
-    
+    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+
     @State var active :Bool = false
     var body: some View {
         
         
-        NavigationLink(destination: PaymentOptions(address: address),isActive: $active) {
+        NavigationLink(destination: PaymentOptions(address: address).environmentObject(self.shoppingCartViewModel),isActive: $active) {
             
             EmptyView()
         }
@@ -68,4 +68,3 @@ struct AddressItem_Previews: PreviewProvider {
         
     }
 }
-

@@ -115,41 +115,52 @@ struct AddressScreen: View {
                                                    
                                                    EmptyView()
                                                }.edgesIgnoringSafeArea(.vertical)
-                        
                         Button(action: {
-                            let addressPar  = [
-                                
-                                "address" :[
-                                    
-                                    "address1": address1,
-                                    "city": city,
-                                    "country": state
-                                    
-                                    
-                                ]
-                                
-                            ]
-                            print(addressPar)
-                            
-                            
-                           
-                        
-                            
-                            
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text("Add Address")
-                                    .fontWeight(.bold)
-                                    .font(.body)
-                                Spacer()
-                            }
-                            .foregroundColor(.white)
-                            .frame(height: 55)
-                            .background(Color.accentColor)
-                            .cornerRadius(15)
-                        
-                        }
+                                                 let addressPar  = [
+                                                     
+                                                     "address" :[
+                                                         
+                                                         "address1": address1,
+                                                         "city": city,
+                                                         "country": state
+                                                         
+                                                         
+                                                     ]
+                                                     
+                                                 ]
+                                                 print(addressPar)
+                                                 
+                                                 if self.validateData(){
+                                                
+                                                 vm.defultAddress.city = city
+                                                 vm.defultAddress.country = state
+                                                 vm.defultAddress.address1 = address1
+                                                 
+                                                 vm.postApi(address: addressPar)
+                                                 
+                                                 self.active = true
+                                                 }
+                                                 
+                                             }
+                                             
+                                             ) {
+                                                 HStack {
+                                                     Spacer()
+                                                     Text("Next")
+                                                         .fontWeight(.bold)
+                                                         .font(.body)
+                                                     Spacer()
+                                                 }
+                                                 .foregroundColor(.white)
+                                                 .frame(height: 55)
+                                                 .background(Color.accentColor)
+                                                 .cornerRadius(15)
+                                                 
+                                                 Text(self.errorMessage)
+                                                     .foregroundColor(Color.red)
+                                                     .multilineTextAlignment(.center)
+                                             }
+                                             
                         
                         Spacer()
                         

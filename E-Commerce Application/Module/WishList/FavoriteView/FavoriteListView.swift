@@ -17,7 +17,11 @@ struct FavoriteListView: View {
     @State var favoriteArr : [DraftOrder]?
    // @ObservedObject  var viewModelFavorite = WishListViewModel()
 
-    
+    @State private var IsEgp : Bool?
+
+    @State private var Egp = UserDefaults.standard.float(forKey: "EGP")
+    @State private var usd = UserDefaults.standard.float(forKey: "USD")
+
     var body: some View {
         
        // NavigationView{
@@ -53,11 +57,21 @@ struct FavoriteListView: View {
                                                    .fontWeight(.semibold)
                                                    .padding()
                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                               Text("Price: \(row.lineItems?[0].price ?? "")")
+                                               if IsEgp ?? true{
+                                               Text("Price: \(row.lineItems?[0].price ?? "") EGP")
                                                    .font(.subheadline)
                                                    .fontWeight(.semibold)
                                                    .padding()
                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                               }else{
+                                                   Text("Price: \((Float(row.lineItems?[0].price ?? "") ?? 0.0) / Egp ) USD")
+                                                       .font(.subheadline)
+                                                       .fontWeight(.semibold)
+                                                       .padding()
+                                                       .frame(maxWidth: .infinity, alignment: .leading)
+                                               }
+                                               
+                                           
                                            }
                                        }
                                    }
@@ -135,6 +149,9 @@ struct FavoriteListView: View {
                            
                            
                            
+                       }    .onAppear{
+                           self.IsEgp = UserDefaults.standard.bool(forKey: "isEGP")
+
                        }
                      //  .onDelete(perform:self.delete)
                        
