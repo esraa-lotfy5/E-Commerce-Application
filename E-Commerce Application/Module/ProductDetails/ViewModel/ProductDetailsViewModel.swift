@@ -29,7 +29,7 @@ class ProductDetailsViewModel :BaseAPI<NetworkRequest> , ObservableObject{
     let monitor = NWPathMonitor()
     
     func getProductDetails(id:String , completion : @escaping (Result <ProductsResults? , NSError>) -> Void){
-        print("enetered")
+//        print("enetered")
             monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
                 if pathUpdateHandler.status == .satisfied {
                     DispatchQueue.main.sync {

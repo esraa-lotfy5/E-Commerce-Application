@@ -54,6 +54,7 @@ struct ProductDetails: View {
         self.productDetailsViewModel.getProductDetails(id: String(self.productid ?? "")) { re in
             print(  try? re.get()?.product)
         }
+        print("OKAY")
     }
     var body: some View {
         if productDetailsViewModel.NetworkState == true {
