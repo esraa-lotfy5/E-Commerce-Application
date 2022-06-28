@@ -134,8 +134,7 @@ struct LoginScreen: View {
                                 
                                 NavigationLink(destination: RegisterScreen()
                                     .navigationBarBackButtonHidden(true)
-                                               //                    .navigationViewStyle(StackNavigationViewStyle())
-                                               //                    .navigationBarHidden(true)
+                                            
                                 ){
                                     
                                     Text("Create an Account")
@@ -200,6 +199,7 @@ struct LoginScreen: View {
                                                 .background(Color.gray.opacity(0.3))
                                                 .cornerRadius(10)
                                                 .padding(.trailing)
+                                            
                                             
                                             
                                         }
@@ -333,4 +333,12 @@ struct Login_Previews: PreviewProvider {
     static var previews: some View {
         LoginScreen()
     }
+}
+func isloggedOut (){
+    UserDefaults.standard.set(false, forKey: "isLoggedIn")
+    UserDefaults.standard.set("", forKey: "id")
+    UserDefaults.standard.set("", forKey: "email")
+    UserDefaults.standard.set("", forKey: "first_name")
+    UserDefaults.standard.set("", forKey: "last_name")
+    
 }

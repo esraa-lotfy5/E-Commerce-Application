@@ -115,7 +115,7 @@ extension NetworkRequest : TargetType {
             return Constants.endPointOrders
           
         case.updatedCurrency(let base):
-            return "latest?symbols=EGP,USD,AED,AFN&base=\(base)&apikey=SEYGO2EroCLponB3IyndgQQ04a0oN1jl"
+            return "latest?symbols=EGP,USD,AED,AFN&base=\(base)&apikey=ORyl7lm1qahH8H4EFcRlFeFoV0d9HciN"
             
         case .updateInventoryLevel( let inventoryLevel):
             return "inventory_levels/adjust.json"

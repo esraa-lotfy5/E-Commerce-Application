@@ -34,6 +34,7 @@ struct ProductDetails: View {
             if i.option2 == selectedColor && i.option1 == selectedSize{
                 result =  i.inventory_quantity ?? 0
             }
+           
             
         }
         return result

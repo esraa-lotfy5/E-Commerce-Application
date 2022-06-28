@@ -82,9 +82,20 @@ struct ProductRow: View {
                             .multilineTextAlignment(.leading)
                             .frame(width: self.viewWidth-60, alignment: .leading)
                     }
-                    Text("$ \(secondItem.totalPrice)")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
+                    
+                    if IsEgp ?? true {
+                        
+                        Text(" \(secondItem.totalPrice )  EGP ").font(.subheadline)
+                            .foregroundColor(.blue)
+                       
+                    }
+                    else{
+                        Text(" \((Float(secondItem.totalPrice ) ?? 0.0) / Egp , specifier: "%.2f")  USD ").font(.subheadline)
+                            .foregroundColor(.blue)
+                        
+                        
+                    }
+                        
                 }.padding(.leading, 16)
             }
         }.cornerRadius(15)

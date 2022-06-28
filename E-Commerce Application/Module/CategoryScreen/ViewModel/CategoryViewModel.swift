@@ -32,7 +32,7 @@ class CategoryViewModel : ObservableObject{
     }
     func getProducts(){
         let newParameters = updateParameters()
-        print(newParameters)
+//        print(newParameters)
         monitor.pathUpdateHandler = { [weak self] pathUpdateHandler  in
             if pathUpdateHandler.status == .satisfied {
                 DispatchQueue.main.sync {

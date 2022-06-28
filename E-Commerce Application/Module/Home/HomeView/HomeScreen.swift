@@ -25,8 +25,7 @@ var body: some View {
                 NavigationHome()
                 BannerView()
                 BrandsView()
-             /////   TabBarHome()
-    //    Text("\(viewModel.str.count)")
+
              Spacer()
     }.fullScreenCover(isPresented:
                         $shouldShownOnBoarding2, content: {
