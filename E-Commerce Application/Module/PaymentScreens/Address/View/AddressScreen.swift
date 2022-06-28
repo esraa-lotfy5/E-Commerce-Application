@@ -11,7 +11,7 @@ import StepperView
 import BraintreeDropIn
 
 struct AddressScreen: View {
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
+    
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular )),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -41,6 +41,9 @@ struct AddressScreen: View {
     
     @State var active :Bool = false
     
+    @State var address : [Addresss] = []
+    
+    @State var errorMessage: String = ""
     
     var body: some View {
         
@@ -55,8 +58,8 @@ struct AddressScreen: View {
             ScrollView(.horizontal,showsIndicators: false){
                 
                 HStack(alignment :.top,spacing: 10){
-                    ForEach(vm.comingAddressess){ address in
-                        AddressItem(address: address).environmentObject(self.shoppingCartViewModel)
+                    ForEach(address){ address in
+                        AddressItem(address: address)
                     }
                 }.padding()
             }
@@ -110,10 +113,11 @@ struct AddressScreen: View {
                         .cornerRadius(10)
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
-                        NavigationLink(destination: PaymentOptions(address: vm.defultAddress).environmentObject(self.shoppingCartViewModel),isActive: $active) {
-                                                   
-                                                   EmptyView()
-                                               }.edgesIgnoringSafeArea(.vertical)
+                        
+                        NavigationLink(destination: PaymentOptions(address: vm.defultAddress),isActive: $active) {
+                            
+                            EmptyView()
+                        }.edgesIgnoringSafeArea(.vertical)
                         
                         Button(action: {
                             let addressPar  = [
@@ -131,20 +135,24 @@ struct AddressScreen: View {
                             print(addressPar)
                             
                             
-                           
-                            vm.defultAddress.city = city
-                            vm.defultAddress.country = state
-                            vm.defultAddress.address1 = address1
+                            if self.validateData(){
+                                                
+                                                 vm.defultAddress.city = city
+                                                 vm.defultAddress.country = state
+                                                 vm.defultAddress.address1 = address1
+                                                 
+                                                 vm.postApi(address: addressPar)
+                                                 
+                                                 self.active = true
+                                                 }
                             
-                            vm.postApi(address: addressPar)
-                            
-                            self.active = true
+                          
                             
                             
                         }) {
                             HStack {
                                 Spacer()
-                                Text("Next")
+                                Text("Add Address")
                                     .fontWeight(.bold)
                                     .font(.body)
                                 Spacer()
@@ -153,6 +161,10 @@ struct AddressScreen: View {
                             .frame(height: 55)
                             .background(Color.accentColor)
                             .cornerRadius(15)
+                            
+                            Text(self.errorMessage)
+                                    .foregroundColor(Color.red)
+                                    .multilineTextAlignment(.center)
                         }
                         
                         Spacer()
@@ -171,9 +183,62 @@ struct AddressScreen: View {
         
             
         }.onAppear{
-            vm.getAddress()
+            getAddress()
         }
         
         
     }
+    
+    func getAddress(){
+        
+//        orders = ordersViewModel.getUserOrders()
+        vm.getAddress { result in
+            switch result {
+                
+            case .success(let ordersResponse):
+                address = ordersResponse ?? []
+                print("orders in OrderList \(address)")
+                
+            case .failure(let error):
+                print("error \(error)")
+                
+            }
+        }
+        print("profile orders \(address)")
+        
+    }
+    
+    func validateData() -> Bool {
+        
+        if !validateFields() {
+            
+            self.showErrorMessage("Please fill all the fields or select from cards!")
+            return false
+            
+       
+            
+        } else {
+            
+            // continue with register
+            return true
+            
+        }
+        
+    }
+    
+    func validateFields() -> Bool {
+        
+        if self.address1.count > 0 && self.city.count > 0 && self.state.count > 0 {
+            return true
+        }
+        
+        return false
+        
+    }
+    func showErrorMessage(_ errorMessage: String) {
+        self.errorMessage = errorMessage
+    }
+    
 }
+
+
