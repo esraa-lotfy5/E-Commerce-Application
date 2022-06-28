@@ -438,7 +438,7 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
-                shoppingCartViewModel.deleteAllDraftOrder()
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error
@@ -486,7 +486,7 @@ struct PlaceOrders: View {
                 active = true
                 showProgressView = false
                 
-                shoppingCartViewModel.deleteAllDraftOrder()
+//                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
                 // handle error

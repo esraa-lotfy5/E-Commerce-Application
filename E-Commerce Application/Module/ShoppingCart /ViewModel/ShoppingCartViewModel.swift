@@ -201,7 +201,7 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
 
                 self?.shoppingCartProducts = updateProducts
                 self?.totalTax = updateTotalTax
-                self?.totalPrice = updateTotalPrice
+                self?.totalPrice = updateTotalPrice + (self?.discount ?? 0.0    )
                 self?.subTotalPrice = updateSubTotalPrice
                 return true
             })}

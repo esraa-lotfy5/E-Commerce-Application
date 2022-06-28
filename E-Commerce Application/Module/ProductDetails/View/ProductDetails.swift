@@ -44,8 +44,7 @@ struct ProductDetails: View {
     
     let colorGray = Color(red: 232/255, green: 232/255, blue: 232/255)
     let colorWhite = Color(red: 1, green: 1, blue: 1)
-    var productSizes = "OS"
-    var productColors = "black"
+   
     var productid :String? //  "6870135275659" //"6870133932171"//
     
    

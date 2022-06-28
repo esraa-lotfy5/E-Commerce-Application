@@ -90,6 +90,8 @@ struct CategoryNavigationBar: View {
                                 self.showingAlert.toggle()
                                 alert_Title = "Warrning"
                                 alertMessage = "Please sign in to show wishlist"
+                            }else{
+                                self.isActivef = true
                             }
                     }
                     
@@ -117,13 +119,12 @@ struct CategoryNavigationBar: View {
                         self.showingAlert.toggle()
                         alert_Title = "Warrning"
                         alertMessage = "Please sign in to show wishlist"
+                    }else{
+                        self.isActive = true
                     }
                     
                     
                 }
-                    
-            //    .background(NavigationLink(destination: WishList(product: [Product3(name: "test", price: 90.0, size: "S", desc: "desc")]), isActive: $isActive) { EmptyView() })
-             //   .background(NavigationLink(destination: WishList(), isActive: $isActive) { EmptyView() })
                 .background(NavigationLink(destination: FavoriteView(), isActive: $isActive) { EmptyView() })
                 .padding(15)
                 .frame(width: 50, height: 40)

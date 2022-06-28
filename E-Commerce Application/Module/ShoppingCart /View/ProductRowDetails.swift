@@ -32,7 +32,7 @@ struct ProductRowDetails: View {
                     .padding(.top)
                 
                 //MARK: Size
-                Text("Size: \(product.noteAttributes?.last?.value ?? "nil")")
+                Text("Size: \(product.noteAttributes?[1].value ?? "nil")")
                     .foregroundColor(.black)
                     .font(.headline)
                     .padding(5)
@@ -48,17 +48,17 @@ struct ProductRowDetails: View {
            
                 
                 if IsEgp ?? true {
-                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!, specifier: "%.2f")  USD ") .foregroundColor(.black)
+                    Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!, specifier: "%.2f")  EGP ") .foregroundColor(.black)
                         .padding(5)
 
                         .font(.headline)
+                    
                 }
                 else{
                     Text("\((Float(product.lineItems?.first?.price ?? "0.0"))!  / Egp , specifier: "%.2f")  USD ") .foregroundColor(.black)
                         .padding(5)
                         .font(.headline)
-                    
-                    
+               
                 }
                 
               

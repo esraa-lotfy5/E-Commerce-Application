@@ -15,7 +15,7 @@ struct OrderListView: View {
   
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    @ObservedObject var shoppingCartViewModel = ShoppingCartViewModel()
+    @StateObject var shoppingCartViewModel : ShoppingCartViewModel = ShoppingCartViewModel()
     @ObservedObject  var viewModelDiscount = DiscountCodeViewModel()
 
     
@@ -29,7 +29,7 @@ struct OrderListView: View {
     @State var promoCodeName : String = ""
     @State var shoppingCartCount : Int = 0
     @State var counter : Int = 0
-
+    @State var errormessage :String?
     @State var IsClicked = false
     @State var NotClickableColor = Color.accentColor
     //For Loading
@@ -38,11 +38,10 @@ struct OrderListView: View {
     
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     @State var totalPrice : Float = 0.0
+    init(){
+        print("DraftORDER")
+    }
 
-//    init(){
-//            self.shoppingCartViewModel.getAllDraftOrders()
-//    
-//    }
     var body: some View {
         if shoppingCartViewModel.NetworkState == true {
 
@@ -153,6 +152,8 @@ struct OrderListView: View {
                     HStack{
                     
                         VStack(alignment: .leading){
+                            
+                            VStack(alignment: .leading){
                             HStack{
                                 TextField("Enter PromoCode", text: $promoCodeName).padding(15)
                                Spacer()
@@ -173,6 +174,10 @@ struct OrderListView: View {
                                              if self.totalPrice > self.shoppingCartViewModel.totalPrice{
                                                  self.IsClicked = true
                                                  self.NotClickableColor = Color.gray
+                                                 self.errormessage = ""
+                                             }
+                                             else{
+                                                 self.errormessage = " Invalid PromoCode"
                                              }
                                             print( self.shoppingCartViewModel.totalPrice)
                                          }
@@ -185,12 +190,17 @@ struct OrderListView: View {
                                         .fontWeight(.bold)
                                         .font(.body)
                                     Spacer(minLength: 3)
+                                    
                                 }.disabled(IsClicked)
                                     .foregroundColor(.white)
                                     .frame(height: 50)
                                     .background(NotClickableColor)
                                     .cornerRadius(15)
 
+                            }
+                                Text(self.errormessage ?? "")
+                                    .foregroundColor(.red)
+                                    .font(.system(size: 18))
                             }
                             if IsEgp ?? true{
                                 
@@ -208,17 +218,20 @@ struct OrderListView: View {
                             }
                             else{
                                 
-                                Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Egp   , specifier: "%.2f" ) USD" )
+                                    
+                                    Text("  subTotal : \(shoppingCartViewModel.subTotalPrice / Egp , specifier: "%.2f" ) USD" )
+                                    
+                                    .foregroundColor(.blue)
+                                    .font(.headline)
+                                    Text("  Total Tax : \(shoppingCartViewModel.totalTax  / Egp ,  specifier: "%.2f") USD " )
+                                        .foregroundColor(.blue)
+                                        .font(.headline)
+                                    Text("  Total Price: \(shoppingCartViewModel.totalPrice / Egp  ,  specifier: "%.2f") USD")
+                                    
+                                        .foregroundColor(.blue)
+                                        .font(.headline)
                                 
-                                    .foregroundColor(.blue)
-                                    .font(.headline)
-                                Text("  Total Tax : \(shoppingCartViewModel.totalTax  / Egp ,  specifier: "%.2f") USD " )
-                                    .foregroundColor(.blue)
-                                    .font(.headline)
-                                Text("  Total Price: \(shoppingCartViewModel.totalPrice / Egp  ,  specifier: "%.2f") USD")
-                                
-                                    .foregroundColor(.blue)
-                                    .font(.headline)
+                               
                             }
                            
                         }
@@ -232,13 +245,7 @@ struct OrderListView: View {
                     .padding(.trailing)
                     .padding(.top)
                     .padding(.bottom)
-                    }.onAppear{
-                        self.shoppingCartViewModel.calcTotal()
-                       
                     }
-                    
-                    
-                    
                     Button(action: {
                         self.isActive = true
                     }) {
@@ -264,20 +271,20 @@ struct OrderListView: View {
             }
             
             else {
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .gray))
-                    .onReceive(timer) { _ in
-                        if currentProgress == 30.0 {
-                            currentProgress += 1
-                            print("progress")
-                            print(currentProgress)
-                            
-                        }
-                        else{
+//                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: .gray))
+//                    .onReceive(timer) { _ in
+//                        if currentProgress == 30.0 {
+//                            currentProgress += 1
+//                            print("progress")
+//                            print(currentProgress)
+//
+//                        }
+//                        else{
                             emptyOrderList()
-                            
-                        }
-                        
-                    }
+//                            
+//                        }
+//                        
+//                    }
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 150)               }
             
         }.onAppear{
