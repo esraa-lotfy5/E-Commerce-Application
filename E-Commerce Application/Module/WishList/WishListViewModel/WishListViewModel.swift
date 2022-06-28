@@ -62,7 +62,6 @@ class WishListViewModel : ObservableObject {
 //
 //}
 
-
 //in view
 ////////edit inventory item
 //        Button {

@@ -16,7 +16,6 @@ struct FavoriteListView: View {
     @State var productFavId : Int?
     @State var favoriteArr : [DraftOrder]?
    // @ObservedObject  var viewModelFavorite = WishListViewModel()
-
     @State var currencyFav = UserDefaults.standard.string(forKey: "currencyString")
     @State var currencyValueFav = UserDefaults.standard.float(forKey: "currencyValue")
     
@@ -24,7 +23,10 @@ struct FavoriteListView: View {
         
        // NavigationView{
                    List{
-                   
+                       if viewModelFavorite.wishList.isEmpty{
+                           NoFavoriteView()
+                       }
+                       else{
                        ForEach(viewModelFavorite.wishList, id: \.self) { row in
         
                           
@@ -134,7 +136,6 @@ struct FavoriteListView: View {
                            }
                            }
                        //.onDelete(perform:self.delete)
-
                            
                            
                            //                           NavigationLink(destination: ProductDetails(),isActive: $isActive) {
@@ -160,10 +161,10 @@ struct FavoriteListView: View {
                    
         
         
-        
+                   }
         //}
                    .navigationBarBackButtonHidden(true)
-        
+                   
         
     }
     
@@ -193,12 +194,3 @@ struct FavoriteListView: View {
 
 
 }
-
-
-
-
-
-
-
-
-
