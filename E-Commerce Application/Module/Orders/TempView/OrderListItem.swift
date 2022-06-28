@@ -32,7 +32,8 @@ struct OrderListItem: View {
                 }
                 
                 Spacer()
-                Text("\(order.financial_status ?? "")").bold().foregroundColor(.green)
+//                Text("\(order.financial_status ?? "")").bold().foregroundColor(.green)
+                Text("\((order.financial_status == "paid") ? "Paid" : "Unpaid")").bold().foregroundColor(.green)
                 
             }.font(.title).padding(.bottom, 5)
             
@@ -67,19 +68,6 @@ struct OrderListItem: View {
                 Text(orderDate).foregroundColor(.gray)
                 
             }.font(.subheadline)
-            
-            // date created
-//            let formattedDate = formattedDateFromString(order.created_at ?? "", withFormat: "yyyy-MM-dd")
-            
-            
-            
-            
-            
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-//            let date = dateFormatter.date(from: order.created_at ?? "")
-//
-//            print("\(date)")
             
         }.padding()
         

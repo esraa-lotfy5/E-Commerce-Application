@@ -182,10 +182,14 @@ struct PlaceOrders: View {
             }
         
         //////////
-        NavigationLink(destination: ProfileScreen(),isActive: $active) {
-
-            EmptyView()
-        }.edgesIgnoringSafeArea(.vertical)
+            if #available(iOS 15.0, *) {
+                NavigationLink(destination: TabBarHome(),isActive: $active) {
+                    
+                    EmptyView()
+                }.edgesIgnoringSafeArea(.vertical)
+            } else {
+                // Fallback on earlier versions
+            }
         
         if self.isPayPal{
             
@@ -280,8 +284,16 @@ struct PlaceOrders: View {
                                 lineItems.append(itemParameter)
 
                             }
+                            
+                            var orderIds = [Int]()
+                                                                    
+                            for i in orders {
+                                
+                                orderIds.append(i.id ?? 0)
+                                
+                            }
 //
-                            placeOrderPayPal(lineItems: lineItems)
+                            placeOrderPayPal(lineItems: lineItems, orderIds: orderIds)
                             
                             
                         case .failure(let error):
@@ -354,8 +366,16 @@ struct PlaceOrders: View {
                                             lineItems.append(itemParameter)
 
                                         }
+                                        
+                                        var orderIds = [Int]()
+                                                                                
+                                        for i in orders {
+                                            
+                                            orderIds.append(i.id ?? 0)
+                                            
+                                        }
                 //
-                                        placeOrderCash(lineItems: lineItems)
+                                        placeOrderCash(lineItems: lineItems, orderIds: orderIds)
                                         
                                         
                                     case .failure(let error):
@@ -409,7 +429,7 @@ struct PlaceOrders: View {
     }
     
     }
-    func placeOrderPayPal(lineItems: [Parameters]) {
+    func placeOrderPayPal(lineItems: [Parameters], orderIds: [Int]) {
         
         print("place order clicked")
 
@@ -439,6 +459,13 @@ struct PlaceOrders: View {
                 
             case .success(let order):
                 print("order in view: \(order)")
+                
+                // delete draft orders (cart items)
+                for id in orderIds {
+                    print("will delete from draft order: \(id)")
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+                }
+                
 //                shoppingCartViewModel.deleteAllDraftOrder()
                 
             case .failure(let error):
@@ -451,7 +478,7 @@ struct PlaceOrders: View {
     }
     
     
-    func placeOrderCash(lineItems: [Parameters]) {
+    func placeOrderCash(lineItems: [Parameters], orderIds: [Int]) {
         
         print("place order clicked")
         showProgressView = true
@@ -486,6 +513,12 @@ struct PlaceOrders: View {
                 print("order in view: \(order)")
                 active = true
                 showProgressView = false
+                
+                // delete draft orders (cart items)
+                for id in orderIds {
+                    print("will delete from draft order: \(id)")
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+                }
                 
 //                shoppingCartViewModel.deleteAllDraftOrder()
                 

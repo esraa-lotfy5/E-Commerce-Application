@@ -95,7 +95,7 @@ struct AddressScreen: View {
             
             VStack {
                 VStack {
-                    HStack (alignment: .top, spacing: 0){
+                    HStack (alignment: .top, spacing: 0) {
                         //MARK:- back button
                         Spacer().frame(width:10)
                         HStack{
@@ -112,55 +112,53 @@ struct AddressScreen: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         NavigationLink(destination: PaymentOptions(address: vm.defultAddress).environmentObject(self.shoppingCartViewModel),isActive: $active) {
-                                                   
-                                                   EmptyView()
-                                               }.edgesIgnoringSafeArea(.vertical)
+                            
+                            EmptyView()
+                        }.edgesIgnoringSafeArea(.vertical)
                         Button(action: {
-                                                 let addressPar  = [
-                                                     
-                                                     "address" :[
-                                                         
-                                                         "address1": address1,
-                                                         "city": city,
-                                                         "country": state
-                                                         
-                                                         
-                                                     ]
-                                                     
-                                                 ]
-                                                 print(addressPar)
-                                                 
-                                                 if self.validateData(){
-                                                
-                                                 vm.defultAddress.city = city
-                                                 vm.defultAddress.country = state
-                                                 vm.defultAddress.address1 = address1
-                                                 
-                                                 vm.postApi(address: addressPar)
-                                                 
-                                                 self.active = true
-                                                 }
-                                                 
-                                             }
-                                             
-                                             ) {
-                                                 HStack {
-                                                     Spacer()
-                                                     Text("Next")
-                                                         .fontWeight(.bold)
-                                                         .font(.body)
-                                                     Spacer()
-                                                 }
-                                                 .foregroundColor(.white)
-                                                 .frame(height: 55)
-                                                 .background(Color.accentColor)
-                                                 .cornerRadius(15)
-                                                 
-                                                 Text(self.errorMessage)
-                                                     .foregroundColor(Color.red)
-                                                     .multilineTextAlignment(.center)
-                                             }
-                                             
+                            let addressPar  = [
+                                
+                                "address" :[
+                                    
+                                    "address1": address1,
+                                    "city": city,
+                                    "country": state
+                                    
+                                    
+                                ]
+                                
+                            ]
+                            print(addressPar)
+                            
+                            if self.validateData(){
+                                
+                                vm.defultAddress.city = city
+                                vm.defultAddress.country = state
+                                vm.defultAddress.address1 = address1
+                                
+                                vm.postApi(address: addressPar)
+                                
+                                self.active = true
+                            }
+                            
+                        }
+                               
+                        ) {
+                            HStack {
+                                Spacer()
+                                Text("Next")
+                                    .fontWeight(.bold)
+                                    .font(.body)
+                                Spacer()
+                            }
+                            .foregroundColor(.white)
+                            .frame(height: 55)
+                            .background(Color.accentColor)
+                            .cornerRadius(15)
+                            
+                            
+                        }
+                        
                         
                         Spacer()
                         
@@ -169,22 +167,25 @@ struct AddressScreen: View {
                         
                         
                     }.frame(height:200)
+                    Text(self.errorMessage)
+                        .foregroundColor(Color.red)
+                        .multilineTextAlignment(.center)
                 }
                 
             }.navigationBarBackButtonHidden(true)
             
-                
             
-        
+            
+            
             
         }.onAppear{
             getAddress()
         }
         
-        }
+    }
     func getAddress(){
         
-//        orders = ordersViewModel.getUserOrders()
+        //        orders = ordersViewModel.getUserOrders()
         vm.getAddress { result in
             switch result {
                 
@@ -208,7 +209,7 @@ struct AddressScreen: View {
             self.showErrorMessage("Please fill all the fields or select from cards!")
             return false
             
-       
+            
             
         } else {
             
