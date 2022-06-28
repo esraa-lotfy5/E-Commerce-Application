@@ -22,6 +22,8 @@ struct Constants {
     static let endPointOrders = "orders.json"
     static let endpointCurrency = ""
     
+    static let locationId = 66823782573
+    
 }
 
 struct ErrorMessages {
