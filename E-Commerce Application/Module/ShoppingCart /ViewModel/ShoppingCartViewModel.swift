@@ -21,11 +21,10 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
   
     var networkApi : NetworkAPI = NetworkAPI()
     @Published var shoppingCartProducts = [DraftOrder]()
-    @Published var totalPrice : Float = 0.0
-    @Published var subTotalPrice : Float = 0.0
-    @Published var totalTax :Float = 0.0
-    @Published var discount  : Float = 0.0
-
+    @Published var totalPrice = 0.0
+    @Published var subTotalPrice = 0.0
+    @Published var totalTax = 0.0
+    
     //Internet
     @Published var NetworkState : Bool = true
 
@@ -41,20 +40,20 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
         self.totalPrice =  self.shoppingCartProducts.reduce(0.0) {
             
             partialResult, draftorder in
-            partialResult + Float(draftorder.totalPrice)!
+            partialResult + Double(draftorder.totalPrice)!
             
         } ?? 0.0
         
         self.subTotalPrice =  self.shoppingCartProducts.reduce(0.0) {
             
             partialResult, draftorder in
-            partialResult + Float(draftorder.subtotalPrice)!
+            partialResult + Double(draftorder.subtotalPrice)!
             
         } ?? 0.0
         self.totalTax =  self.shoppingCartProducts.reduce(0.0) {
             
             partialResult, draftorder in
-            partialResult + Float(draftorder.totalTax)!
+            partialResult + Double(draftorder.totalTax)!
         } ?? 0.0
     }
     func getAllDraftOrders() {
@@ -85,20 +84,20 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                             self?.totalPrice =  self?.shoppingCartProducts.reduce(0.0) {
                                 
                                 partialResult, draftorder in
-                                partialResult + Float(draftorder.totalPrice)!
+                                partialResult + Double(draftorder.totalPrice)!
                                 
                             } ?? 0.0
                             
                             self?.subTotalPrice =  self?.shoppingCartProducts.reduce(0.0) {
                             
                             partialResult, draftorder in
-                            partialResult + Float(draftorder.subtotalPrice)!
+                            partialResult + Double(draftorder.subtotalPrice)!
                             
                         } ?? 0.0
                         self?.totalTax =  self?.shoppingCartProducts.reduce(0.0) {
                             
                             partialResult, draftorder in
-                            partialResult + Float(draftorder.totalTax)!
+                            partialResult + Double(draftorder.totalTax)!
                         } ?? 0.0
                     }
                     return true
@@ -162,9 +161,9 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     }
     func refreshPage(){
         var updateProducts = [DraftOrder]()
-        var updateTotalPrice :Float = 0.0
-        var updateSubTotalPrice :Float = 0.0
-        var updateTotalTax :Float = 0.0
+        var updateTotalPrice :Double = 0.0
+        var updateSubTotalPrice :Double = 0.0
+        var updateTotalTax :Double = 0.0
 //        self.getAllDraftOrders()
         DispatchQueue.global(qos: .background).async {
 
@@ -181,27 +180,27 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     updateTotalPrice = updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.totalPrice)!
+                        partialResult + Double(draftorder.totalPrice)!
 
                       }
 
                     updateSubTotalPrice =  updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.subtotalPrice)!
+                        partialResult + Double(draftorder.subtotalPrice)!
 
                       }
                     updateTotalTax =  updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.totalTax)!
+                        partialResult + Double(draftorder.totalTax)!
 
                       }
                 }
 
                 self?.shoppingCartProducts = updateProducts
                 self?.totalTax = updateTotalTax
-                self?.totalPrice = updateTotalPrice + (self?.discount ?? 0.0    )
+                self?.totalPrice = updateTotalPrice
                 self?.subTotalPrice = updateSubTotalPrice
                 return true
             })}
@@ -211,9 +210,9 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
     
     func refreshPage2() async {
         var updateProducts = [DraftOrder]()
-        var updateTotalPrice :Float = 0.0
-        var updateSubTotalPrice :Float = 0.0
-        var updateTotalTax :Float = 0.0
+        var updateTotalPrice :Double = 0.0
+        var updateSubTotalPrice :Double = 0.0
+        var updateTotalTax :Double = 0.0
 //        self.getAllDraftOrders()
 //        DispatchQueue.global(qos: .background).async {
 
@@ -230,20 +229,20 @@ class ShoppingCartViewModel : ObservableObject , ShoppingCartProtocol {
                     updateTotalPrice = updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.totalPrice)!
+                        partialResult + Double(draftorder.totalPrice)!
 
                       }
 
                     updateSubTotalPrice =  updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.subtotalPrice)!
+                        partialResult + Double(draftorder.subtotalPrice)!
 
                       }
                     updateTotalTax =  updateProducts.reduce(0.0) {
 
                         partialResult, draftorder in
-                        partialResult + Float(draftorder.totalTax)!
+                        partialResult + Double(draftorder.totalTax)!
 
                       }
                 }

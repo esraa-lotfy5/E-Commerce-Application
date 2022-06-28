@@ -26,14 +26,9 @@ struct PaymentOptions: View {
     @ObservedObject var store = Store()
     @State private var paymentIndex = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var shoppingCartViewModel : ShoppingCartViewModel
     var address : Addresss
-    @State var payment :Float = 0.0
+
     var paymentsOptions = ["PayPal","Cash On Delivery"]
-    
-    
-    
-    
     let steps = [
         TextView(text: " \(" ") Address", font: Font.system(size: 12, weight: Font.Weight.regular)),
         TextView(text: " \(" ") Payment Options", font: Font.system(size: 12, weight: Font.Weight.regular)),
@@ -129,7 +124,7 @@ struct PaymentOptions: View {
                         .shadow(color: Color.gray, radius: 3, x: 0, y: 3)
                         Spacer().frame(width:50)
                         
-                        NavigationLink(destination: PlaceOrders(address: address).environmentObject(self.shoppingCartViewModel),isActive: $active) {
+                        NavigationLink(destination: PlaceOrders(address: address),isActive: $active) {
                             
                             EmptyView()
                         }.edgesIgnoringSafeArea(.vertical)
@@ -161,18 +156,13 @@ struct PaymentOptions: View {
                 }
                 
             }.navigationBarBackButtonHidden(true)
-                      .environmentObject(shoppingCartViewModel)
-                      .onAppear{
-                          print("______PAYMENT________")
-                          payment = self.shoppingCartViewModel.totalPrice
-                          print(self.payment)
-                      }
-                  
-              }.onAppear{
-                  print("______PAYMENT________")
-                  payment = self.shoppingCartViewModel.totalPrice
-                  print(self.payment)
-              }
+            
+            
+        }.onAppear{
+//            print("Total")
+//            print(vm.getTotal())
+        }
+        
         
         
     }

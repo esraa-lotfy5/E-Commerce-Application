@@ -37,8 +37,8 @@ struct ProductDetailsContentWithOptions: View {
       
         HStack {
             Text(title)
-            Spacer()
-            ScrollView (.horizontal,showsIndicators: false){
+            Spacer(minLength: 2)
+            ScrollView{
                 HStack {
                     ForEach(details , id: \.self){ item  in
                         Button(action: {
@@ -46,7 +46,7 @@ struct ProductDetailsContentWithOptions: View {
                         }, label: {
                             Text(" \(item) ")
                                 .scaledToFit()
-                                .font(.system(size: 16))
+                                .font(.system(size: 12))
                                 .foregroundColor( _text.wrappedValue == item ? .black: .white)  // <-- Here
 //                                .fontWeight(.semibold)
                                 .padding(6)
