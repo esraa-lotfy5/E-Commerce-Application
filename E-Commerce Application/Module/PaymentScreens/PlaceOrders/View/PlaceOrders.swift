@@ -63,7 +63,7 @@ struct PlaceOrders: View {
     var currLastName = UserDefaults.standard.string(forKey: "last_name")
        var currency = UserDefaults.standard.string(forKey: "currencyString")
     @ObservedObject var addressViewModel = AddressViewModel()
-
+    @ObservedObject var ordersViewModel = OrdersViewModel()
     
     
     var body: some View {
@@ -293,7 +293,15 @@ struct PlaceOrders: View {
                                 
                             }
 //
-                            placeOrderPayPal(lineItems: lineItems, orderIds: orderIds)
+                            var inventoryItemsIds = [Int]()
+                                                                    
+                            for i in orders {
+                                
+                                inventoryItemsIds.append(Int(i.noteAttributes?.last?.value ?? "") ?? 0)
+                                print("inventoryItemsIds # \(i.noteAttributes?.last?.value)")
+                            }
+                            
+                            placeOrderPayPal(lineItems: lineItems, orderIds: orderIds, inventoryItemsIds: inventoryItemsIds)
                             
                             
                         case .failure(let error):
@@ -374,8 +382,16 @@ struct PlaceOrders: View {
                                             orderIds.append(i.id ?? 0)
                                             
                                         }
+                                        
+                                        var inventoryItemsIds = [Int]()
+                                                                                
+                                        for i in orders {
+                                            
+                                            inventoryItemsIds.append(Int(i.noteAttributes?.last?.value ?? "") ?? 0)
+                                            print("inventoryItemsIds # \(i.noteAttributes?.last?.value)")
+                                        }
                 //
-                                        placeOrderCash(lineItems: lineItems, orderIds: orderIds)
+                                        placeOrderCash(lineItems: lineItems, orderIds: orderIds, inventoryItemsIds: inventoryItemsIds)
                                         
                                         
                                     case .failure(let error):
@@ -429,7 +445,7 @@ struct PlaceOrders: View {
     }
     
     }
-    func placeOrderPayPal(lineItems: [Parameters], orderIds: [Int]) {
+    func placeOrderPayPal(lineItems: [Parameters], orderIds: [Int], inventoryItemsIds: [Int]) {
         
         print("place order clicked")
 
@@ -461,9 +477,30 @@ struct PlaceOrders: View {
                 print("order in view: \(order)")
                 
                 // delete draft orders (cart items)
-                for id in orderIds {
-                    print("will delete from draft order: \(id)")
-                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+//                for id in orderIds {
+//                    print("will delete from draft order: \(id)")
+//                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+//                }
+                
+                for i in 0..<lineItems.count {
+                    
+                    // delete draft orders (cart items)
+                    print("will delete from draft order id: \(orderIds[i])")
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: orderIds[i])
+                    
+                    // update inventory item
+                    let quantity = lineItems[i]["quantity"] as! Int * -1
+                    print("will update inventory items id: \(inventoryItemsIds[i])")
+                    print("will update inventory items quantity: \(quantity)")
+                    
+                    let inventoryItemObj = [
+                        "location_id": Constants.locationId,
+                        "inventory_item_id": inventoryItemsIds[i],
+                        "available_adjustment": quantity
+                    ]
+                    
+                    ordersViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
+                    
                 }
                 
 //                shoppingCartViewModel.deleteAllDraftOrder()
@@ -478,7 +515,7 @@ struct PlaceOrders: View {
     }
     
     
-    func placeOrderCash(lineItems: [Parameters], orderIds: [Int]) {
+    func placeOrderCash(lineItems: [Parameters], orderIds: [Int], inventoryItemsIds: [Int]) {
         
         print("place order clicked")
         showProgressView = true
@@ -514,11 +551,53 @@ struct PlaceOrders: View {
                 active = true
                 showProgressView = false
                 
-                // delete draft orders (cart items)
-                for id in orderIds {
-                    print("will delete from draft order: \(id)")
-                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+                
+                
+                for i in 0..<lineItems.count {
+                    
+                    // delete draft orders (cart items)
+                    print("will delete from draft order id: \(orderIds[i])")
+                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: orderIds[i])
+                    
+                    // update inventory item
+                    let quantity = lineItems[i]["quantity"] as! Int * -1
+                    print("will update inventory items id: \(inventoryItemsIds[i])")
+                    print("will update inventory items quantity: \(quantity)")
+                    
+                    let inventoryItemObj = [
+                        "location_id": Constants.locationId,
+                        "inventory_item_id": inventoryItemsIds[i],
+                        "available_adjustment": quantity
+                    ]
+                    
+                    ordersViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
+                    
                 }
+//
+//                for id in orderIds {
+//                    print("will delete from draft order: \(id)")
+//                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+//                }
+//
+//                for id in inventoryItemsIds {
+//
+//                    print("will update inventory item id: \(id)")
+//
+//                    shoppingCartViewModel.deleteDraftOrder(draftOrderID: id)
+//
+//                    lineItems
+//
+//                    ordersViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
+//
+//                }
+//
+//                let inventoryItemObj = [
+//                    "location_id": Constants.locationId,
+//                    "inventory_item_id": 43702138863789,
+//                    "available_adjustment": -1
+//                    ]
+//
+//                ordersViewModel.updateInventoryLevel(inventoryItem: inventoryItemObj)
                 
 //                shoppingCartViewModel.deleteAllDraftOrder()
                 
@@ -535,7 +614,6 @@ struct PlaceOrders: View {
 }
 
 //func pay
-
 
 struct BTDropInRepresentable: UIViewControllerRepresentable {
     var authorization: String
