@@ -28,7 +28,7 @@ struct BodySettingsView : View{
 @State private var currencyValue = UserDefaults.standard.float(forKey: "currencyValue")
     
     @State private var selectedIndex = 0
-    
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
 
 
     
@@ -39,77 +39,84 @@ var body: some View{
     
       
             
+    VStack {
+        Form {
+            Section {
+                
+              
+                
+                
+                //start of element currency
+                VStack{
+                    
+                    HStack {
+                        Text(" choose Currency ")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    Picker(selection: $vm.currencyType, label: Text("currencyType"), content: {
+                        Text("EGP").tag(CurrencyType.EGP)
+                        Text("USD").tag(CurrencyType.USD)
+                        
+                    })
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+                .padding(.top, 20)
+            }
+                
+                
+                //end of element
+                
+                
+         
             
-            Form {
-                Section {
-                    
-                  
-                    
-                    
-                    //start of element currency
-                    VStack{
-                        
-                        HStack {
-                            Text(" choose Currency ")
-                                .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(.secondary)
-                            Spacer()
-                        }
-                        Picker(selection: $vm.currencyType, label: Text("currencyType"), content: {
-                            Text("EGP").tag(CurrencyType.EGP)
-                            Text("USD").tag(CurrencyType.USD)
-                            
-                        })
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
-                    .padding(.top, 20)
-                }
-                    
-                    
-                    //end of element
-                    
-                    
-             
-                
-                Section{
-                    //start of element contact us
-                    HStack{
-                        Image(systemName: "phone.fill")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        Button(action: {
-                            print("contact us is clicked")
-                        }, label: {
-                            Text("Contact Us")
-                        })
-                            .foregroundColor(Color.black)
-                        
-                    }
-                    //end of element
-                    
-                    //start of element about us
-                    HStack{
-                        Image(systemName: "info.circle")
-                        .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        Button(action: {
-                            print("about us is clicked")
-                        }, label: {
-                            Text("About Us")
-                        })
-                            .foregroundColor(Color.black)
-                        
-                    }
-                    //end of element
-                    
+            Section{
+                //start of element contact us
+                HStack{
+                    Image(systemName: "phone.fill")
+                    .frame(width: 25, height: 25)
+                        .foregroundColor(Color.white)
+                        .background(Color.gray)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Button(action: {
+                        print("contact us is clicked")
+                    }, label: {
+                        Text("Contact Us")
+                    })
+                        .foregroundColor(Color.black)
                     
                 }
+                //end of element
+                
+                //start of element about us
+                HStack{
+                    Image(systemName: "info.circle")
+                    .frame(width: 25, height: 25)
+                        .foregroundColor(Color.white)
+                        .background(Color.gray)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Button(action: {
+                        print("about us is clicked")
+                    }, label: {
+                        Text("About Us")
+                    })
+                        .foregroundColor(Color.black)
+                    
+                }
+                //end of element
+                
+                
+            }
+            
+            
+            if isLoggedIn {
+                
+                
                 
                 Section{
+                    
+                    
                     //start of element logout
                     HStack{
                         Image(systemName: "multiply.circle")
@@ -118,13 +125,13 @@ var body: some View{
                             .background(Color.gray)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         
-                        NavigationLink(destination: LoginScreen(),isActive: $active) {
-                         EmptyView()
-                        }
+                        
+                        
                         Button(action: {
+                            
                             print("logout is clicked")
                             isloggedOut()
-                            self.active = true
+                            
                
                         }, label: {
                             Text("Logout")
@@ -134,21 +141,36 @@ var body: some View{
                     //end of element
                 }
                 
+            }
             
-                
+            
+            
+    }
+        NavigationLink(destination: LoginScreen(),isActive: $active) {
+            EmptyView()
         }
+        
+    }
+
     
     
 
     }
     func isloggedOut (){
+        
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
         UserDefaults.standard.set("", forKey: "id")
         UserDefaults.standard.set("", forKey: "email")
         UserDefaults.standard.set("", forKey: "first_name")
         UserDefaults.standard.set("", forKey: "last_name")
+        active = true
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 ){
+//            print("DispatchQueue now")
+//            active = true
+//        }
+        
+        
         
     }
-    
-    
+
 }

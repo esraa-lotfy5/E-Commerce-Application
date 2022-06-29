@@ -25,9 +25,15 @@ struct OrderListItem: View {
                 
                 if let orderPrice = order.total_line_items_price {
                     
-                    let price = orderPrice.components(separatedBy: ".")
+                    var price = orderPrice.components(separatedBy: ".")
+                    
+                    if order.currency == "USD" {
+                        Text("\((Int(price[0]) ?? 1) / 18)  \(order.currency ?? "")").bold().lineLimit(1)
+                    } else {
+                        Text("\(price[0])  \(order.currency ?? "")").bold().lineLimit(1)
+                    }
 
-                    Text("\(price[0])  \(order.currency ?? "")").bold().lineLimit(1)
+//                    Text("\(price[0])  \(order.currency ?? "")").bold().lineLimit(1)
                     
                 }
                 

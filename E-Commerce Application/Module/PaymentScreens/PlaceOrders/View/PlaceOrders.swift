@@ -61,7 +61,7 @@ struct PlaceOrders: View {
      let currEmail = UserDefaults.standard.string(forKey: "email")
     var currFirstName = UserDefaults.standard.string(forKey: "first_name")
     var currLastName = UserDefaults.standard.string(forKey: "last_name")
-       var currency = UserDefaults.standard.string(forKey: "currencyString")
+//       var currency = UserDefaults.standard.string(forKey: "currencyString")
     @ObservedObject var addressViewModel = AddressViewModel()
     @ObservedObject var ordersViewModel = OrdersViewModel()
     
@@ -276,30 +276,62 @@ struct PlaceOrders: View {
                                 $0.email?.lowercased() == currEmail?.lowercased()
                             }
                             
-                            for draftOrder in orders {
+                            var orderIds = [Int]()
+                            var inventoryItemsIds = [Int]()
+                            
+                            for order in orders {
+                                
+                                if order.note == "cart" {
+                                    itemParameter["variant_id"] = order.lineItems?[0].variantId
+                                    itemParameter["quantity"] = order.lineItems?[0].quantity
 
-                                itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
-                                itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
-
-                                lineItems.append(itemParameter)
+                                    lineItems.append(itemParameter)
+                                    
+                                    orderIds.append(order.id ?? 0)
+                                    inventoryItemsIds.append(Int(order.noteAttributes?.last?.value ?? "") ?? 0)
+                                    print("inventoryItemsIds # \(order.noteAttributes?.last?.value)")
+                                }
 
                             }
                             
-                            var orderIds = [Int]()
-                                                                    
-                            for i in orders {
-                                
-                                orderIds.append(i.id ?? 0)
-                                
-                            }
+//                            for draftOrder in orders {
 //
-                            var inventoryItemsIds = [Int]()
-                                                                    
-                            for i in orders {
-                                
-                                inventoryItemsIds.append(Int(i.noteAttributes?.last?.value ?? "") ?? 0)
-                                print("inventoryItemsIds # \(i.noteAttributes?.last?.value)")
-                            }
+//                                itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
+//                                itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
+//
+//                                lineItems.append(itemParameter)
+//
+//                            }
+                            
+//                            var orderIds = [Int]()
+//
+//                            for i in orders {
+//
+//                                orderIds.append(i.id ?? 0)
+//
+//                            }
+////
+//                            var inventoryItemsIds = [Int]()
+//
+//                            for i in orders {
+//
+//                                inventoryItemsIds.append(Int(i.noteAttributes?.last?.value ?? "") ?? 0)
+//                                print("inventoryItemsIds # \(i.noteAttributes?.last?.value)")
+//                            }
+                            
+//                            var orderIds = [Int]()
+//                            var inventoryItemsIds = [Int]()
+//
+//                            for order in orders {
+//
+//                                if order.note == "cart" {
+//                                    orderIds.append(order.id ?? 0)
+//                                    inventoryItemsIds.append(Int(order.noteAttributes?.last?.value ?? "") ?? 0)
+//                                    print("inventoryItemsIds # \(order.noteAttributes?.last?.value)")
+//                                }
+//
+//
+//                            }
                             
                             placeOrderPayPal(lineItems: lineItems, orderIds: orderIds, inventoryItemsIds: inventoryItemsIds)
                             
@@ -366,31 +398,45 @@ struct PlaceOrders: View {
                                             $0.email?.lowercased() == currEmail?.lowercased()
                                         }
                                         
-                                        for draftOrder in orders {
-
-                                            itemParameter["variant_id"] = draftOrder.lineItems?[0].variantId
-                                            itemParameter["quantity"] = draftOrder.lineItems?[0].quantity
-
-                                            lineItems.append(itemParameter)
-
-                                        }
-                                        
                                         var orderIds = [Int]()
-                                                                                
-                                        for i in orders {
+                                        var inventoryItemsIds = [Int]()
+                                        
+                                        for order in orders {
                                             
-                                            orderIds.append(i.id ?? 0)
-                                            
+                                            if order.note == "cart" {
+                                                itemParameter["variant_id"] = order.lineItems?[0].variantId
+                                                itemParameter["quantity"] = order.lineItems?[0].quantity
+
+                                                lineItems.append(itemParameter)
+                                                
+                                                orderIds.append(order.id ?? 0)
+                                                inventoryItemsIds.append(Int(order.noteAttributes?.last?.value ?? "") ?? 0)
+                                                print("inventoryItemsIds # \(order.noteAttributes?.last?.value)")
+                                            }
+
                                         }
                                         
-                                        var inventoryItemsIds = [Int]()
+                                        
+                                        
+//                                        for order in orders {
+//                                            
+//                                            if order.note == "cart" {
+//                                                
+//                                            }
+//                                            
+//                                            
+//                                        }
+                                        
+                                        
                                                                                 
-                                        for i in orders {
-                                            
-                                            inventoryItemsIds.append(Int(i.noteAttributes?.last?.value ?? "") ?? 0)
-                                            print("inventoryItemsIds # \(i.noteAttributes?.last?.value)")
-                                        }
-                //
+//                                        for order in orders {
+//
+//                                            if order.note == "cart" {
+//
+//
+//                                            }
+//                                        }
+//                //
                                         placeOrderCash(lineItems: lineItems, orderIds: orderIds, inventoryItemsIds: inventoryItemsIds)
                                         
                                         
@@ -459,7 +505,7 @@ struct PlaceOrders: View {
         
         let order: Parameters = [ "order": [
             "email": currEmail ?? "",
-            "currency": currency ?? "EGP",
+            "currency": currencyString ?? "EGP",
             "line_items": lineItems,
             "shipping_address": shippingAddress
         ]
@@ -530,7 +576,7 @@ struct PlaceOrders: View {
         
         let order: Parameters = [ "order": [
             "email": currEmail ?? "",
-            "currency": currency ?? "EGP",
+            "currency": currencyString ?? "EGP",
             "line_items": lineItems,
             "shipping_address": shippingAddress,
             "financial_status": "pending"

@@ -253,7 +253,13 @@ struct LoginScreen: View {
 
          
             }
+            
+        }.onAppear {
+            if isLoggedIn {
+                proceedWithLogin = true
+            }
         }
+        
         .navigationBarHidden(true)
     }
     
